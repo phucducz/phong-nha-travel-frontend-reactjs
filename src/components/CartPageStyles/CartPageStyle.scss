@@ -1,0 +1,196 @@
+@import '../GlobalStyles/GlobalStyles.scss';
+
+%flex_center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+%buttonCart {
+    @extend %button;
+    @extend %flex_center;
+    margin-left: 1rem;
+    border-radius: .5rem;
+
+    h3 {
+        color: $whiteColor;
+    }
+
+    &:hover {
+        h3 {
+            color: $colorPrimary;
+        }
+    }
+}
+
+.container-product {
+    width: 116rem;
+    background-color: $whiteColor;
+    margin: 13rem auto 0 auto;
+
+    .product-box {
+        width: 100%;
+        margin: 0 auto;
+
+        .product-box_title {
+            width: 107rem;
+            display: flex;
+            justify-content: space-between;
+            margin: 0 auto;
+            padding: 3rem 0;
+            border-bottom: .1px solid #2f2f2f;
+
+            div {
+                h3 {
+                    text-align: center;
+                }
+            }
+        }
+
+        .product-odd {
+            background-color: rgb(228, 227, 227);
+        }
+
+        .product-box_item {
+            .item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 107rem;
+                margin: 0 auto 3rem auto;
+                padding: 3rem 0;
+                position: relative;
+
+                &:before {
+                    content: "";
+                    background-color: #2980B9;
+                    position: absolute;
+                    bottom: -2rem;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    height: 0.6rem;
+                    width: 60rem;
+                }
+
+                .item_name {
+                    @extend %flex_center;
+
+                    svg {
+                        font-size: 2rem;
+                        color: red;
+                        cursor: pointer;
+                    }
+
+                    img {
+                        width: 14rem;
+                        padding: 0 2rem;
+                    }
+
+                    div {
+                        padding: 0 2rem;
+                        width: 40rem;
+                    }
+
+                    .link-name {
+                        color: $colorPrimary;
+
+                        h3 {
+                            color: $colorPrimary;
+
+                            &:hover {
+                                color: $borderColor;
+                            }
+                        }
+                    }
+                }
+
+                .item_quantity {
+                    @extend %flex_center;
+
+                    input {
+                        width: 5rem;
+                        text-align: center;
+                    }
+                }
+
+                .item_total {
+                    @extend %flex_center;
+
+                    i {
+                        cursor: pointer;
+                        padding-left: 2rem;
+
+                        &:hover {
+                            color: $colorPrimary;
+                        }
+                    }
+                }
+
+                .item_price {
+                    @extend %flex_center;
+
+                    .link {
+                        pointer-events: none;
+                    }
+                }
+            }
+
+            .update-item {
+                width: 100%;
+                height: 40rem;
+                background-color: rgb(238, 238, 238);
+            }
+        }
+
+        .product-action {
+            @extend %flex_center;
+            justify-content: space-between;
+            margin: 4rem auto;
+            padding-top: 1rem;
+            width: 107rem;
+            border-top: .1rem solid $colorWord;
+
+            .product-box_coupon {
+                display: flex;
+                align-items: center;
+
+                .inputCoupon {
+                    width: 20rem;
+                    height: 4.5rem;
+                    border-radius: .5rem;
+                    outline: none;
+                    margin-right: 3rem;
+                }
+
+                .buttonCoupon {
+                    @extend %buttonCart;
+                }
+            }
+
+            .product-box_update {
+                button {
+                    @extend %buttonCart;
+                }
+            }
+        }
+    }
+
+    .info-box {
+        width: 107rem;
+        margin: 0 auto 5rem auto;
+        border-bottom: .2rem solid $colorWord;
+        padding-bottom: 5rem;
+
+        .payment-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .box_fill-info {
+            h3 {
+                padding: 2rem 0;
+            }
+        }
+    }
+}

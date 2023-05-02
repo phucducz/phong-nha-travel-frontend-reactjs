@@ -1,0 +1,44 @@
+@import '../GlobalStyles/GlobalStyles.scss';
+
+.container_account {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 61vh;
+    margin-top: 11rem;
+
+    .account {
+        background-color: var(--white);
+        width: 70rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 1%;
+
+        .account_title {
+            @extend %title-h3;
+            text-transform: uppercase;
+            margin: 4rem 0;
+        }
+
+        div {
+            margin: 1.5rem 0;
+        }
+
+        .password {
+            .password_t {
+                display: flex;
+                justify-content: space-between;
+
+                h3 + h3 {
+                    color: var(--primary);
+                    cursor: pointer;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+}

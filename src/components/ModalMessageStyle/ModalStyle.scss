@@ -1,0 +1,169 @@
+@import '../GlobalStyles/GlobalStyles.scss';
+
+.active {
+    position: fixed !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    opacity: 1 !important;
+}
+
+.wrap {
+    overflow-y: scroll;
+    width: 116rem;
+    max-height: 60rem;
+    background-color: $whiteColor;
+    position: fixed;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    box-shadow: 3px -1px 19px 4px rgba(0, 0, 0, 0.35);
+    -webkit-box-shadow: 3px -1px 19px 4px rgba(0, 0, 0, 0.35);
+    -moz-box-shadow: 3px -1px 19px 4px rgba(0, 0, 0, 0.35);
+    transition: 0.5s ease-in-out;
+    display: none;
+    opacity: 0;
+
+    .message {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .message_title {
+            h3 {
+                @extend %title-h3;
+                padding: 5rem 0;
+                text-transform: capitalize;
+                font-size: 3rem;
+            }
+        }
+
+        .message_content {
+            margin-top: 5rem;
+
+            .container_product {
+                display: flex;
+                width: 80rem;
+
+                box-shadow: 3px -1px 19px 4px rgba(0, 0, 0, 0.35);
+                -webkit-box-shadow: 3px -1px 19px 4px rgba(31, 31, 31, 0.35);
+                -moz-box-shadow: 3px -1px 19px 4px rgba(0, 0, 0, 0.35);
+                border-radius: .5rem;
+
+                .product_image {
+                    img {
+                        width: 26rem;
+                        margin: -5rem 0 0 -8rem;
+                        border-radius: .5rem;
+                        box-shadow: 3px -1px 19px 4px rgba(0, 0, 0, 0.35);
+                        -webkit-box-shadow: 3px -1px 19px 4px rgba(31, 31, 31, 0.35);
+                        -moz-box-shadow: 3px -1px 19px 4px rgba(0, 0, 0, 0.35);
+                    }
+                }
+
+                .product_description {
+                    width: 80rem;
+                    height: auto;
+                    margin: 0 auto;
+                    padding: 20px 0;
+
+                    p {
+                        padding: 0 0 0 4rem;
+                    }
+
+                    .title {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin: 0;
+                        padding: 0 2rem;
+
+                        .title_name {
+                            @extend %title-h3;
+                            flex: 2;
+                        }
+                    }
+
+                    .product_description_price {
+                        color: #808080;
+                    }
+
+                    .product_description_desc {
+                        width: 57rem;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
+
+                    ul {
+                        li {
+                            p {
+                                padding-left: 0;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .container_payment {
+                margin: 5rem 0;
+
+                .payment_title {
+                    padding: 2rem 0;
+                    display: flex;
+                    align-items: center;
+
+                    i {
+                        padding-right: 1rem;
+                        font-size: 1.3rem;
+                    }
+                }
+
+                .payment_methods {
+                    display: flex;
+
+                    .payment-method {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 20rem;
+                        height: 5rem;
+                        padding: 3rem;
+                        border: .1rem solid $colorBody;
+                        border-radius: .5rem;
+                        cursor: pointer;
+                        margin-right: 3rem;
+
+                        i {
+                            padding-right: 1rem;
+                        }
+
+                        &:hover {
+                            background-color: rgb(227, 248, 227);
+                            border: .1rem solid rgb(189, 241, 189);
+                        }
+                    }
+
+                    .payment_active {
+                        background-color: rgb(227, 248, 227);
+                        border: .1rem solid rgb(189, 241, 189);
+                    }
+                }
+            }
+        }
+
+        .message_button {
+            display: flex;
+
+            button {
+                @extend %button;
+                margin: 5rem 3rem;
+                border-radius: .5rem;
+                width: max-content;
+                font-size: 1.5rem;
+            }
+        }
+    }
+}

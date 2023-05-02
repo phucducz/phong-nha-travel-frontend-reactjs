@@ -1,0 +1,74 @@
+@import '../GlobalStyles/GlobalStyles.scss';
+
+.personal_information {
+    width: 80rem;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+
+    .user {
+        .personal_information_title {
+            display: flex;
+            padding: 2rem 0;
+
+            i {
+                padding-right: 1rem;
+            }
+        }
+
+        .personal_information_user {
+            display: flex;
+
+            .information_user {
+                background-color: $colorBody;
+
+                .user_content {
+                    padding: 0 3rem;
+
+                    .firstName, .lastName {
+                        width: 22.8rem;
+                        height: 4.5rem;
+                    }
+
+                    input {
+                        width: 44.6rem;
+                        height: 4.5rem;
+                    }
+                }
+            }
+        }
+    }
+
+    .tour {
+        .tour_information_title {
+            display: flex;
+            padding: 2rem 0;
+
+            i {
+                padding-right: 1rem;
+            }
+        }
+
+        .order {
+            display: flex;
+            justify-content: center;
+            background-color: $colorBody;
+
+            .tour_content {
+                padding: 0 3rem;
+                display: flex;
+                flex-direction: column;
+
+                div {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+
+                    p {
+                        padding-left: 1rem;
+                    }
+                }
+            }
+        }
+    }
+}

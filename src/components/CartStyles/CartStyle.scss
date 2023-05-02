@@ -1,0 +1,162 @@
+@import "../GlobalStyles/GlobalStyles.scss";
+
+$widthContent: 37rem;
+$paddingContent: 3rem;
+$widthImage: 32.5rem;
+
+.container-tour {
+    display: flex;
+    width: 116rem;
+    margin: 0 auto;
+
+    .flex {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .tour-travel {
+        cursor: pointer;
+        background-color: $whiteColor;
+        display: flex;
+        justify-content: space-between;
+        width: 89rem;
+        margin: 0 1rem 1rem 0;
+
+        .containerImg {
+            min-width: 32.5rem;
+            height: 25.2rem;
+            overflow: hidden;
+        }
+
+        &:hover {
+            img {
+                transform: scale(1.2);
+            }
+        }
+
+        .infoTour {
+            display: flex;
+            justify-content: space-between;
+            width: $widthContent;
+        }
+
+        .imageTour {
+            width: 32.5rem;
+            height: 25.2rem;
+            transition: all .25s;
+        }
+
+        .content {
+            padding: 0 $paddingContent;
+            height: 25.2rem;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+
+            h3 {
+                color: $colorPrimary;
+                font-weight: 900;
+                font-size: 2rem;
+                text-align: center;
+                padding: 0 1rem;
+            }
+
+            p {
+                width: calc($widthContent - $paddingContent);
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+
+        .price {
+            width: calc(116rem - $widthContent - $widthImage);
+            border-left: .1rem solid $blackColor;
+            padding: 0 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 1rem 0;
+            height: calc(24rem - 1rem);
+
+            button {
+                @extend %button;
+                width: max-content;
+                padding: 1rem 3rem;
+                font-size: 1.3rem;
+                text-decoration: none;
+
+                &:hover {
+                    background-color: $whiteColor;
+                    color: $blackColor;
+                }
+            }
+
+            h3 {
+                width: max-content;
+                margin: 0 auto 1rem auto;
+            }
+        }
+    }
+
+    .search {
+        width: 25.5rem;
+        height: 40.6rem;
+        background-color: $colorPrimary;
+        position: fixed;
+        top: 15.6rem; right: 10.8rem;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        h3, p {
+            color: $whiteColor;
+            text-align: center;
+            padding: .5rem;
+        }
+
+        input, .category {
+            width: 20rem;
+            height: 4.5rem;
+            margin: 1rem 0;
+            outline: none;
+        }
+
+        .category {
+            font-size: 1.5rem;
+        }
+
+        input:nth-child(3) {
+            margin-top: 1rem;
+        }
+
+        .date {
+            display: flex;
+            justify-content: space-between;
+            width: 20rem;
+            
+            .start {
+                width: calc(19rem * 52 / 100);
+            }
+
+            .end {
+                width: calc(19rem * 52 / 100);
+            }
+        }
+
+        .find {
+            color: $colorPrimary;
+            font-weight: 700;
+            background-color: $whiteColor;
+            border-radius: .7rem;
+            border: .3rem solid $whiteColor;
+            cursor: pointer;
+            transition: all .5s;
+
+            &:hover {
+                color: $whiteColor;
+                background-color: $colorPrimary;
+            }
+        }
+    }
+}

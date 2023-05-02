@@ -1,0 +1,270 @@
+@import '../GlobalStyles/GlobalStyles.scss';
+
+.line-through {
+    text-decoration: line-through !important;
+}
+
+.--flexbox {
+    display: flex;
+}
+
+.flexbox--center {
+    justify-content: center;
+    align-items: center;
+}
+
+/* .--border-bottom{
+    border-bottom: .1rem solid #e9e9e9;
+} */
+
+.--cursor-pointer {
+    cursor: pointer;
+}
+
+/* MENU */
+.header__container {
+    margin: 0px;
+    padding: 0 110px;
+    height: auto;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 9999;
+    background-color: white;
+    box-shadow: 0px 4px 5px 0px rgba(15, 14, 14, 0.79);
+    -webkit-box-shadow: 0px 4px 5px 0px rgba(15, 14, 14, 0.79);
+    -moz-box-shadow: 0px 4px 5px 0px rgba(15, 14, 14, 0.79);
+}
+
+/* set layout: flex, căn chỉnh menu */
+.menu-ul {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px;
+    align-items: center;
+    width: 116rem;
+    margin: 0 auto;
+}
+
+/* căn chỉnh menu trái */
+.menu-left {
+    /* padding: 0 0 0 80px; */
+    height: max-content;
+}
+
+.logo-image {
+    max-width: 231.7px;
+    max-height: 95px;
+}
+
+/* set layout: flex cho menu phải*/
+.menu-right {
+    display: flex;
+    width: max-content;
+
+    &>li.has-child::after {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f078";
+        padding-left: 1rem;
+        font-size: 1rem;
+    }
+
+    & .has-child:hover > ul {
+        display: block;
+    }
+}
+
+/* set position: relative cho menu li phải 
+làm menu đa cấp*/
+.menu-li {
+    list-style: none;
+    display: block;
+    position: relative;
+    padding: .5rem 1rem .5rem 1rem;
+}
+
+.menu-a {
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #000;
+    line-height: 18px;
+}
+
+/* làm icon giỏ hàng menu phải */
+// .menu-right .menu-li:last-child 
+// .menu-a::after {
+//     font-family: "Font Awesome 5 Free";
+//     font-weight: 900;
+//     content: "\f07a";
+// }
+
+/* hiệu ứng hover vào menu phải, display: none*/
+// .menu-li:hover .sub-menu {
+//     display: block;
+// }
+
+.menu-right .menu-li::before {
+    content: "";
+    position: absolute;
+    background-color: #004400;
+    height: 4px;
+    width: 0;
+    bottom: 0px;
+    left: 0px;
+    transition: 0.25s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+/* hiệu ứng hover vào thẻ li */
+.menu-right .menu-li:hover::before {
+    display: block;
+    width: 100%;
+}
+
+.menu-li__sub-menu li a {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #000;
+}
+
+.menu-right .menu-li:last-child .menu-a {
+    position: relative;
+}
+
+/* tạo menu cấp 1 icon giỏ hàng */
+.menu-li__sub-menu {
+    position: absolute;
+    right: 0;
+    list-style: none;
+    font-weight: 700;
+    width: 230px;
+    margin-top: 5px;
+    padding: 10px 10px;
+    background-color: rgb(244, 243, 243);
+    display: none;
+}
+
+/* set chiều cao cho menu cấp 1 icon giỏ hàng */
+.menu-li__sub-menu li {
+    list-style: none;
+    height: max-content;
+    padding: 10px 20px;
+}
+
+/* bỏ gạch dưới thẻ a menu cấp 1 icon giỏ hàng */
+.menu-li__sub-menu li a:hover {
+    text-decoration: underline;
+}
+
+.menu-li:last-child:hover .menu-li__sub-menu {
+    display: block;
+}
+
+.sub-menu li a:hover {
+    text-decoration: underline;
+}
+
+.sub-menu li {
+    height: max-content;
+    padding: 10px 20px;
+}
+
+.sub-menu li a {
+    text-transform: uppercase;
+    text-decoration: none;
+    color: black;
+    font-weight: 700;
+    font-size: 1.4rem;
+}
+
+/* a tạo menu cấp 1 TUOR KHÁC */
+.sub-menu {
+    position: absolute;
+    left: 0;
+    list-style: none;
+    width: 200px;
+    margin-top: 5px;
+    padding: 10px 10px;
+    background-color: rgb(244, 243, 243);
+    display: none;
+
+    & > li.has-child::after {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f078";
+        padding-left: 1rem;
+        font-size: 1rem;
+    }
+}
+
+/* hover TOUR KHÁC */
+.menu-li:nth-child(4):hover .sub-menu {
+    display: block;
+}
+
+.sub-menu li:nth-child(3) {
+    position: relative;
+}
+
+/* tạo menu cấp 2 TOUR NỔI BẬT */
+.sub-menu_standout {
+    position: absolute;
+    left: 180px;
+    top: -22px;
+    list-style: none;
+    width: 200px;
+    margin-top: 5px;
+    padding: 0 10px;
+    padding-top: 15px;
+    background-color: rgb(244, 243, 243);
+    display: none;
+}
+
+/* hover menu cấp 2 TOUR NỔI BẬT */
+// .sub-menu li:nth-child(3):hover .sub-menu_standout {
+//     display: block;
+// }
+
+// .sub-menu li:nth-child(3) a {
+//     display: flex;
+//     justify-content: space-between;
+// }
+
+.icon-standout:hover {
+    text-decoration: none !important;
+}
+
+.menu-li i {
+    @include fontAweSomeStyle();
+}
+
+.sub-menu-icon::before {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    content: '\f0d7';
+    color: #000;
+    padding-left: .5rem;
+}
+
+// .icon-standout::after {
+//     font-family: 'Font Awesome 5 Free';
+//     font-weight: 900;
+//     content: '\f105';
+//     color: #000;
+// }
+
+.menu-li:nth-child(8) .menu-a {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+// .icon-cart::after { 
+//     font-family: 'Font Awesome 5 Free';
+//     font-weight: 900;
+//     content: '\f0d7';
+//     color: #000;
+//     margin-left: 10px;
+
+// }
