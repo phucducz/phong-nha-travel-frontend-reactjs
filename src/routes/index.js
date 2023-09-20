@@ -1,5 +1,5 @@
+import { routes } from "~/config";
 import Home from "~/pages/Home";
-import Contact from "~/pages/Contact";
 import Lienhe from "~/pages/Lienhe";
 import Camnang from "~/pages/Camnang";
 import ViewTour from "~/pages/ViewTour";
@@ -7,17 +7,19 @@ import Cart from "~/pages/Cart";
 import BookTour from "~/pages/BookTour";
 import CartPage from "~/pages/CartPage";
 import AccountPage from "~/pages/AccountPage";
+import Admin from "~/pages/Admin";
+import AdminLayout from "~/layouts/AdminLayout";
 
 const publicRoutes = [
-    { path: "/", component: Home },
-    { path: "/lienhe", component: Lienhe },
-    { path: "/camnang", component: Camnang },
-    { path: "/contact", component: Contact },
-    { path: "/cart/tour/:tourId", component: ViewTour },
-    { path: "/cart", component: Cart },
-    { path: "/checkout/:tourId", component: BookTour },
-    { path: "/cartpage", component: CartPage },
-    { path: "/account", component: AccountPage }
+    { path: routes.Home, component: Home },
+    { path: routes.Lienhe, component: Lienhe },
+    { path: routes.Camnang, component: Camnang },
+    { path: routes.ViewTour, component: ViewTour },
+    { path: routes.Cart, component: Cart },
+    { path: routes.BookTour, component: BookTour },
+    { path: routes.CartPage, component: CartPage },
+    { path: routes.AccountPage, component: AccountPage },
+    { path: routes.Admin, component: Admin, layout: AdminLayout}
 ];
 
 export { publicRoutes }

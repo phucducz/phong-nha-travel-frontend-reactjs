@@ -1,0 +1,87 @@
+@import "../GlobalStyles/GlobalStyles.scss";
+
+:root {
+    --height-task: 4rem;
+    --count-task: taskList;
+}
+
+.tasks {
+    background-color: var(--color-body);
+    counter-reset: var(--count-task);
+
+    .tasks_title {
+        width: max-content;
+        height: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 auto 0 2rem;
+        cursor: pointer;
+        user-select: none;
+
+        span {
+            font-size: 1.3rem;
+            margin: 0 1.3rem 0 0;
+        }
+
+        .icon-task {
+            margin-right: 1.5rem;
+        }
+
+        &:hover {
+
+            span,
+            svg {
+                color: var(--primary);
+            }
+        }
+        
+        & .icon-list {
+            margin-right: 1rem;
+        }
+    }
+
+    .tasks_active {
+        // height: calc(var(--height-task) * var(--count-task)) !important;
+        height: calc(var(--height-task) * 3) !important;
+    }
+
+    .task_active {
+        color: #6789e0;
+        background-color: #dff3fd;
+        border-radius: .5rem;
+    }
+
+    ._tasks {
+        width: 20rem;
+        height: 0;
+        margin: 0 auto;
+        overflow: hidden;
+        transition: all .3s;
+
+        .tasks_list {
+            width: 21rem;
+            line-height: var(--height-task);
+            margin: 0 0 0 2rem;
+            padding-left: 2rem;
+            cursor: pointer;
+            counter-increment: var(--count-task);
+            position: relative;
+            
+            &::before {
+                content: '';
+                display: block;
+                width: .1rem;
+                height: var(--height-task);
+                position: absolute;
+                top: 0; left: -.5rem;
+                border-left: .2rem solid var(--primary);
+            }
+
+            &:hover {
+                color: var(--primary);
+            }
+        }
+    }
+
+}

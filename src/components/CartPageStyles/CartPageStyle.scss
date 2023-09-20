@@ -24,7 +24,7 @@
 }
 
 .container-product {
-    width: 116rem;
+    width: var(--max-width-page);
     background-color: $whiteColor;
     margin: 13rem auto 0 auto;
 
@@ -51,7 +51,7 @@
             background-color: rgb(228, 227, 227);
         }
 
-        .product-box_item {
+        // .product-box_item {
             .item {
                 display: flex;
                 justify-content: space-between;
@@ -140,7 +140,7 @@
                 height: 40rem;
                 background-color: rgb(238, 238, 238);
             }
-        }
+        // }
 
         .product-action {
             @extend %flex_center;

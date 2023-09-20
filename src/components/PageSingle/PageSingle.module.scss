@@ -1,0 +1,43 @@
+.page__single {
+    width: var(--max-width-page);
+    min-width: 82.5rem;
+    padding: 5rem 1.5rem;
+
+    .page__single__title {
+        &>p {
+            font-family: 'Kaushan Script';
+            font-size: 1.8rem;
+            padding: 0 2rem;
+            border: none;
+            text-transform: capitalize;
+        }
+
+        &>h3 {
+            margin: 2.8rem 0;
+            padding: 0 2rem 0 2rem;
+            font-size: 3rem;
+        }
+    }
+
+    .page__single__content {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+}
+
+
+.cm__title {
+    color: var(--color-black);
+    font-weight: 700;
+    margin-top: 15px;
+    font-size: 3.4rem;
+    position: relative;
+    text-transform: uppercase;
+}
+
+.cm__content {
+    padding-left: 2rem;
+    padding-top: .5rem;
+    border-left: .5rem solid #47a0ff;
+}

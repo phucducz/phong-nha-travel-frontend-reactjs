@@ -1,0 +1,92 @@
+$width_background: 5rem;
+
+.item {
+    max-width: max-content;
+    min-width: 9rem;
+    height: auto;
+    display: flex;
+    align-items: center;
+
+    &>label {
+        cursor: pointer;
+        padding-left: 2rem;
+        text-align: center;
+        user-select: none;
+    }
+}
+
+input[type='checkbox'] {
+    width: 2rem;
+    height: 2rem;
+    position: relative;
+    cursor: pointer;
+
+    &::after {
+        content: '';
+        display: none;
+        width: $width_background;
+        height: $width_background;
+        border-radius: 100%;
+        background-color: var(--primary);
+        opacity: .1;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: -2;
+    }
+
+    &:hover::after {
+        display: block;
+    }
+
+    &::before {
+        content: '';
+        width: 0;
+        height: 0;
+        border-radius: 100%;
+        background-color: var(--primary);
+        opacity: .2;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+        transition: .1s all linear;
+    }
+
+    &:focus::before {
+        animation: .3s checked linear;
+        animation-delay: 0;
+    }
+}
+
+@keyframes checked {
+    0% {
+        width: 1rem;
+        height: 1rem;
+    }
+
+    25% {
+        width: calc($width_background - 3rem);
+        height: calc($width_background - 3rem);
+        opacity: .2;
+    }
+
+    50% {
+        width: $width_background;
+        height: $width_background;
+    }
+
+    75% {
+        opacity: .1;
+        width: $width_background;
+        height: $width_background;
+    }
+    
+    100% {
+        opacity: 0;
+        width: $width_background;
+        height: $width_background;
+    }
+}

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import * as getService from "~/apiService/getService";
+import { getService } from "~/services";
 import Pagination from "~/components/Pagination";
 import CartStyle from "~/components/CartStyles";
 
@@ -16,21 +16,20 @@ function Cart() {
     const [currentPage, setCurrentPage] = useState(1);
     const toursPerPage = 3;
     const search = useRef();
-    const btnFind = useRef();
 
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchAPI = async () => {
-            const result = await getService.get('tours');
+            const result = await getService('tours');
             setTours(result);
         }
 
         const fetchCategories = async () => {
-            const result = await getService.get('topics');
+            const result = await getService('topics');
             setTopics(result);
         }
-        
+
         const fetch = () => {
             fetchAPI();
             fetchCategories();
@@ -38,7 +37,6 @@ function Cart() {
 
         fetch();
     }, []);
-    console.log(category);
 
     const indexOfLastTours = currentPage * toursPerPage;
     const indexOfFirstTours = indexOfLastTours - toursPerPage;
@@ -48,7 +46,7 @@ function Cart() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+
         const fetchTour = async () => {
             const result = await getService.get('tours', {
                 name: name
@@ -58,8 +56,6 @@ function Cart() {
 
         fetchTour();
     }
-
-    console.log(tours);
 
     return (
         <CartStyle>
@@ -95,14 +91,14 @@ function Cart() {
                             </div>
                         ))}
                         <Pagination
-                            toursPerPage={toursPerPage} 
-                            totalTours={tours.length != 0 ? tours.length : 0} 
+                            toursPerPage={toursPerPage}
+                            totalTours={tours.length != 0 ? tours.length : 0}
                             handleOnclick={handleOnclick}
                         />
                     </div>
-                    <form 
+                    <form
                         className="search"
-                        style={{height: '29.6rem'}}
+                        style={{ height: '29.6rem' }}
                         onSubmit={e => handleSubmit(e)}
                     >
                         <h3>Tìm kiếm Tour</h3>

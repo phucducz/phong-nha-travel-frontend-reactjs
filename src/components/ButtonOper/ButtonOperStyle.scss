@@ -1,0 +1,33 @@
+
+.edit {
+    background-color: #faaf68;
+    border: .3rem solid transparent;
+
+    &:hover {
+        border-color: #f07c11;
+    }
+}
+
+.delete {
+    background-color: #fc3838;
+    border: .3rem solid transparent;
+
+    &:hover {
+        border-color: #ec1010;
+    }
+}
+
+.button_oper {
+    color: var(--white);
+    outline: none;
+    padding: 1rem 2rem;
+    font-size: 1.3rem;
+    cursor: pointer;
+    border-radius: .5rem;
+
+    
+
+    + .button_oper {
+        margin-left: 2rem;
+    }
+}

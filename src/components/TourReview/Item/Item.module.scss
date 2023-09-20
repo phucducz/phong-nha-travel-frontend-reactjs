@@ -1,0 +1,61 @@
+.item {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: .1rem dashed #ececec;
+
+    .item__user {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .item__feedback {
+        width: 75%;
+    }
+
+    &:last-child {
+        border: none;
+    }
+}
+
+.item__user {
+    width: 9.5rem;
+    height: 14.2rem;
+
+    & img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 50%;
+        border: .6rem solid var(--white);
+        box-shadow: 0 2px 3px rgba(0, 0, 0, 0.09);
+    }
+
+    & h3 {
+        font-size: 1.5rem;
+        font-family: 'Kaushan Script';
+        font-weight: 100;
+    }
+}
+
+.item__feedback {
+    &>h3 {
+        font-size: 2rem;
+    }
+
+    &>p {
+        color: #686868;
+        line-height: 3rem;
+        font-size: 1.5rem;
+    }
+
+    &>svg {
+        color: var(--color-yellow);
+
+        &+svg {
+            padding-left: .5rem;
+        }
+    }
+}

@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-
 const image = {
     pexels: require('~/images/pexels-photo-237272.jpeg'),
     beach: require('~/images/beach-g6dc238df2_1920.jpg'),

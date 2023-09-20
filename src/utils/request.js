@@ -8,7 +8,7 @@ const request = axios.create({
 });
 
 export const get = async (path, option = {}) => {
-    const res = await request.get(path, option);    
+    const res = await request.get(path, option);
     return res.data;
 }
 
@@ -19,6 +19,11 @@ export const post = async (path, option = {}) => {
 
 export const deleteAPI = async (path, option = {}) => {
     const res = await request.delete(path, option);
+    return res.data;
+}
+
+export const putAPI = async (path, option = {}) => {
+    const res = await request.put(path, option);
     return res.data;
 }
 

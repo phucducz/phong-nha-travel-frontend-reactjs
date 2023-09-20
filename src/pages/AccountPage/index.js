@@ -26,7 +26,7 @@ function AccountPage() {
                     />
                 </div>
                 <div className={cx('password')}>    
-                    <div class="password_t">
+                    <div className="password_t">
                         <h3>Mật khẩu</h3>
                         <h3>Bạn đã quên mật khẩu?</h3>
                     </div>

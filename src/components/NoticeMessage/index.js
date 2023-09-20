@@ -2,8 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import classNames from "classnames/bind";
 
 import styles from "../NoticeMessageStyles/NoticeMessageStyle.scss";
-import * as deleteService from "~/apiService/deleteService.js";
-import axios from "axios";
+import { deleteService } from "~/services";
 
 const cx = classNames.bind(styles);
 
@@ -12,10 +11,7 @@ function NoticeMessage(props) {
     const { message, setActive, action, payload } = props;
     const messageUI = useRef();
 
-    console.log(props);
-
     useEffect(() => {
-        console.log('work', setActive.statusNotice);
         setActiveUI(setActive.statusNotice);
     }, [setActive.statusNotice]);
 
@@ -26,17 +22,14 @@ function NoticeMessage(props) {
         setTimeout(() => {
             setActive.modalMessage.current.style.display = "none";
         }, 500);
-        
+
         setActiveUI(false);
     }
-
-    console.log(payload);
 
     const actionAccept = () => {
         if (action === 'delete') {
             const deleteTour = async () => {
-                const res = await deleteService.deleteAPI('bookedDetails', payload);
-                console.log(res);
+                const res = await deleteService('bookedDetails', payload);
             }
 
             deleteTour();

@@ -1,11 +1,13 @@
 import classNames from "classnames/bind";
 
-import styles from "../ModalMessageStyle/ModalStyle.scss";
+import style from './ModalStyle.module.scss';
 
-const cx = classNames.bind(styles);
+const cx = classNames.bind(style);
 
-function ModalMessage({ children }) {
-
+function ModalMessage({ 
+    children,
+    visible
+}) {
     return (
         <div className={cx('content_message')}>
             {children}

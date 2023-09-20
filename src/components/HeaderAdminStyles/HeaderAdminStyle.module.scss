@@ -1,0 +1,79 @@
+@import "../GlobalStyles/GlobalStyles.scss";
+
+:root {
+    --font-title: 2rem;
+    --height: 8rem;
+}
+
+.wrapper-admin {
+    width: 100%;
+    height: var(--height);
+    background-image: linear-gradient(to left, var(--primary) 40%, var(--color-sub) 70%);
+
+}
+
+.header {
+    width: 95%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .header_title {
+        .title_icon {
+            font-size: var(--font-title);
+            color: var(--white);
+        }
+
+        span {
+            font-size: var(--font-title);
+            color: var(--white);
+            margin-left: 1.5rem;
+            text-transform: uppercase;
+        }
+    }
+
+    .header_action {
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .name {
+            color: var(--white);
+            padding: 0 2rem;
+        }
+    }
+}
+
+.bell,
+.question
+    {
+    color: var(--white);
+    font-size: 1.5rem;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.bell,
+.question {
+    &:hover {
+        background-color: #78b9e4;
+        border-radius: .5rem;
+    }
+}
+
+.image {
+    width: 4rem;
+    height: 4rem;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.content {
+    position: absolute;
+    top: 5.8rem;
+    left: -15rem;
+}
+

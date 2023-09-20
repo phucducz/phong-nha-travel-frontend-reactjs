@@ -1,0 +1,198 @@
+@mixin positionMid() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes zoom-vr {
+    0% {
+        height: 7rem;
+        width: 7rem;
+    }
+
+    50% {
+        height: 5.5rem;
+        width: 5.5rem;
+    }
+
+    100% {
+        height: 7rem;
+        width: 7rem;
+    }
+}
+
+@keyframes zoom {
+    0% {
+        opacity: .6;
+        height: 6rem;
+        width: 6rem;
+    }
+
+    50% {
+        opacity: .3;
+        height: 9.5rem;
+        width: 9.5rem;
+    }
+
+    100% {
+        opacity: 0;
+        height: 9.5rem;
+        width: 9.5rem;
+    }
+}
+
+@keyframes shaking {
+    0% {
+        transform: rotate(-30deg) translate(-6px, -18px);
+    }
+
+    15% {
+        transform: rotate(30deg) translate(-18px, -6px);
+    }
+
+    25% {
+        transform: rotate(-30deg) translate(-6px, -18px);
+    }
+
+    35% {
+        transform: rotate(15deg) translate(-16px, -9px);
+    }
+
+    50% {
+        transform: rotate(0) translate(-13px, -13px);
+    }
+
+    60% {
+        transform: rotate(0) translate(-13px, -13px);
+    }
+
+    80% {
+        transform: rotate(0) translate(-13px, -13px);
+    }
+
+    100% {
+        transform: rotate(0) translate(-13px, -13px);
+    }
+}
+
+.social-network__item {
+    height: 4rem;
+    width: 4rem;
+    padding: 4.5rem;
+    position: relative;
+    cursor: pointer;
+
+    &::after {
+        content: '';
+        display: block;
+        background-color: #2196F3;
+        height: 4rem;
+        width: 4rem;
+        border-radius: 100%;
+        z-index: 3;
+        @include positionMid;
+    }
+
+    &::before {
+        content: '';
+        display: block;
+        background-color: #2196F3;
+        opacity: .6;
+        height: 7rem;
+        width: 7rem;
+        border-radius: 100%;
+        z-index: 2;
+        @include positionMid;
+        animation: zoom-vr 1s ease-in-out infinite;
+    }
+}
+
+.item__image {
+    height: 2.5rem;
+    width: 2.7rem;
+    background-color: #2196F3;
+    z-index: 4;
+    @include positionMid;
+    animation: shaking .8s linear infinite 1s;
+}
+
+.social-network__item {
+    &>span {
+        content: '';
+        display: block;
+        background-color: #5aacee;
+        height: 9.5rem;
+        width: 9.5rem;
+        border-radius: 100%;
+        z-index: 1;
+        opacity: .6;
+        @include positionMid;
+        animation: zoom 1s ease-in-out infinite;
+        animation-delay: .5s;
+    }
+
+    &>div {
+        position: absolute;
+        top: 50%;
+        left: 26%;
+        transform: translateY(-50%);
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding-right: 2rem;
+        background-color: #2196F3;
+        min-width: 18rem;
+        height: 4rem;
+        border-radius: 50px;
+
+        &>p {
+            font-size: 1.6rem;
+            color: var(--white);
+        }
+    }
+}
+
+.phone {
+    &>img {
+        background: #e46c6c;
+    }
+
+    &::before {
+        background: #e46c6c;
+    }
+
+    &::after {
+        background: #e46c6c;
+    }
+
+    &>span {
+        background: #f0caca;
+    }
+
+    &>div {
+        background-color: #e46c6c;
+    }
+}
+
+.instagram {
+    &>img {
+        background: linear-gradient(to right,#f9ce34, #ee2a7b, #6228d7);
+    }
+
+    &::before {
+        background: linear-gradient(to right,#f9ce34, #ee2a7b, #6228d7);
+    }
+
+    &::after {
+        background: linear-gradient(to right,#f9ce34, #ee2a7b, #6228d7);
+    }
+
+    &>span {
+        background: linear-gradient(to right,#f9ce34, #ee2a7b, #6228d7);
+    }
+
+    &>div {
+        background-color: linear-gradient(to right,#f9ce34, #ee2a7b, #6228d7);
+    }
+}

@@ -1,0 +1,27 @@
+@mixin setPosition($position, $top, $right, $bottom,
+    $left, $middleVertical) {
+    position: $position;
+
+    @if $top !=0 {
+        top: $top;
+    }
+
+    @if $right !=0 {
+        right: $right
+    }
+
+    @if $bottom !=0 {
+        bottom: $bottom;
+    }
+
+    @if $left !=0 {
+        left: $left;
+    }
+
+    @if($middleVertical != false) {
+        transform: translateY(-50%);
+    }
+    @else if($middleVertical == false) {
+        transform: none;
+    }
+}

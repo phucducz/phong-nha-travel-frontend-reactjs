@@ -1,0 +1,93 @@
+:root {
+    --top: -14rem;
+}
+
+.popper {
+    position: relative;
+}
+
+.menu {
+    span svg {
+        color: var(--white);
+        font-size: 1.5rem;
+        padding: 1rem;
+        cursor: pointer;
+
+        &:hover {
+            color: var(--black);
+        }
+    }
+}
+
+.cr-item {
+    background-color: var(--color-body);
+    border-radius: .5rem;
+    box-shadow: 1px 3px 26px 0px rgba(0, 0, 0, 0.75);
+    padding: 1rem 0;
+}
+
+.top-start {
+    position: absolute;
+    top: var(--top);
+    left: 0;
+}
+
+.top-end {
+    position: absolute;
+    top: var(--top);
+    right: 0;
+}
+
+.bottom-start {
+    position: absolute;
+    bottom: var(--top);
+    left: 0;
+}
+
+.bottom-end {
+    position: absolute;
+    top: 100%;
+    right: 0;
+}
+
+@keyframes showPopper {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        display: block;
+    }
+}
+
+@keyframes hidePopper {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        display: none;
+    }
+}
+
+.menu {
+    span p {
+        width: max-content;
+        padding: 0;
+        margin: 0;
+    }
+
+    &:hover {
+        .cr-item {
+            display: block;
+        }
+    }
+
+    .cr-item {
+        display: none;
+    }
+}

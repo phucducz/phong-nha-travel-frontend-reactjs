@@ -1,6 +1,7 @@
 @import 'normalize.css';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,600&display=swap');
 
+$colorBody: #f6f6f6;
 $colorPrimary: #2980B9;
 $borderColor: #34a1e9;
 $whiteColor: #ffffff;
@@ -8,16 +9,29 @@ $blackColor: #000;
 $colorWord: #2f2f2f;
 $redColor: #ff0000;
 $orangeColor: #ff7b00;
-$colorBody: #f6f6f6;
-$colorYellow: #e2df2d;
+$colorYellow: #050504;
 $bottomSocial: 2rem;
 $colorFacebook: #3b5998;
 $colorTwitter: #00acee;
 $showBoxConfirm: 0.5s ease-in-out showConfirm;
 
 :root {
+    --font-family: 'Oxygen';
+    --font-icon: 'adventure-tours';
+    --font-revicons: 'revicons';
+
+    --black: #000;
     --white: #ffffff;
-    --primary: #2980B9;
+    --primary: #47a0ff;
+    --color-body: #f6f6f6;
+    --color-word: #333;
+    --color-sub: #4baeef;
+    --color-sub-two: #033352;
+    --color-red: #ff0000;
+    --color-orange: #ff7b00;
+    --color-yellow: #ffcd47;
+
+    --max-width-page: 114rem;
 }
 
 * {
@@ -28,7 +42,68 @@ $showBoxConfirm: 0.5s ease-in-out showConfirm;
 body {
     font-family: 'Montserrat', sans-serif;
     margin: 0;
-    background-color: $colorBody;
+    background-color: var(--color-body);
+}
+
+//font families
+
+@font-face {
+    font-family: 'Oxygen';
+    src: url('/fonts/2sDcZG1Wl4LcnbuCNWgzaGW5.woff2') format(truetype);
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'Kaushan Script';
+    src: url('/fonts/2sDcZG1Wl4LcnbuCNWgzZmW5O7w.woff2');
+}
+
+@font-face {
+    font-family: 'Kaushan Script';
+    src: url('/fonts/2sDfZG1Wl4LcnbuKgE0mV0Q.woff2');
+}
+
+@font-face {
+    font-family: 'Kaushan Script';
+    src: url('/fonts/2sDfZG1Wl4LcnbuKjk0m.woff2');
+}
+
+@font-face {
+    font-family: 'adventure-tours';
+    src: url('/fonts/adventure-tours.woff');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'Kaushan Script';
+    src: url('/fonts/fa-regular-400.woff2');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Kaushan Script';
+    src: url('/fonts/fa-solid-900.woff2');
+    font-weight: 900;
+}
+
+@font-face {
+    font-family: 'Kaushan Script';
+    src: url('/fonts/fontawesome-webfont.woff2');
+}
+
+@font-face {
+    font-family: 'revicons';
+    src: url('/fonts/revicons.woff');
+}
+
+@font-face {
+    font-family: 'Kaushan Script';
+    src: url('/fonts/vm8vdRfvXFLG3OLnsO15WYS5DG72wNJHMw.woff2');
+}
+
+@font-face {
+    font-family: 'Kaushan Script';
+    src: url('/fonts/vm8vdRfvXFLG3OLnsO15WYS5DG74wNI.woff2');
 }
 
 @mixin fontAweSomeStyle() {
@@ -36,63 +111,68 @@ body {
     padding-right: 5px;
 }
 
-p {
+// Scrollbar
+html *::-webkit-scrollbar {
+    width: 10px;
+}
+
+html *::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+html *::-webkit-scrollbar-thumb {
+    background: #a9a9a9;
+    border: 4px solid transparent;
+    border-radius: 8px;
+}
+
+html *::-webkit-scrollbar-thumb:hover {
+    background: #707070;
+}
+
+p,
+a,
+label,
+i,
+svg,
+option,
+select,
+h3,
+input,
+textarea {
     font-size: 1.3rem;
+    font-family: 'Oxygen';
+    color: var(--color-word);
     padding: 0;
-    color: $colorWord;
-}
-
-label {
-    font-size: 1.3rem;
-    padding: 0;
-    color: $colorWord;
-}
-
-i, svg {
-    font-size: 1.3rem;
-    color: $colorWord;
-}
-
-option {
-    font-size: 1.3rem;
-    color: $colorWord;
 }
 
 h3 {
     font-size: 1.5rem;
     margin: 0;
-    color: $colorWord;
 }
 
-input {
-    font-size: 1.3rem;
-    color: $colorWord;
-}
-
-a {
-    font-size: 1.3rem;
-    color: $colorWord;
+textarea {
+    font-size: 1.5rem;
 }
 
 %button {
     display: flex;
     justify-content: space-between;
-    width: 16rem;
-    height: 5rem;
-    border-radius: 5rem;
+    width: max-content;
     cursor: pointer;
     padding: 1.5rem 2rem;
     opacity: 1;
     font-weight: 700;
-    background-color: $colorPrimary;
-    border: .3rem solid #47a0ff;
+    background-color: var(--primary);
     color: white;
+    border: .3rem solid #47a0ff;
+    border-radius: 5rem;
     transition: .25s ease-in-out;
 
     &:hover {
-        background-color: $whiteColor;
-        color: $colorPrimary;
-        border: .3rem solid $colorPrimary;
+        background-color: var(--white);
+        color: var(--primary);
+        border: .3rem solid var(--primary);
     }
 }
 

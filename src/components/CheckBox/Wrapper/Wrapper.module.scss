@@ -1,0 +1,28 @@
+.wrapper__input {
+    max-width: 46.6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    &>div {
+        min-width: calc(46.6rem / 2);
+        padding-top: 2rem;
+    }
+}
+
+.wrapper__title {
+    text-transform: capitalize;
+
+    span {
+        text-transform: none;
+        font-size: 1.3rem;
+        padding-left: .5rem;
+
+        & abbr {
+            font-size: 1.3rem;
+            padding-left: .5rem;
+            color: var(--color-red);
+        }
+    }
+}

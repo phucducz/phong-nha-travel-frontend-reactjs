@@ -1,62 +1,24 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
 
-import * as getService from "~/apiService/getService";
+import { getService } from "~/services";
 import ViewTourStyle from "~/components/ViewTourStyles";
+import { formatMoney } from "~/format";
 
 function ViewTour() {
     const { tourId } = useParams();
-    const [tour, setTour] = useState({
-        description: '',
-        id: '',
-        name: '',
-        price_id: '',
-        topic_id: ''
-    });
+    const [tour, setTour] = useState({});
 
     const navigate = useNavigate();
 
-    const [inputs, setInputs] = useState([]);
-
-    const [name, setName] = useState('');
-    const inputName = useRef();
-    const [email, setEmail] = useState('');
-    const inputEmail = useRef();
-    const [mobile, setMobile] = useState('');
-    const inputMobile = useRef();
-    const [date, setDate] = useState('');
-    const inputDate = useRef();
-    const [quanity, setQuanity] = useState('');
-    const inputQuanity = useRef();
-
     useEffect(() => {
         const fetchAPI = async () => {
-            const respond = await getService.get('tours', tourId);
-            console.log(respond);
+            const respond = await getService('tours', tourId);
             setTour(respond);
         }
 
         fetchAPI();
     }, []);
-
-    useEffect(() => {
-        setInputs({ name, email, mobile, date, quanity });
-    }, [name, email, mobile, date, quanity]);
-
-    useEffect(() => {
-        validate(inputs);
-    }, [inputs]);
-
-    const validate = inputs => {
-        const { name, email, mobile, date, quanity } = inputs;
-
-        let result = [];
-        let index = 0;
-        const regexEmail =
-            /^((([!#$%&'*+\-/=?^_`{|}~\w])|([!#$%&'*+\-/=?^_`{|}~\w][!#$%&'*+\-/=?^_`{|}~\.\w]{0,}[!#$%&'*+\-/=?^_`{|}~\w]))[@]\w+([-.]\w+)*\.\w+([-.]\w+)*)$/;
-        return result;
-    }
 
     return (
         <ViewTourStyle>
@@ -173,70 +135,15 @@ function ViewTour() {
                         <div className="book_price_decoration">
                             <div className="amount">
                                 <i className="fa-solid fa-tag"></i>
-                                <h3>{tour.price}</h3>
+                                <h3>{formatMoney(tour.price)}</h3>
                             </div>
                             <p>One tour per person</p>
-                        </div>
-                        {/* <div className="container_book"> */}
-                        {/* <h3>Book the Tour</h3>
-                            <div className="book_box-input">
-                                <input
-                                    ref={inputName}
-                                    value={name}
-                                    className="inputName"
-                                    placeholder="Name"
-                                    onChange={(e) => setName(e.target.value)}
-                                />
-                                <i className="fa-solid fa-person"></i>
-                            </div>
-                            <div className="book_box-input">
-                                <input
-                                    ref={inputEmail}
-                                    value={email}
-                                    className="inputEmail"
-                                    placeholder="Email"
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                                <i className="fa-solid fa-envelope"></i>
-                            </div>
-                            <div className="book_box-input">
-                                <input
-                                    ref={inputMobile}
-                                    value={mobile}
-                                    className="inputMobile"
-                                    placeholder="Mobile"
-                                    onChange={(e) => setMobile(e.target.value)}
-                                />
-                                <i className="fa-solid fa-phone"></i>
-                            </div>
-                            <div className="book_box-input">
-                                <input
-                                    type="date"
-                                    style={{paddingRight: '.6rem'}}
-                                    ref={inputDate}
-                                    value={date}
-                                    className="inputDate"
-                                    placeholder="Date"
-                                    onChange={(e) => setDate(e.target.value)}
-                                />
-                            </div>
-                            <div className="book_box-input">
-                                <input
-                                    ref={inputQuanity}
-                                    value={quanity}
-                                    className="inputQuanity"
-                                    placeholder="Quanity"
-                                    onChange={(e) => setQuanity(e.target.value)}
-                                />
-                                <i className="fa-solid fa-person-circle-plus"></i>
-                            </div> */}
-                        <input
+                        </div><input
                             className="book_button"
                             type="submit"
                             value="BOOK NOW"
                             onClick={() => navigate(`/checkout/${tour.id}`)}
                         />
-                        {/* </div> */}
                     </div>
                 </div>
             </div>

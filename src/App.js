@@ -1,9 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from "react";
 import { publicRoutes } from '~/routes';
-import { DefaultLayout } from "./layout";
 import { Fragment } from "react";
-import "~/FontAwesome/FontAwesome.js";
+
+import { DefaultLayout } from "./layouts";
+import { MessageProvider } from "./context/Message";
+import { AdminProvider } from "./context/Admin";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
@@ -25,7 +27,15 @@ function App() {
                 path={route.path}
                 element={
                   <Layout>
-                    <Page />
+                    {route.component === Admin
+                      ? <AdminProvider>
+                        <MessageProvider>
+                          <Page />
+                        </MessageProvider>
+                      </AdminProvider>
+                      : <Page />
+                    }
+                    {/* <Page /> */}
                   </Layout>
                 } />
             );

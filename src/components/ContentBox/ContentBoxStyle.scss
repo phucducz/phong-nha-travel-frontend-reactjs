@@ -1,0 +1,50 @@
+@import '../GlobalStyles/GlobalStyles.scss';
+
+.hide-content {
+    position: fixed !important;
+    left: 50% !important;
+    top: 42% !important;
+    transform: translate(-50%, -50%) !important;
+    opacity: 0 !important;
+}
+
+.active-content {
+    position: fixed !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    opacity: 1 !important;
+}
+
+.wrapper-content {
+    overflow-y: scroll;
+    width: var(--max-width-page);
+    max-height: 60rem;
+    background-color: var(--white);
+    position: fixed;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    box-shadow: 3px -1px 19px 4px rgba(0, 0, 0, 0.35);
+    -webkit-box-shadow: 3px -1px 19px 4px rgba(0, 0, 0, 0.35);
+    -moz-box-shadow: 3px -1px 19px 4px rgba(0, 0, 0, 0.35);
+    transition: 0.5s ease-in-out;
+    display: none;
+    opacity: 0;
+
+    h3 {
+        @extend %title-h3;
+        font-size: 3rem;
+        text-transform: uppercase;
+        width: max-content;
+        margin: 5rem auto;
+    }
+
+    .cn-button {
+        display: flex;
+        justify-content: space-between;
+        width: 46.6rem;
+        margin: 1rem auto 5rem auto;
+    }
+}

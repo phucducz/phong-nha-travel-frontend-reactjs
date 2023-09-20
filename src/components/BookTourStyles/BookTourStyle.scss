@@ -30,7 +30,7 @@
 }
 
 .woocommerce {
-    width: 116rem;
+    width: var(--max-width-page);
     margin: 0 auto;
 
     %box-woocommerce_notice {
@@ -126,20 +126,26 @@
             justify-content: center;
             padding: 0 5rem;
 
-            .coupon_input {
+            form {
                 display: flex;
+                align-items: center;
 
-                .inputCoupon {
-                    width: 48.8rem;
-                    height: 5rem;
-                    outline: none;
-                    background-color: #f5f4f4;
-                    border: .1rem solid #cccccc;
-                    border-radius: .5rem;
+                .divInput {
+                    display: flex;
 
-                    &:focus {
-                        background-color: $whiteColor;
+                    .inputCoupon {
+                        width: 48.8rem;
+                        height: 5rem;
+                        outline: none;
+                        background-color: #f5f4f4;
+                        border: .1rem solid #cccccc;
+                        border-radius: .5rem;
+
+                        &:focus {
+                            background-color: $whiteColor;
+                        }
                     }
+
                 }
 
                 .inputApply {
@@ -148,11 +154,6 @@
                     width: max-content;
                     margin-left: 5rem;
                     height: 5rem;
-
-                    // &:hover {
-                    //     background-color: $whiteColor;
-                    //     color: $colorPrimary;
-                    // }
                 }
             }
         }
@@ -161,7 +162,7 @@
 
 .checkout-box {
     .payment-info {
-        width: 116rem;
+        width: var(--max-width-page);
         margin: 0 auto;
         display: flex;
         justify-content: space-between;
@@ -228,7 +229,7 @@
     }
 
     .order_infomation {
-        width: 116rem;
+        width: var(--max-width-page);
         margin: 10rem auto;
         padding: 5rem;
         background-color: $whiteColor;

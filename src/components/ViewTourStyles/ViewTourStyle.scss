@@ -1,7 +1,10 @@
 @import '../GlobalStyles/GlobalStyles.scss';
 
-$widthContainer: 116rem;
-$widthNav: 40rem;
+:root {
+    --width-nav: 40rem;
+    --color-facebook: #3b5998;
+    --color-twitter: #1DA1F2;
+}
 
 .container {
     .container_image {
@@ -10,7 +13,7 @@ $widthNav: 40rem;
 
         h3 {
             @extend %title-h3;
-            color: $blackColor;
+            color: var(--black);
             position: absolute;
             top: 33%;
             left: 50%;
@@ -20,19 +23,19 @@ $widthNav: 40rem;
         .image {
             width: 100%;
             height: 60rem;
-            background-color: $colorBody;
+            background-color: var(--color-body);
         }
     }
 
     .wrap_tour {
-        width: $widthContainer;
+        width: var(--max-width-page);
         margin: -20rem auto 0 auto;
         display: flex;
         justify-content: space-between;
 
         .tour_review {
-            width: calc($widthContainer * 74 / 100);
-            background-color: $whiteColor;
+            width: calc(var(--max-width-page) * 74 / 100);
+            background-color: var(--white);
             padding: 0 5rem;
 
             .review_title {
@@ -54,7 +57,7 @@ $widthNav: 40rem;
             .review_price {
                 h3 {
                     margin-top: 2rem;
-                    color: $colorPrimary;
+                    color: var(--primary);
                 }
 
                 li {
@@ -65,7 +68,7 @@ $widthNav: 40rem;
         }
 
         .nav_tour {
-            width: $widthNav;
+            width: var(--width-nav);
             display: flex;
             justify-content: space-between;
 
@@ -73,8 +76,8 @@ $widthNav: 40rem;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                background-color: $whiteColor;
-                width: calc($widthNav / 2.7);
+                background-color: var(--white);
+                width: calc(var(--width-nav) / 2.7);
                 height: 5rem;
                 margin-right: 1rem;
                 border-radius: .5rem;
@@ -123,8 +126,8 @@ $widthNav: 40rem;
         }
 
         .tour_book {
-            width: calc($widthContainer * 22 / 100);
-            margin-left: calc($widthContainer * 4 / 100);
+            width: calc(var(--max-width-page) * 22 / 100);
+            margin-left: calc(var(--max-width-page) * 4 / 100);
             margin-top: 5.1rem;
 
             .book_price_decoration {
@@ -135,17 +138,17 @@ $widthNav: 40rem;
                 .amount {
                     display: flex;
                     justify-content: center;
-                    background-color: $colorPrimary;
+                    background-color: var(--primary);
                     align-items: center;
                     height: 50%;
 
                     i {
-                        color: $whiteColor;
+                        color: var(--white);
                     }
 
                     h3 {
                         @extend %title-h3;
-                        color: $whiteColor;
+                        color: var(--white);
                     }
                 }
 
@@ -153,7 +156,7 @@ $widthNav: 40rem;
                     height: 50%;
                     line-height: 4.5rem;
                     text-align: center;
-                    background-color: $whiteColor;
+                    background-color: var(--white);
                     margin: 0;
                 }
             }
@@ -161,7 +164,7 @@ $widthNav: 40rem;
             .container_book {
                 width: 25.5rem;
                 height: 40.6rem;
-                background-color: $colorPrimary;
+                background-color: var(--primary);
                 margin-top: 5rem;
                 display: flex;
                 align-items: center;
@@ -169,7 +172,7 @@ $widthNav: 40rem;
 
                 h3 {
                     @extend %title-h3;
-                    color: $whiteColor;
+                    color: var(--white);
                     padding: 2rem;
                 }
 
@@ -187,7 +190,7 @@ $widthNav: 40rem;
                     position: relative;
 
                     i {
-                        color: $colorPrimary;
+                        color: var(--primary);
                         position: absolute;
                         right: 4%;
                         top: 38%;
@@ -199,7 +202,7 @@ $widthNav: 40rem;
             .book_button {
                 @extend %button;
                 border-radius: .5rem;
-                border: .3rem solid $whiteColor;
+                border: .3rem solid var(--white);
                 width: max-content;
                 margin: 8rem auto 0 auto;
             }
@@ -208,7 +211,7 @@ $widthNav: 40rem;
         .shareButton {
             display: flex;
             justify-content: space-between;
-            background-color: $whiteColor;
+            background-color: var(--white);
 
             .box {
                 display: flex;
@@ -227,11 +230,11 @@ $widthNav: 40rem;
 
                 &:hover {
                     .fa-facebook {
-                        color: $colorFacebook;
+                        color: var(--color-facebook);
                     }
 
                     .fa-twitter {
-                        color: $colorTwitter;
+                        color: var(--color-twitter);
                     }
 
                     .fa-instagram {

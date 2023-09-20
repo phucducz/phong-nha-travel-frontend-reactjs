@@ -7,16 +7,16 @@ import classNames from "classnames/bind";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-import styles from "~/components/BookTourStyles/BookTourStyle.scss";
-import * as postService from "~/apiService/postService.js";
-import * as getService from "~/apiService/getService.js";
+import style from "~/components/BookTourStyles/BookTourStyle.scss";
+import { postService, getService } from "~/services";
 import * as StateBook from "~/components/State/StateBook.js";
 import ModalMessage from "~/components/ModalMessage";
-import NoticeMessage from "~/components/NoticeMessage";
 import ErrorStyles from "~/components/ErrorStyles";
 import UpdateTourBooked from "~/components/UpdateTourBooked";
+import NoticeMessage from "~/components/NoticeMessage";
+import { formatMoney } from "~/format";
 
-const cx = classNames.bind(styles);
+const cx = classNames.bind(style);
 
 function BookTour() {
     const [tour, setTour] = useState({});
@@ -38,9 +38,9 @@ function BookTour() {
     const [resultCoupon, setResultCoupon] = useState('');
     const [couponStatus, setCouponStatus] = useState('');
     const [resultChecked, setResultChecked] = useState({
-        data: '',
-        status: 0,
-        message: 'failure!'
+        data: {},
+        message: '',
+        status: +0
     });
     const divCoupon = useRef();
 
@@ -79,10 +79,10 @@ function BookTour() {
         validationSchema: Yup.object({
             firstName: Yup.string()
                 .required("Không được để trống!")
-                .matches(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{3,}$/, "Vui lòng nhập họ là chữ và có ít nhất 3 chữ!"),
+                .matches(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{3,}$/, "Vui lòng nhập họ là chữ và có ít nhất 4 ký tự!"),
             lastName: Yup.string()
                 .required("Không được để trống!")
-                .matches(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{3,}$/, "Vui lòng nhập tên là chữ và có ít nhất 3 chữ!"),
+                .matches(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{3,}$/, "Vui lòng nhập tên là chữ và có ít nhất 4 ký tự!"),
             nameCompany: Yup.string()
                 .required("Không được để trống!")
                 .matches(/[A-Za-z0-9'\.\-\s\,]/, "Vui lòng nhập tên công ty đúng định dạng(Không dùng ký tự đặc biệt)"),
@@ -148,13 +148,13 @@ function BookTour() {
 
     useEffect(() => {
         const fetchTour = async () => {
-            const result = await getService.get('tours', tourId);
+            const result = await getService('tours', tourId);
             setTour(result);
             setTotalPrice(result.price);
         }
 
         const fetchCoupon = async () => {
-            const result = await getService.get('coupons');
+            const result = await getService('coupons');
             setDataCoupon(result);
         }
 
@@ -189,11 +189,11 @@ function BookTour() {
         setResultCoupon(codeCoupon);
 
         const fetchCoupon = async () => {
-            const result = await getService.get('coupons', {
+            const result = await getService('coupons', {
                 code: codeCoupon
             });
 
-            setResultChecked(result.data);
+            setResultChecked(result);
         }
 
         fetchCoupon();
@@ -208,22 +208,30 @@ function BookTour() {
     }, [formik.values]);
 
     useEffect(() => {
-        resultChecked !== null ? setPriceCoupon(() =>
-            totalPrice - totalPrice * +resultChecked.value / 100
+        setTotalPrice(tour.price * formik.values.quantity);
+    }, [formik.values.quantity]);
+
+    useEffect(() => {
+        const { data } = resultChecked;
+
+        resultChecked.status !== 0 ? setPriceCoupon(() =>
+            totalPrice - totalPrice * +data.value / 100
         ) : setPriceCoupon(totalPrice);
     }, [totalPrice, resultChecked]);
 
     useEffect(() => {
+        const { data } = resultChecked;
+
         const payMentId = checkRadio === true ? 1 : 2;
         var couponId;
 
-        if (resultChecked) {
+        if (data != null) {
             setCheckCoupon(1);
 
             if (resultChecked.status === 0)
                 couponId = "null";
             else
-                couponId = resultChecked.id;
+                couponId = data.id;
         }
         else {
             setCheckCoupon(0);
@@ -242,7 +250,7 @@ function BookTour() {
 
     const handleSubmit = () => {
         const bookTour = async () => {
-            const res = await postService.post("bookedDetails", payload);
+            const res = await postService("bookedDetails", payload);
             setStatus(res);
         }
 
@@ -285,6 +293,8 @@ function BookTour() {
                 <div className={cx("woommerce_coupon")}>
                     <div className={cx(`check_coupon check-${couponStatus}`)}>
                         {results.map(result => {
+                            const { data, value } = resultChecked;
+
                             return (
                                 checkCoupon == result.status &&
                                 <div
@@ -293,12 +303,12 @@ function BookTour() {
                                     className={cx(checkCoupon == result.status && `${result.className} ${couponStatus}`)}
                                 >
                                     {result.i}
-                                    {resultChecked === null ? <p>Mã giảm giá " {resultCoupon} " không tồn tại!</p>
+                                    {data === null ? <p>Mã giảm giá " {resultCoupon} " không tồn tại!</p>
                                         : <p>Chúc mừng bạn được <span style={{
                                             color: '#2980B9',
                                             fontSize: '1.3rem',
                                             textTransform: 'uppercase'
-                                        }}>giảm giá {resultChecked.value}%</span> tất cả các Tuor bạn đã đặt</p>}
+                                        }}>giảm giá {data.value} %</span> tất cả các Tuor bạn đã đặt</p>}
                                 </div>
                             )
                         })}
@@ -325,7 +335,7 @@ function BookTour() {
                                 <input
                                     type='submit'
                                     value='ÁP DỤNG'
-                                    className={cx("inputApply")}
+                                    className={cx('inputApply')}
                                     onClick={e => handleSubmitCoupon(e)}
                                 />
                             </form>
@@ -723,22 +733,22 @@ function BookTour() {
                                 <p>{tour.name}</p>
                                 <p>Ngày đặt lịch: {information.bookDate}</p>
                             </td>
-                            <td><p>{tour.price} ₫</p></td>
+                            <td><p>{formatMoney(tour.price)}</p></td>
                         </tr>
                         <tr className={cx("infomation_total")}>
                             <td><p>Tổng</p></td>
-                            <td><p>{totalPrice} ₫</p></td>
+                            <td><p>{formatMoney(totalPrice)}</p></td>
                         </tr>
                         <tr className={cx("infomation_total")}>
                             <td><p>Giảm giá</p></td>
-                            <td><p>{resultChecked !== null
-                                ? resultChecked.value
+                            <td><p>{resultChecked.data !== null
+                                ? resultChecked.data.value
                                 : 0
                             }%</p></td>
                         </tr>
                         <tr className={cx("infomation_total")}>
                             <td><p>Tổng</p></td>
-                            <td><p className={cx("price_coupon")}>{priceCoupon} ₫</p></td>
+                            <td><p className={cx("price_coupon")}>{formatMoney(priceCoupon)}</p></td>
                         </tr>
                     </table>
                     <div className={cx("choose_payment")}>
@@ -820,7 +830,7 @@ function BookTour() {
                                         <p className={cx('title_name')}>{tour.name}</p>
                                         <p className={cx('title_quantity')}>Số lượng: {payload.quantity}</p>
                                     </div>
-                                    <p className={cx('product_description_price')}>{tour.price * formik.values.quantity} ₫</p>
+                                    <p className={cx('product_description_price')}>{formatMoney(tour.price * payload.quantity)}</p>
                                     <ul>
                                         <li><p className={cx('product_description_desc')}>{tour.description}</p></li>
                                         <li><p className={cx('product_description_title')}>{tour.title}</p></li>
@@ -844,7 +854,7 @@ function BookTour() {
                                     ))}
                                 </div>
                             </div>
-                            <UpdateTourBooked 
+                            <UpdateTourBooked
                                 action='read'
                                 content={{
                                     payload,
@@ -852,56 +862,6 @@ function BookTour() {
                                     priceCoupon
                                 }}
                             />
-                            {/* <div className={cx("personal_information")}>
-                                <div className={cx('user')}>
-                                    <div className={cx("personal_information_title")}>
-                                        <i className="fa-solid fa-person"></i>
-                                        <h3>Thông tin người dùng</h3>
-                                    </div>
-                                    <div className={cx('personal_information_user')}>
-                                        <div className={cx('information_user')}>
-                                            <div className="user_content">
-                                                <p>{payload.lastName} {payload.firstName}</p>
-                                                <p>{payload.nameCompany}</p>
-                                                <p>{payload.country}</p>
-                                                <p>{payload.phoneNumber}</p>
-                                                <p>{payload.postOffice}</p>
-                                                <p>{payload.city}</p>
-                                                <p>{payload.address}</p>
-                                                <p>{payload.apartment}</p>
-                                                <p>{payload.email}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className={cx('tour')}>
-                                    <div className={cx("tour_information_title")}>
-                                        <i className="fa-solid fa-person"></i>
-                                        <h3>Thông tin tour đã đặt</h3>
-                                    </div>
-                                    <div className={cx('order')}>
-                                        <div className="tour_content">
-                                            <div>
-                                                <h3>Ngày đặt:</h3>
-                                                <p>{payload.bookDate === "" ? "--/--/----" : payload.bookDate}</p>
-                                            </div>
-                                            <div>
-                                                <h3>Mã giảm giá:</h3>
-                                                <p style={{ color: '#2980B9' }}>{payload.couponId === undefined || payload.couponId === "null"
-                                                    ? "Không áp dụng" : resultCoupon}</p>
-                                            </div>
-                                            <div>
-                                                <h3>Số lượng:</h3>
-                                                <p>{payload.quantity}</p>
-                                            </div>
-                                            <div>
-                                                <h3>Tổng số tiền:</h3>
-                                                <p>{priceCoupon} ₫</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> */}
                         </div>
                         <div className={cx("message_button")}>
                             <button

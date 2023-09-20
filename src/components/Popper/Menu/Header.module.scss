@@ -1,0 +1,26 @@
+.popper_header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: max-content;
+    min-width: 20rem;
+    padding: 1rem;
+    margin-top: -1rem;
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+    cursor: pointer;
+
+    svg {
+        color: var(--color-word);
+    }
+
+    &:hover {
+        background-color: #dedede;
+    }
+}
+
+.popper_header__title {
+    color: var(--color-word);
+    margin: 0 auto;
+    line-height: 2.9rem;
+}

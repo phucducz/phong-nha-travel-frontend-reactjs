@@ -1,0 +1,145 @@
+.cn-filter {
+    position: relative;
+}
+
+.filter_button {
+    svg {
+        padding-right: .2rem;
+    }
+
+    .title {
+        height: max-content;
+        padding-left: 1rem;
+        color: var(--color-word);
+        color: var(--color-word);
+        color: #4baeef;
+    }
+
+    &:hover {
+        background-color: var(--white);
+        color: var(--primary);
+    }
+}
+
+.filter_box {
+    position: absolute;
+    left: 0;
+    overflow: hidden;
+    height: 0;
+    min-width: 30rem;
+    background-color: var(--white);
+    border-radius: .5rem;
+    box-shadow: 3px 2px 29px -5px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 3px 2px 29px -5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 3px 2px 29px -5px rgba(0, 0, 0, 0.75);
+    z-index: 9999;
+    transition: all .2s;
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        height: 0;
+        transition: all .5s;
+
+        .content_item {
+            display: flex;
+            align-items: center;
+            margin: 2rem;
+
+            label,
+            input {
+                cursor: pointer;
+            }
+
+            input + label {
+                padding-left: 1rem;
+            }
+        }
+    }
+}
+
+.header {
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+
+    .header_action {
+        h3 {
+            color: var(--primary);
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.cn-filed {
+    position: relative;
+    padding: 2rem;
+    cursor: pointer;
+
+    .filter {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    p,
+    svg {
+        color: #8c8c8c;
+    }
+
+    p {
+        margin: 0;
+        padding: 0;
+    }
+
+    .filter_icon-up,
+    .filter_icon-down {
+        position: absolute;
+        right: 2rem;
+        color: var(--color-word);
+    }
+
+    &:hover {
+        background-color: #dedede;
+    }
+}
+
+.cn-item {
+    margin: 0 2rem;
+}
+
+.item_active + div,
+.item_disable + div {
+    margin-top: 2rem; 
+}
+
+.item_active,
+.item_disable {
+    &:last-child {
+        margin-bottom: 2rem;
+    }
+}
+
+.item_active {
+    .content {
+        background-color: var(--color-body);
+    }
+
+    .cn-content {
+        p {
+            color: var(--color-word);
+        }
+    }
+}
+
+.item_disable {
+    .cn-item {
+        margin: 0 2rem;
+        border-bottom: .2rem solid #a8a8a8;
+    }
+}

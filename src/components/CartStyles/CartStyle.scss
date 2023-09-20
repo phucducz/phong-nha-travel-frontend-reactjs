@@ -6,7 +6,7 @@ $widthImage: 32.5rem;
 
 .container-tour {
     display: flex;
-    width: 116rem;
+    width: 1var(--max-width-page)16rem;
     margin: 0 auto;
 
     .flex {
@@ -70,7 +70,7 @@ $widthImage: 32.5rem;
         }
 
         .price {
-            width: calc(116rem - $widthContent - $widthImage);
+            width: calc(var(--max-width-page) - $widthContent - $widthImage);
             border-left: .1rem solid $blackColor;
             padding: 0 3rem;
             display: flex;

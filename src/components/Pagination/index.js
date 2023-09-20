@@ -5,9 +5,6 @@ import PaginationStyle from "../PaginationStyles";
 function Pagination({ toursPerPage, totalTours, handleOnclick }) {
 
     const numbersPage = [];
-    console.log(toursPerPage);
-    console.log(totalTours);
-    console.log(handleOnclick);
 
     for (let i = 1; i <= Math.ceil(totalTours / toursPerPage); i++)
         numbersPage.push(i);

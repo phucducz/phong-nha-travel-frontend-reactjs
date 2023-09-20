@@ -1,0 +1,74 @@
+.divSelect {
+    position: relative;
+    width: 46.9rem;
+    margin-top: 3rem;
+
+    .label {
+        position: absolute;
+        top: 65%;
+        left: 0;
+        transform: translateY(-50%);
+        height: 2rem;
+        overflow: hidden;
+        padding-left: 2rem;
+        color: #9e9e9e;
+        pointer-events: none;
+        transition: all .5s;
+    }
+
+    .label-option {
+        padding: 0 .2rem;
+    }
+
+    abbr {
+        color: red;
+        padding-left: 1rem;
+    }
+
+    .small {
+        width: 22.8rem;
+        height: 4.5rem;
+    }
+
+    .large {
+        width: 46.6rem;
+        height: 4.54rem;
+    }
+
+    &:focus-within {
+        label {
+            height: 0;
+        }
+    }
+
+    &+.divInput {
+        margin-top: 3rem;
+    }
+
+    &>select {
+        margin-top: 1rem;
+    }
+}
+
+.select {
+    width: 46.6rem;
+    height: 4.5rem;
+    padding-left: 2rem;
+    background-color: #f5f4f4;
+    border: 0.1rem solid #cecece;
+    outline: none;
+    transition: all 0.5s;
+    border-radius: .3rem;
+
+    &:valid+label {
+        height: 0;
+    }
+}
+
+.divSelect {
+    label {
+        & .label-option {
+            margin-left: .5rem;
+        }
+    }
+}

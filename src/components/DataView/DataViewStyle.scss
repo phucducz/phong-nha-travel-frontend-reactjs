@@ -1,0 +1,22 @@
+.product-box_item {
+    .item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 107rem;
+        margin: 0 auto 3rem auto;
+        padding: 3rem 0;
+        position: relative;
+
+        &:before {
+            content: "";
+            background-color: #2980B9;
+            position: absolute;
+            bottom: -2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 0.6rem;
+            width: 60rem;
+        }
+    }
+}

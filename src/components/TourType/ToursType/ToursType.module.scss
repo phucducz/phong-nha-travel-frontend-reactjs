@@ -1,0 +1,41 @@
+.tours-type {
+    padding-top: 3rem;
+    position: relative;
+    
+    .tours-type__present {
+        width: var(--max-width-page);
+        display: flex;
+        overflow: hidden;
+    }
+}
+
+@mixin setPosition($pos, $per) {
+    position: absolute;
+    #{$pos}: #{$per};
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@mixin commonlyAttributes {
+    color: #cdcdcd;
+    font-size: 2rem;
+    padding-top: 3rem;
+    cursor: pointer;
+    transition: .2s color linear;
+
+    &:hover {
+        color: #b1b1b1;
+    }
+}
+
+.tours-type {
+    & .tours-type__prev {
+        @include setPosition(left, -3.5%);
+        @include commonlyAttributes;
+    }
+
+    & .tours-type__next {
+        @include setPosition(right, -3.5%);
+        @include commonlyAttributes;
+    }
+}

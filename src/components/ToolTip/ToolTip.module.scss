@@ -1,0 +1,41 @@
+$border_space: 1.3rem;
+
+.tooltip {
+    max-width: 6rem;
+    min-width: 6rem;
+    position: absolute;
+    background-color: var(--black);
+    border-radius: .4rem;
+    opacity: .9;
+    text-align: center;
+    display: none;
+
+    p {
+        margin: 0;
+        padding: .3rem .8rem;
+        text-transform: capitalize;
+        color: var(--white);
+    }
+}
+
+.tooltip__arrow {
+    position: absolute;
+    bottom: calc(1% - (1.3rem/2));
+    left: 38%;
+    transform: translateX(-50%);
+    border-top: $border_space solid var(--black);
+    border-left: $border_space solid transparent;
+    transform: rotate(135deg);
+}
+
+.top {
+    bottom: 140%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.bottom {
+    top: 140%;
+    left: 50%;
+    transform: translateX(-50%);
+}

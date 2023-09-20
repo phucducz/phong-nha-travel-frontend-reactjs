@@ -1,0 +1,51 @@
+.item {
+    display: flex;
+    justify-content: space-between;
+    width: 25.5rem;
+}
+
+@mixin setMiddleItem() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.item__icon {
+    background-color: #47a0ff;
+    border-radius: 50%;
+    min-width: 6.6rem;
+    height: 6.6rem;
+    margin-right: 2rem;
+    position: relative;
+
+    svg {
+        @include setMiddleItem;
+        font-size: 2.5rem;
+        color: var(--white);
+    }
+
+    &:after {
+        content: '';
+        display: block;
+        min-width: 5.6rem;
+        height: 5.6rem;
+        @include setMiddleItem;
+        background-color: transparent;
+        border: .2rem dotted var(--white);
+        border-radius: 100%;
+    }
+}
+
+.item__content {
+    h3 {
+        text-transform: capitalize;
+        font-size: 1.65rem;
+    }
+
+    p {
+        font-size: 1.5rem;
+        line-height: 2.3rem;
+        color: #9a9a9a;
+    }
+}

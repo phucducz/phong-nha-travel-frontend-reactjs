@@ -1,0 +1,27 @@
+.cn_item {
+    cursor: pointer;
+
+    &:hover {
+        background-color: #dedede;
+    }
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    width: max-content;
+    min-width: 20rem;
+
+    .item_icon {
+        width: 2rem;
+    }
+
+    .item_content {
+        margin: .3rem;
+    }
+
+    & .item_icon+.item_content {
+        margin-left: 1rem;
+    }
+}

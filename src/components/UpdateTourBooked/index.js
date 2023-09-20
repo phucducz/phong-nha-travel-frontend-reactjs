@@ -7,9 +7,6 @@ function UpdateTourBooked(props) {
     const { content, action } = props;
 
     const { payload } = content;
-    console.log(payload);
-    console.log(payload.firstName);
-    console.log(props);
 
     return (
         <div className={cx('wrapper')}>
@@ -59,7 +56,7 @@ function UpdateTourBooked(props) {
                                     </div>
                                     <div>
                                         <h3>Tổng số tiền:</h3>
-                                        <p>{payload.priceCoupon} ₫</p>
+                                        <p>{content.priceCoupon} ₫</p>
                                     </div>
                                 </div>
                             </div>
@@ -118,15 +115,6 @@ function UpdateTourBooked(props) {
                                             type='text'
                                             className={cx('date')}
                                         />
-                                        {/* <p>{payload.lastName} {payload.firstName}</p>
-                                        <p>{payload.nameCompany}</p>
-                                        <p>{payload.country}</p>
-                                        <p>{payload.phoneNumber}</p>
-                                        <p>{payload.postOffice}</p>
-                                        <p>{payload.city}</p>
-                                           <p>{payload.address}</p>
-                                        <p>{payload.apartment}</p>
-                                        <p>{payload.email}</p> */}
                                     </div>
                                 </div>
                             </div>

@@ -9,7 +9,6 @@ function TourAPI() {
             .then(response => response.json())
             .then(tours => setTours(tours))
     }, []);
-    console.log(tours)
 
     return (
         <div className="container-gridtour">

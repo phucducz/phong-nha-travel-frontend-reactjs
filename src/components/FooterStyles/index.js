@@ -1,4 +1,4 @@
-import './FooterStyle.scss';
+import './FooterStyle.module.scss';
 
 function FooterStyle({ children }) {
     return children;

@@ -4,15 +4,12 @@ import App from '~/App';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import reportWebVitals from './reportWebVitals';
-import { ThemeProvider } from './pages/ThemeProvider'; 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <ThemeProvider>
-      <App />
-    </ThemeProvider>
-  </React.StrictMode>
+  // <React.StrictMode>
+    <App />
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
