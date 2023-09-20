@@ -1,0 +1,26 @@
+.group-coupon {
+    display: flex;
+    align-items: center;
+    // justify-content: flex-end;
+
+    &>button {
+        margin-left: 1rem;
+    }
+}
+
+.group-coupon__input {
+    width: 48.8rem;
+    height: 5rem;
+}
+
+.group-coupon__button {
+    text-transform: uppercase;
+    background-color: rgba(71, 160, 255, 0.8);
+    border: none;
+    margin-left: 6rem;
+
+    &:hover {
+        transform: translate(0);
+        background-color: #47a0ff;
+    }
+}

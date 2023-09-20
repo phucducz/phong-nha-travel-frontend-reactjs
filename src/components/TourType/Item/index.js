@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import classNames from "classnames/bind";
 
 import style from './Item.module.scss';
@@ -15,10 +16,15 @@ function Item({
 
     return (
         <div className={classes} {...passProps}>
-            <img src={data.image}/>
+            <img src={data.image} alt={data.name} />
             <p>{data.title}</p>
         </div>
     )
+}
+
+Item.propTypes = {
+    data: PropTypes.object.isRequired,
+    className: PropTypes.string
 }
 
 export default Item;

@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from "react";
 import classNames from "classnames/bind";
 
-import styles from "../NoticeMessageStyles/NoticeMessageStyle.scss";
+import style from './NoticeMessageStyle.module.scss';
 import { deleteService } from "~/services";
 
-const cx = classNames.bind(styles);
+const cx = classNames.bind(style);
 
 function NoticeMessage(props) {
     const [activeUI, setActiveUI] = useState(false);
@@ -29,7 +30,7 @@ function NoticeMessage(props) {
     const actionAccept = () => {
         if (action === 'delete') {
             const deleteTour = async () => {
-                const res = await deleteService('bookedDetails', payload);
+                // const res = await deleteService('bookedDetails', payload);
             }
 
             deleteTour();
@@ -70,6 +71,10 @@ function NoticeMessage(props) {
             }
         </>
     )
+}
+
+NoticeMessage.propTypes = {
+    props: PropTypes.object.isRequired
 }
 
 export default NoticeMessage;

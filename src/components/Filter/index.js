@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -28,9 +29,6 @@ function Filter({
         else
             filterRef.current.style.height = '0';
     }, [active]);
-
-    filters.map(filter => console.log(Object.entries(filter)));
-    filters.map(filter => console.log(filter));
 
     return (
         <div className={cx('cn-filter')}>
@@ -68,67 +66,15 @@ function Filter({
                         />
                     ))
                 }
-                {/* {fields
-                    && fields.map((field, indexField) => (
-                        <div
-                            key={indexField}
-                            className={cx(
-                                `${field === enable.field &&
-                                    enable.status === true
-                                    ? 'enable'
-                                    : 'disable'}`
-                            )}
-                        >
-                            <div className={cx('cn-filed')}>
-                                <div
-                                    onClick={() => handleSetEnable(field)}
-                                    className={cx('filter')}
-                                >
-                                    <p>
-                                        {field}
-                                    </p>
-                                    <FontAwesomeIcon
-                                        className={cx('filter_icon-up')}
-                                        icon={faChevronUp}
-                                    />
-                                    <FontAwesomeIcon
-                                        className={cx('filter_icon-down')}
-                                        icon={faChevronDown}
-                                    />
-                                </div>
-                            </div>
-                            <div className={cx('content')}>
-                                {contents.map((content, indexContent) => {
-                                    return (
-                                        indexField === indexContent
-                                        && content.map(value => (
-                                            Object.entries(value).map((value, key) => {
-                                                return (
-                                                    value[0] === titles[indexField]
-                                                    && <div
-                                                        key={key}
-                                                        style={{ height: '3.5rem' }}
-                                                        className={cx('content_item')}
-                                                    >
-                                                        <input
-                                                            type='checkbox'
-                                                            value={`${value[1]}`}
-                                                            id={`${value[1]}`}
-                                                        />
-                                                        <label htmlFor={`${value[1]}`}>{value[1]}</label>
-                                                    </div>
-                                                )
-                                            }
-                                            ))
-                                        )
-                                    )
-                                })}
-                            </div>
-                        </div>
-                    ))
-                } */}
             </div>
         </div>
     );
 }
+
+Filter.propTypes = {
+    fields: PropTypes.array,
+    titles: PropTypes.array,
+    contents: PropTypes.array,
+}
+
 export default Filter;

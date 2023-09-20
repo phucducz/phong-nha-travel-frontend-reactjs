@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 
@@ -19,19 +20,22 @@ function Slider({
     const handleClick = (cases) => {
         switch (cases) {
             case 'UP':
-                setCounter(counter == length - 1 ? 0 : counter + 1);
+                setCounter(counter === length - 1 ? 0 : counter + 1);
                 break;
 
             case 'DOWN':
-                setCounter(counter == 0 ? length - 1 : counter - 1);
+                setCounter(counter === 0 ? length - 1 : counter - 1);
                 break;
+
+            default: 
+                throw new Error('Invalud case!');
         }
     }
 
     useEffect(() => {
         const id = setInterval(() => {
             setCounter(prev => {
-                if (prev == length - 1)
+                if (prev === length - 1)
                     return 0;
                 else
                     return prev + 1;
@@ -53,13 +57,13 @@ function Slider({
                         key={index}
                         src={img.src}
                         alt={img.alt}
-                        className={cx(index == counter ? 'active' : 'disable')}
+                        className={cx(index === counter ? 'active' : 'disable')}
                     />
                 ))}
             </div>
             <div className={cx('slider__bullets')}>
                 {images.map((item, index) => (
-                    index == counter
+                    index === counter
                         ? <i key={index} className={cx('bullet', 'active')} />
                         : <i key={index} className={cx('bullet', 'disable')} onClick={() => setCounter(index)} />
                 )
@@ -71,6 +75,11 @@ function Slider({
             ></button>
         </div >
     );
+}
+
+Slider.propTypes = {
+    images: PropTypes.array.isRequired,
+    className: PropTypes.string
 }
 
 export default Slider;

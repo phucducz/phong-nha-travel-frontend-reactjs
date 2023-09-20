@@ -30,9 +30,16 @@ const useFilter = () => {
     return useContext(FilterContext);
 }
 
+const useMenu = initialState => {
+    const [menu, setMenu] = useState(initialState);
+
+    return [menu, setMenu];
+}
+
 export {
     useMessageBox,
     useAdmin,
     useDebounce,
-    useFilter
+    useFilter,
+    useMenu
 }

@@ -1,0 +1,135 @@
+@keyframes show {
+    0% {
+        opacity: .2;
+        display: none;
+    }
+
+    50% {
+        display: block;
+    }
+
+    100% {
+        opacity: .9;
+        display: block;
+    }
+}
+
+.td {
+    position: relative;
+    z-index: 12;
+    transition: all .5s linear;
+    display: inline-block;
+    width: 2.5rem;
+    height: 3rem;
+
+    &>svg {
+        font-size: 2.5rem;
+        color: var(--white);
+    }
+
+    // &+.td {
+    //     margin-left: 1.5rem;
+    // }
+
+    &:hover {
+        &>div {
+            display: block;
+            animation: show .2s linear;
+        }
+    }
+
+    &>i {
+        cursor: pointer;
+    }
+}
+
+@mixin commonlyAttribute {
+    text-transform: none;
+    font-style: normal;
+    font-size: 2.5rem;
+    color: var(--white);
+}
+
+i[class='td__star']::before {
+    content: '\e049';
+    font-family: var(--font-icon);
+    @include commonlyAttribute;
+}
+
+i[class='td__earth']::before {
+    content: 'J';
+    font-family: var(--font-icon);
+    @include commonlyAttribute;
+}
+
+i[class='td__deal']::before {
+    content: "\e06f";
+    font-family: var(--font-icon);
+    @include commonlyAttribute;
+}
+
+i[class='td__pn']::before {
+    content: '<';
+    font-family: var(--font-icon);
+    @include commonlyAttribute;
+}
+
+i[class='td__banknote']::before {
+    content: '\e12e';
+    font-family: var(--font-icon);
+    @include commonlyAttribute;
+}
+
+i[class='td__photocamera']::before {
+    content: '\e12b';
+    font-family: var(--font-icon);
+    @include commonlyAttribute;
+}
+
+i[class='td__calendar']::before {
+    content: '\e129';
+    font-family: var(--font-icon);
+    @include commonlyAttribute;
+}
+
+i[class='td__chat']::before {
+    content: '\e12d';
+    font-family: var(--font-icon);
+    @include commonlyAttribute;
+}
+
+i[class='td__heart']::before {
+    content: 'M';
+    font-family: var(--font-icon);
+    @include commonlyAttribute;
+}
+
+i[class='td__price-tag']::before {
+    content: '\e128';
+    font-family: 'adventure-tours';
+    @include commonlyAttribute;
+}
+
+i[class='td__user']::before {
+    content: '\e024';
+    font-family: var(--font-icon);
+    @include commonlyAttribute;
+}
+
+i[class='td__email-2']::before {
+    content: '\e0fb';
+    font-family: var(--font-icon);
+    @include commonlyAttribute;
+}
+
+i[class='td__phone-1']::before {
+    content: '\e132';
+    font-family: var(--font-icon);
+    @include commonlyAttribute;
+}
+
+i[class='td__user-plus']::before {
+    content: '\e07f';
+    font-family: var(--font-icon);
+    @include commonlyAttribute;
+}

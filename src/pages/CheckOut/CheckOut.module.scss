@@ -1,0 +1,483 @@
+@mixin commonlyAttribute {
+    background-color: var(--white);
+    padding: 4rem 5rem;
+    border-radius: .3rem;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.09);
+}
+
+@mixin crossBefore($color) {
+    content: '';
+    display: block;
+    width: .5rem;
+    height: 3rem;
+    background-color: $color;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+.woocommerce {
+    max-width: var(--max-width-page);
+    height: auto;
+    margin: 0 auto;
+
+    .woocommerce__coupon,
+    .form__box,
+    .form__product-box,
+    .woocommerce__checked-true,
+    .woocommerce__checked-false {
+        width: 100%;
+        height: auto;
+        display: flex;
+        position: relative;
+        @include commonlyAttribute;
+    }
+
+    &>div+div,
+    &>div+form {
+        margin-top: 4rem;
+    }
+}
+
+.woocommerce__coupon {
+    align-items: center;
+    position: relative;
+
+    & .coupon__icon {
+        position: relative;
+    }
+
+    &::before {
+        // content: '';
+        // display: block;
+        // width: .5rem;
+        // height: 3rem;
+        // background-color: var(--primary);
+        // position: absolute;
+        // top: 50%;
+        // left: 0;
+        // transform: translateY(-50%);
+        @include crossBefore(var(--primary));
+    }
+}
+
+.woocommerce__checked-true,
+.woocommerce__checked-false {
+    &>p {
+        margin-left: .5rem;
+    }
+}
+
+.woocommerce__checked-true {
+    &>svg {
+        color: var(--white);
+        background-color: #43b946;
+        border-radius: 100%;
+    }
+
+    &:before {
+        @include crossBefore(#43b946);
+    }
+}
+
+.woocommerce__checked-false {
+    &>svg {
+        color: #eb7591;
+    }
+
+    &:before {
+        @include crossBefore(#eb7591);
+    }
+}
+
+// .check__entered-true {
+//     display: flex;
+//     width: 100%;
+//     padding: 4rem 5rem;
+//     position: relative;
+
+//     &>svg {
+//         color: var(--white);
+//         background-color: #eb7591;
+//         border-radius: 100%;
+//         margin-right: .5rem;
+//     }
+
+//     &:before {
+//         @include crossBefore(#eb7591);
+//     }
+// }
+
+.coupon__icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: .5rem;
+
+    &>svg {
+        color: var(--white);
+        font-size: 1.2rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+    }
+
+    &::after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-color: var(--primary);
+        border-radius: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 0;
+    }
+}
+
+.coupon__show {
+    font-family: var(--font-family);
+    font-size: 1.5rem;
+    color: var(--primary);
+    margin: .2rem 0 0 .5rem;
+    cursor: pointer;
+    border-bottom: .2rem dotted transparent;
+    transition: all .3s linear;
+
+    &:hover {
+        border-bottom: .2rem dotted var(--primary);
+    }
+}
+
+.woocommerce__checkout-coupon {
+    border-radius: .3rem;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.09);
+    transition: all .5s ease-in-out;
+    background-color: var(--white);
+    height: 0;
+    overflow: hidden;
+    margin-bottom: -4rem !important;
+
+    .checkout-coupon__form {
+        padding: 4rem 5rem;
+
+        &>div+form {
+            margin-top: 1rem;
+        }
+    }
+
+    &.active {
+        height: 15.6rem;
+        margin-bottom: 0 !important;
+    }
+}
+
+.checkout-coupon__entered {
+    &>p {
+        color: var(--color-red);
+    }
+}
+
+// coupon
+
+// .checkout-coupon__input {
+//     display: flex;
+// }
+
+// .input__input {
+//     width: 48.8rem;
+//     height: 5rem;
+// }
+
+// .input__button {
+//     text-transform: uppercase;
+//     background-color: rgba(71, 160, 255, 0.8);
+//     border: none;
+//     margin-left: 6rem;
+
+//     &:hover {
+//         transform: translate(0);
+//         background-color: #47a0ff;
+//     }
+// }
+
+.woocommerce__checkout__form {
+    &>div+div {
+        margin-top: 4rem;
+    }
+}
+
+.form__box {
+    justify-content: space-between;
+}
+
+.form__box__1 {
+    &>p {
+        margin-bottom: 2rem;
+        font-size: 2rem;
+    }
+
+    &>div {
+        font-size: 1.7rem;
+        margin-bottom: 2rem;
+        line-height: 2.7rem;
+    }
+}
+
+.form__box__2 {
+    &>div+div {
+        margin-top: 2rem;
+    }
+}
+
+.first-name {
+    float: left;
+}
+
+.last-name {
+    float: right;
+}
+
+.form__product-box {
+    display: block !important;
+
+    &>div+div {
+        margin-top: 2rem;
+    }
+}
+
+.order__table {
+    & span {
+        font-size: 1.5rem;
+    }
+
+    & span.quantity {
+        font-weight: 700;
+    }
+
+    & span+span {
+        margin-top: 1.5rem;
+    }
+
+    & span.booking-date {
+        display: block;
+    }
+}
+
+.checkout-payment {
+    &>div+div {
+        padding-bottom: 2rem;
+    }
+}
+
+.product-box__methods__payment {
+    background-color: #ebe9eb;
+    padding: 2rem;
+    border-radius: .3rem;
+
+    &>div+div {
+        padding-top: 2rem;
+    }
+}
+
+.checkout-payment {
+    border-bottom: .1rem solid #d3ced2;
+
+    &>div+div {
+        margin-top: 2rem;
+    }
+
+    .payment-bacs {
+        height: 0;
+        display: flex;
+        align-items: flex-end;
+        overflow: hidden;
+        transition: height .3s linear;
+        position: relative;
+
+        &>p {
+            width: 100%;
+            line-height: 4.6rem;
+            padding-left: 1.5rem;
+            background-color: #dfdcde;
+        }
+
+        &::after {
+            content: '';
+            display: block;
+            border-top: 2rem solid #dfdcde;
+            border-left: 2rem solid transparent;
+            position: absolute;
+            top: 19%;
+            left: 3rem;
+            transform: rotate(-45deg);
+        }
+
+        &.active {
+            height: 6.6rem;
+        }
+    }
+}
+
+.place-order {
+    &>p {
+        line-height: 3.6rem;
+
+        &>a {
+            color: var(--primary);
+            cursor: pointer;
+            border-bottom: .1rem dotted transparent;
+            transition: .2s border-bottom linear;
+            text-decoration: none;
+
+            &:hover {
+                border-bottom: .1rem dotted var(--primary);
+            }
+        }
+    }
+}
+
+.box__place-order__button {
+    display: flex;
+    justify-content: flex-end;
+
+    &>button {
+        background-color: rgba(71, 160, 255, 0.8);
+        border-color: transparent;
+
+        &:hover {
+            transform: translate(0);
+            background-color: var(--primary);
+        }
+    }
+}
+
+.confirm-data__tour {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 1rem;
+}
+
+.confirm-data__tour__img {
+    position: relative;
+    z-index: 1;
+
+    &>img {
+        width: 30rem;
+        height: 20rem;
+        border-radius: 1rem;
+        box-shadow: 6px 1px 22px 0px rgba(0, 0, 0, 0.75);
+        -webkit-box-shadow: 6px 1px 22px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 6px 1px 22px 0px rgba(0, 0, 0, 0.75);
+    }
+
+}
+
+.tour__description {
+    width: 100%;
+    height: 16rem;
+    background-color: var(--color-body);
+    padding: 2rem 3rem;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.09);
+    overflow: hidden;
+
+    &>.tour__description__content {
+        margin-top: 3rem;
+        list-style-type: none;
+
+        &>li:last-child {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        &>li+li {
+            margin-top: 1rem;
+        }
+    }
+
+    &>.tour__description__price {
+        margin-top: 1rem;
+    }
+}
+
+.tour__description__title {
+    display: flex;
+    justify-content: space-between;
+
+    &>p:first-child {
+        text-transform: uppercase;
+        color: var(--primary);
+        font-size: 1.7rem;
+    }
+}
+
+.confirm-data__infomation {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 5rem;
+
+    &>div+div {
+        margin-top: 4rem;
+    }
+}
+
+.tour__information {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    
+    &>div {
+        width: max-content;
+
+        &>div+div {
+            margin-top: 2rem;
+        }
+    }
+}
+
+.user__title,
+.ship__title,
+.order__title {
+    display: flex;
+    align-items: center;
+
+    &>svg {
+        margin-right: .5rem;
+    }
+
+    &.order__title {
+        margin-bottom: 2rem;
+    }
+}
+
+.user__content,
+.ship__content {
+    height: auto;
+    background-color: var(--color-body);
+    padding: 2rem 3rem;
+    border-radius: .3rem;
+
+    &>.content {
+        display: flex;
+
+        &>p:first-child {
+            color: var(--primary);
+        }
+
+        &>p+p {
+            margin-left: 1rem;
+        }
+    }
+
+    &>div+div {
+        margin-top: 1.5rem;
+    }
+}

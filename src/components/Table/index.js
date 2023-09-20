@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { useAdmin, useMessageBox } from "~/context";
 
-import style from './TableStyle.scss';
+import style from './TableStyle.module.scss';
 import Search from "../Search";
 import Button from "../Button";
 import Filter from "../Filter";
@@ -104,6 +105,13 @@ function Table({
             }
         </>
     )
+}
+
+Table.propTypes = {
+    columns: PropTypes.array.isRequired,
+    children: PropTypes.node.isRequired,
+    table: PropTypes.string.isRequired,
+    tableActive: PropTypes.string.isRequired,
 }
 
 export default Table;

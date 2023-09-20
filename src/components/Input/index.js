@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types';
 import classNames from "classnames/bind";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { forwardRef, useState } from 'react';
 
 import style from "./InputStyle.module.scss";
 
@@ -11,27 +12,26 @@ function Input({
     content,
     name,
     fieldName,
-    option,
+    optional,
     mini = false,
     tiny = false,
     small = false,
     large = false,
+    error = false,
+    touched = false,
+    onFocus,
     onChange,
     onClick,
     className,
     leftIcon,
     rightIcon,
     ...passProps
-}) {
-    const props = {
-        value,
-        ...passProps
-    }
-
+}, ref) {
+    const props = { ...passProps };
     let Comp = 'input';
 
-    if (value)
-        props.value = value;
+    const [showError, setShowError] = useState(false);
+
     if (type) {
         if (type === 'textarea')
             Comp = 'textarea';
@@ -48,36 +48,71 @@ function Input({
     });
 
     return (
-        <div className='field'>
+        <div className={cx('field')}>
             {fieldName
                 && <label>
                     {fieldName}
-                    {option
-                        ? <span className={cx('label-option')}>
-                            (optional)
-                            <span className={cx('colon')}>:</span>
+                    {optional
+                        ? <span className={cx('label-optional')}>
+                            <span className={cx('colon')}>(tùy chọn)</span>
                         </span>
-                        : <span className={cx('label-option')}>
-                            (required)
-                            <span className={cx('colon')}>:</span>
+                        : <span className={cx('label-optional')}>
                             <abbr title="required">*</abbr>
                         </span>
                     }
                 </label>
             }
-            <div className={cx('divInput')}>
-                {leftIcon && <FontAwesomeIcon icon={leftIcon} className={cx('leftIcon')} />}
+            <div className={cx('divInput', Comp === 'textarea' && 'textarea')}>
+                {leftIcon
+                    && <div className={cx('leftIcon')}>{leftIcon}</div>
+                }
                 <Comp
                     className={classes}
                     name={name}
+                    value={value}
                     onChange={onChange}
+                    onClick={onClick}
+                    onFocus={onFocus}
+                    onBlur={() => setShowError(error && touched)}
                     {...props}
+                    ref={ref}
                 />
-                <label className={cx('label')}>{content}</label>
-                {rightIcon && <FontAwesomeIcon icon={rightIcon} className={cx('rightIcon')} />}
+                <label className={cx('label', value !== '' && 'non-empty')}>{content}</label>
+                {showError
+                    && <div className={cx('divInput__error')}>
+                        {error}
+                    </div>}
+                {rightIcon
+                    && <div className={cx('rightIcon')}>{rightIcon}</div>
+                }
             </div>
         </div>
     )
 }
 
-export default Input;
+Input.propTypes = {
+    type: PropTypes.string,
+    value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
+    ]),
+    content: PropTypes.string,
+    name: PropTypes.string,
+    fieldName: PropTypes.string,
+    optional: PropTypes.bool,
+    mini: PropTypes.bool,
+    tiny: PropTypes.bool,
+    small: PropTypes.bool,
+    large: PropTypes.bool,
+    error: PropTypes.bool,
+    touched: PropTypes.bool,
+    ref: PropTypes.node,
+    onFocus: PropTypes.func,
+    onChange: PropTypes.func,
+    onClick: PropTypes.func,
+    className: PropTypes.string,
+    leftIcon: PropTypes.object,
+    rightIcon: PropTypes.object,
+}
+
+export default forwardRef(Input);

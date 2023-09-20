@@ -5,13 +5,14 @@
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    z-index: 9999;
+    z-index: 20;
     box-shadow: 0px 1px 1px 0px #ddd;
 
     .cn-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        position: relative;
         width: var(--max-width-page);
         margin: 0 auto;
     }
@@ -32,7 +33,6 @@
         list-style: none;
         text-transform: uppercase;
         color: var(--color-word);
-        cursor: pointer;
 
         &+li {
             margin-left: 1.5rem;

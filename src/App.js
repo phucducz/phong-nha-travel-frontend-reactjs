@@ -35,7 +35,6 @@ function App() {
                       </AdminProvider>
                       : <Page />
                     }
-                    {/* <Page /> */}
                   </Layout>
                 } />
             );

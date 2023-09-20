@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import classNames from "classnames/bind";
 import { useEffect, useRef, useState } from "react";
 
@@ -15,8 +16,6 @@ function Item({
     ...passProps
 }) {
     const {
-        filterTour, 
-        setFilterTour, 
         handleFilterTour
     } = useFilter();
 
@@ -91,7 +90,15 @@ function Item({
                 </div>
             </div>
         </div>
-    )
+    );
+}
+
+Item.propTypes = {
+    field: PropTypes.string.isRequired,
+    iconActive: PropTypes.node.isRequired,
+    iconDisable: PropTypes.node.isRequired,
+    content: PropTypes.array.isRequired,
+    load: PropTypes.string.isRequired,
 }
 
 export default Item;

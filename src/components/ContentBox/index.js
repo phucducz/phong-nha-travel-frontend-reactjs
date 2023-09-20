@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import classNames from "classnames/bind";
 import { memo, useRef } from "react";
 
@@ -85,6 +86,14 @@ function ContentBox({
             />
         </>
     )
+}
+
+ContentBox.propTypes = {
+    title: PropTypes.string,
+    visible: PropTypes.bool,
+    setVisible: PropTypes.func,
+    className: PropTypes.string,
+    children: PropTypes.node,
 }
 
 export default memo(ContentBox);

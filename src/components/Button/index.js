@@ -1,7 +1,9 @@
+import PropTypes from 'prop-types';
 import classNames from "classnames/bind";
 import { memo } from "react";
+import { Link } from 'react-router-dom';
 
-import style from "./ButtonStyle.scss";
+import style from "./ButtonStyle.module.scss";
 
 const cx = classNames.bind(style);
 
@@ -20,7 +22,7 @@ function Button({
     cancel = false,
     deleteb = false,
     primary = false,
-    disabled = false,
+    disable = false,
     create = false,
     rightIcon,
     leftIcon,
@@ -34,16 +36,20 @@ function Button({
         ...passProps
     };
 
-    if (to)
+    if (to) {
         Component = 'Link';
-    if (href)
-        Component = 'href';
+        props.to = to;
+    }
+    if (href) {
+        Component = 'a';
+        props.href = href;
+    }
     if (value)
         Component = 'input';
     if (type)
         props.type = type;
 
-    if (disabled)
+    if (disable)
         if (Object.keys(props).forEach(key => {
             if (key.startsWith('on') && typeof props[key] === 'function')
                 delete props[key];
@@ -58,21 +64,30 @@ function Button({
         primary,
         cancel,
         deleteb,
-        disabled,
+        disable,
         create
     });
 
     return (
         <>
             {value === undefined
-                ? <Component
-                    className={classes}
-                    {...props}
-                >
-                    {leftIcon && <span className={cx('button_icon')}>{leftIcon}</span>}
-                    {children && <span className={cx('title')}>{children}</span>}
-                    {rightIcon && <span className={cx('button_icon')}>{rightIcon}</span>}
-                </Component>
+                ? (to
+                    ? <Link
+                        className={classes}
+                        to={to}
+                    >
+                        {leftIcon && <span className={cx('button_icon')}>{leftIcon}</span>}
+                        {children && <span className={cx('title')}>{children}</span>}
+                        {rightIcon && <span className={cx('button_icon')}>{rightIcon}</span>}
+                    </Link>
+                    : <Component
+                        className={classes}
+                        {...props}
+                    >
+                        {leftIcon && <span className={cx('button_icon')}>{leftIcon}</span>}
+                        {children && <span className={cx('title')}>{children}</span>}
+                        {rightIcon && <span className={cx('button_icon')}>{rightIcon}</span>}
+                    </Component>)
                 : <Component
                     className={classes} {...props}
                     value={value}
@@ -80,6 +95,31 @@ function Button({
             }
         </>
     )
+}
+
+Button.propTypes = {
+    to: PropTypes.string,
+    href: PropTypes.string,
+    value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
+    ]),
+    type: PropTypes.string,
+    children: PropTypes.node,
+    className: PropTypes.string,
+    tiny: PropTypes.bool,
+    small: PropTypes.bool,
+    large: PropTypes.bool,
+    rounded: PropTypes.bool,
+    outline: PropTypes.bool,
+    cancel: PropTypes.bool,
+    deleteb: PropTypes.bool,
+    primary: PropTypes.bool,
+    disable: PropTypes.bool,
+    create: PropTypes.bool,
+    rightIcon: PropTypes.node,
+    leftIcon: PropTypes.node,
+    onClick: PropTypes.func,
 }
 
 export default memo(Button);

@@ -1,0 +1,5 @@
+.tours {
+    &>div+div {
+        margin-top: 3rem;
+    }
+}

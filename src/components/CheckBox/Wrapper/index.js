@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import classNames from "classnames/bind";
 
 import style from './Wrapper.module.scss';
@@ -45,6 +46,15 @@ function Wrapper({
             </div>
         </div>
     )
+}
+
+Wrapper.propTypes = {
+    data: PropTypes.array.isRequired,
+    defaultChecked: PropTypes.array,
+    title: PropTypes.string.isRequired,
+    optinal: PropTypes.bool,
+    onChange: PropTypes.func,
+    className: PropTypes.string,
 }
 
 export default Wrapper;

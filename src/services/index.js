@@ -1,8 +1,8 @@
-import * as request from "~/utils/request";
+import * as httpRequest from "~/utils/httpRequest";
 
 const putService = async (path, q = {}) => {
     try {
-        const res = await request.putAPI(path, q);
+        const res = await httpRequest.putAPI(path, q);
         return res;
     }
     catch (error) {
@@ -12,10 +12,8 @@ const putService = async (path, q = {}) => {
 
 const getService = async (path, q = {}) => {
     try {
-        const res = await request.get(path, {
-            params: {
-                q
-            }
+        const res = await httpRequest.get(path, {
+            params: { ...q }
         });
         return res;
     }
@@ -26,7 +24,7 @@ const getService = async (path, q = {}) => {
 
 const postService = async (path, option = {}) => {
     try {
-        const res = await request.post(path, option);
+        const res = await httpRequest.post(path, option);
         return res;
     }
     catch (error) {
@@ -36,10 +34,8 @@ const postService = async (path, option = {}) => {
 
 const deleteService = async (path, q = {}) => {
     try {
-        const res = await request.deleteAPI(path, {
-            params: {
-                q
-            }
+        const res = await httpRequest.deleteAPI(path, {
+            params: { ...q }
         });
         return res;
     } catch (error) {

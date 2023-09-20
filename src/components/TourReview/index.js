@@ -1,1 +1,1 @@
-export { default as TourReview } from './Wrapper/Wrapper';
+export { default as TourReview } from './Wrapper';

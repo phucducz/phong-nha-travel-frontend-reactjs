@@ -1,91 +1,85 @@
 import classNames from 'classnames/bind';
-import { useEffect, useReducer, useState } from 'react';
-import { image, imageFeature } from '~/images';
+import { useEffect, useState } from 'react';
+import { image } from '~/images';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import style from '~/components/HomeStyles/HomeStyle.module.scss';
+import style from './HomeStyle.module.scss';
 import { SLIDER_IMAGES } from "~/constant";
-import SocialNetWork from '~/components/SocialNetworks';
 import { GridTour } from '~/components/GridTour';
 import Button from '~/components/Button';
 import {
     PAGESINGLE_ITEMS,
-    GRIDTOUR_ITEMS_REMARKABLE,
-    GRIDTOUR_ITEMS_DAILY,
+    GRIDTOUR_ITEMS,
     GRIDTOUR_ITEMS_PREFERENTIAL,
-    SOCIAL_NETWORKS
+    TOURSTYPE_ITEMS,
+    TOURREIVEW_ITEMS
 } from '~/constant';
 import { getService } from '~/services';
 import PageSingle from '~/components/PageSingle';
-import { SearchBox } from '~/components/SearchBox';
+import SearchBox from '~/components/SearchBox';
 import { TourReview } from '~/components/TourReview';
-import { TOURREIVEW_ITEMS } from '~/constant';
-import { ToursType } from '~/components/TourType';
-import { TOURSTYPE_ITEMS } from '~/constant';
+import ToursType from '~/components/TourType';
 import Slider from '~/components/Slider';
+import { setTourCategories } from '~/reducers/tourCategories';
+import { setMenuActive } from '~/reducers/menu';
 
 const cx = classNames.bind(style);
 
 function Home() {
+    const dispatch = useDispatch();
+    const tourCategories = useSelector(state => state.tourCategories);
+
+    const navigate = useNavigate();
+
     const [tours, setTours] = useState([]);
-    const [toursOrder, setToursOrder] = useState([]);
-    const [toursHot, setToursHot] = useState([]);
-    const [toursPreferential, setToursPreferential] = useState([]);
     const [categories, setCategories] = useState({ data: [] });
-    const [toursCategories, setToursCategories] = useState({ data: [] });
 
     useEffect(() => {
         const fetchTours = async () => {
-            const result = await getService('tours');
+            // php service
+
+            const result = await getService('tours', {
+                q: 'hot_order'
+            });
+            
+            // java service
+
+            // const result = await getService('tours');
+            
             setTours(result);
         }
 
         const fetchCategories = async () => {
             const result = await getService('categories');
-            result.splice(0, 0, { title: 'Category' });
-            setCategories(() => ({
-                data: result
-            }));
+            result.splice(0, 0, { id: 0, title: 'Category' });
+
+            setCategories({ data: result });
         }
 
         const fetchToursCategories = async () => {
-            const result = await getService('toursCategories');
-            setToursCategories(result);
+            const result = await getService('tourCategories');
+
+            dispatch(setTourCategories(result));
         }
 
-        const fetchTourOrderMost = async () => {
-            const result = await getService('tours', {
-                type: 'order_most'
-            });
-            setToursPreferential(prev => [
-                ...prev,
-                ...result
-            ]);
-        }
-
-        const fetchTourHot = async () => {
-            const result = await getService('tours', {
-                type: 'hot'
-            });
-            setToursPreferential(prev => [
-                ...prev,
-                ...result
-            ]);
-        }
-
-        const fetch = () => {
+        const fetchData = () => {
             fetchTours();
             fetchCategories();
             fetchToursCategories();
-            fetchTourOrderMost();
-            fetchTourHot();
         }
 
-        fetch();
+        fetchData();
     }, []);
 
-    GRIDTOUR_ITEMS_REMARKABLE.title = (
+    const handleNavigate = (id, url) => {
+        navigate(url);
+        id > 0 && dispatch(setMenuActive(id));
+    }
+
+    GRIDTOUR_ITEMS[0].title = (
         <div className={cx('gridtours')}>
             <div className={cx('title')}>
                 <p className={cx('title-p')}>Có thể bạn sẽ thích những TOUR du lịch dưới đây</p>
@@ -94,7 +88,7 @@ function Home() {
         </div>
     );
 
-    GRIDTOUR_ITEMS_DAILY[0].title = (
+    GRIDTOUR_ITEMS[1].title = (
         <div className={cx('gridtour')}>
             <h3 className={cx('cm__title')}>tour hằng ngày</h3>
             <div className={cx('gridtour__regular')}>
@@ -105,6 +99,7 @@ function Home() {
                     rounded
                     rightIcon={<FontAwesomeIcon icon={faArrowRight} />}
                     className={cx('gridtour__regular__button')}
+                    onClick={() => handleNavigate(1, '/tour-category/tour-hằng-ngày')}
                 >
                     xem chi tiết
                 </Button>
@@ -133,19 +128,14 @@ function Home() {
     return (
         <div className={cx('home-body')}>
             <Slider images={SLIDER_IMAGES} />
-            <GridTour
-                data={tours}
-                dataItem={GRIDTOUR_ITEMS_REMARKABLE}
-                categories={toursCategories}
-                slider={true}
-            />
-            {GRIDTOUR_ITEMS_DAILY.map(item => (
+            {GRIDTOUR_ITEMS.map(item => (
                 <GridTour
                     key={item.id}
                     data={tours}
                     dataItem={item}
-                    categories={toursCategories}
+                    categories={tourCategories.listData}
                     slider={item.slider}
+                    flex={item.flex}
                 />
             ))}
             <div className={cx('cn-page')}>
@@ -155,14 +145,14 @@ function Home() {
                         title='chọn phong nha travel'
                         subTitle='chọn sự khác biệt'
                     />
-                    <SearchBox categories={categories} />
+                    <SearchBox searchData={categories} />
                 </div>
             </div>
             <GridTour
-                data={toursPreferential}
+                data={tours}
                 dataItem={{
                     title: (
-                        <div style={{ paddingTop: '3rem' }} className={cx('gridtour')}>
+                        <div className={cx('gridtour')}>
                             <h3 className={cx('cm__title')}>tour đang ưu đãi</h3>
                             <div className={cx('gridtour__regular')}>
                                 <p className={cx('cm__content')}>Những tour có giá được tối ưu hấp dẫn trên Phong Nha Travel</p>
@@ -172,14 +162,16 @@ function Home() {
                                     rounded
                                     rightIcon={<FontAwesomeIcon icon={faArrowRight} />}
                                     className={cx('gridtour__regular__button')}
+                                    onClick={() => handleNavigate(-1, '/tour-category/tour-deal')}
                                 >
                                     xem chi tiết
                                 </Button>
                             </div>
                         </div>
-                    )
+                    ),
+                    topic: 3
                 }}
-                categories={toursCategories}
+                categories={tourCategories.listData}
                 slider={false}
                 flex
                 round
@@ -220,7 +212,6 @@ function Home() {
                 <h3 className={cx('images__desc')}>Hình ảnh từ Phong Nha Travel</h3>
                 <span className={cx('images__crossbar')}></span>
             </div>
-            <SocialNetWork data={SOCIAL_NETWORKS} />
         </div>
     )
 }

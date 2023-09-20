@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import classNames from "classnames/bind";
 
 import style from "./DataViewStyle.scss";
@@ -15,6 +16,11 @@ function DataView({ children, index }) {
             </div>
         </div>
     )
+}
+
+DataView.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number,   
 }
 
 export default DataView;

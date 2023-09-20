@@ -1,30 +1,60 @@
-import { memo } from "react";
+import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
+import { memo, useEffect, useState } from "react";
 
-import PaginationStyle from "../PaginationStyles";
+import style from './PaginationStyle.module.scss';
 
-function Pagination({ toursPerPage, totalTours, handleOnclick }) {
+const cx = classNames.bind(style);
 
+function Pagination({
+    data,
+    className,
+    itemPerPage,
+    totalItem,
+    onClick
+}) {
+    const classes = cx('paginate', {
+        [className]: className
+    });
+
+    const [activePage, setActivePage] = useState(1);
     const numbersPage = [];
 
-    for (let i = 1; i <= Math.ceil(totalTours / toursPerPage); i++)
+    useEffect(() => {
+        setActivePage(1);
+    }, [data]);
+
+    for (let i = 1; i <= Math.ceil(totalItem / itemPerPage); i++)
         numbersPage.push(i);
 
+    const handleClick = (number, data) => {
+        onClick(number, data);
+        setActivePage(number);
+    }
+
     return (
-        <PaginationStyle>
-            <div className="wrapperPaginate">
-                <ul className="paginate">
-                    {numbersPage.map(number => (
-                        <li 
-                            key={number}
-                            onClick={() => handleOnclick(number)}
+        <div className={classes}>
+            <ul className={cx('paginate__ul')}>
+                {numbersPage.map(number => (
+                    <li key={number}>
+                        <p
+                            className={cx('paginate__p', activePage === number && 'active')}
+                            onClick={() => handleClick(number, data)}
                         >
-                            <a>{number}</a>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </PaginationStyle>
+                            {number}
+                        </p>
+                    </li>
+                ))}
+            </ul>
+        </div>
     )
+}
+
+Pagination.propTypes = {
+    className: PropTypes.string,
+    itemPerPage: PropTypes.number.isRequired,
+    totalItem: PropTypes.number.isRequired,
+    onClick: PropTypes.func.isRequired,
 }
 
 export default memo(Pagination);

@@ -125,7 +125,7 @@ function Admin() {
             const tours = await getService('tours', {
                 q: id
             });
-            const toursCategories = await getService('toursCategories', {
+            const tourCategories = await getService('tourCategories', {
                 q: id
             });
             const toursTopics = await getService('toursTopics', {
@@ -133,7 +133,7 @@ function Admin() {
             });
             formik.setValues({
                 ...tours,
-                categories: toursCategories,
+                categories: tourCategories,
                 topics: toursTopics
             });
         }
@@ -216,6 +216,9 @@ function Admin() {
                         ]
                     });
 
+                break;
+
+            default:
                 break;
         }
     }
@@ -364,7 +367,6 @@ function Admin() {
                             <div className={cx('container-input')}>
                                 <Input
                                     fieldName={`${fieldNames[0]}`}
-
                                     content={`${fieldNames[0]}`}
                                     value={formik.values.id}
                                     required
@@ -372,7 +374,6 @@ function Admin() {
                                 />
                                 <Input
                                     fieldName={`${fieldNames[1]}`}
-
                                     content={`${fieldNames[1]}`}
                                     value={formik.values.name}
                                     onChange={formik.handleChange}
@@ -381,7 +382,6 @@ function Admin() {
                                 />
                                 <Input
                                     fieldName={`${fieldNames[4]}`}
-
                                     content={`${fieldNames[4]}`}
                                     value={formik.values.price}
                                     onChange={formik.handleChange}

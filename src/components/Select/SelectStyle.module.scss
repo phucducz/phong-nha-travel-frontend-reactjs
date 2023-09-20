@@ -1,7 +1,6 @@
 .divSelect {
     position: relative;
-    width: 46.9rem;
-    margin-top: 3rem;
+    width: max-content;
 
     .label {
         position: absolute;
@@ -33,6 +32,11 @@
     .large {
         width: 46.6rem;
         height: 4.54rem;
+    }
+
+    .tiny {
+        width: 20.5rem;
+        height: 4.5rem;
     }
 
     &:focus-within {

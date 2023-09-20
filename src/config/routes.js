@@ -2,12 +2,14 @@ const routes = {
     Home: '/',
     Lienhe: '/lienhe',
     Camnang: '/camnang',
-    ViewTour: '/view/tour/:tourId',
+    ViewTour: '/tours/:tourName/:tourId',
+    CheckOut: '/checkout',
     Cart: '/cart',
-    BookTour: '/checkout/:tourId',
-    CartPage: '/cartpage',
-    AccountPage: '/account',
+    Account: '/account',
     Admin: '/admin',
+    TourCategory: '/tour-category/:categoryName',
+    Policy: '/policy',
+    ToursSearch: '/tours/search'    
 }
 
 export { routes };

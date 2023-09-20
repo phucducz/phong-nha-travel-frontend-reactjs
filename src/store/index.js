@@ -1,3 +1,9 @@
-export { default as tourReducer } from './reducer';
-export { initialState } from './reducer';
-export * from './actions';
+import { configureStore } from '@reduxjs/toolkit';
+
+import rootReducer from '~/reducers';
+
+const store = configureStore({
+    reducer: rootReducer
+});
+
+export default store;

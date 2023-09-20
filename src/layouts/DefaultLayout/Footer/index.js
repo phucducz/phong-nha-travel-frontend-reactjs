@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 
 import style from '~/components/FooterStyles/FooterStyle.module.scss';
+import { Link } from "react-router-dom";
 
 const cx = classNames.bind(style);
 
@@ -26,13 +27,13 @@ function Footer() {
                 ></i>}
             <div className={cx('footer')}>
                 <p>
-                    © 2021 Bản quyền thuộc về Phong Nha Travel | Developed by DOKE.
+                    © 2021 Bản quyền thuộc về Phong Nha Travel | Developed by DVPD.
                 </p>
                 <div className={cx('footer__cks')}>
-                    <a href=""> Terms & Conditions</a>
-                    <a href="">Privacy</a>
-                    <a href="">Policy</a>
-                    <a href="">Liên Hệ</a>
+                    <Link to="#"> Terms & Conditions</Link>
+                    <Link to="#">Privacy</Link>
+                    <Link to="#">Policy</Link>
+                    <Link to="#">Liên Hệ</Link>
                 </div>
             </div>
         </div>

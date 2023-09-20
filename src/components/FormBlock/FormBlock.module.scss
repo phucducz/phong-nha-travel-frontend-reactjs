@@ -1,0 +1,16 @@
+.form-block {
+    width: 26.2rem;
+    height: auto;
+    padding: 3.5rem 2.5rem;
+    background-color: #47a0ff;   
+    border-radius: .3rem;
+    margin-top: 6rem;
+}
+
+.form-block__title {
+    font-family: var(--font-family-sub);
+    color: var(--white);
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}

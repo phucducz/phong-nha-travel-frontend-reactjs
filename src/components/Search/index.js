@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,7 +9,7 @@ import {
 import React, { useEffect, useState, useRef } from 'react';
 
 import style from './SearchStyle.module.scss';
-import { getService, postService } from '~/services';
+import { getService } from '~/services';
 import { useAdmin, useDebounce, useFilter } from '~/context';
 
 const cx = classNames.bind(style);
@@ -115,6 +116,16 @@ function Search({
             </div>
         </div>
     )
+}
+
+Search.propTypes = {
+    content: PropTypes.string,
+    name: PropTypes.string,
+    className: PropTypes.string,
+    small: PropTypes.bool,
+    large: PropTypes.bool,
+    onChange: PropTypes.func.isRequired,
+    handleSearch: PropTypes.func.isRequired,
 }
 
 export default Search;

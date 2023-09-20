@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import classNames from "classnames/bind";
 
 import style from "./SelectStyle.module.scss";
@@ -12,6 +13,7 @@ function Select({
     optional = false,
     small = false,
     large = false,
+    tiny = false,
     onChange,
     className,
     ...passProps
@@ -19,6 +21,7 @@ function Select({
     const classes = cx('select', {
         small,
         large,
+        tiny,
         [className]: className
     });
 
@@ -57,6 +60,18 @@ function Select({
             <label className={cx('label')}>{content}</label>
         </div>
     )
+}
+
+Select.propTypes = {
+    data: PropTypes.array.isRequired,
+    content: PropTypes.string,
+    name: PropTypes.string,
+    fieldName: PropTypes.string,
+    optional: PropTypes.bool,
+    small: PropTypes.bool,
+    large: PropTypes.bool,
+    onChange: PropTypes.func.isRequired,
+    className: PropTypes.string,
 }
 
 export default Select;

@@ -1,0 +1,43 @@
+.table-product {
+
+    &>tbody>tr>td {
+        padding: 1rem 2rem;
+    }
+}
+
+.table-product__img {
+    width: 5rem;
+    height: auto;
+    cursor: pointer;
+    transition: opacity .3s linear;
+
+    &:hover {
+        opacity: .8;
+    }
+}
+
+.table-product__price,
+.table-product__quantity,
+.table-product__total {
+    &>p {
+        width: max-content;
+        margin: 0 auto;
+    }
+}
+
+.table-product__product {
+    &>a {
+        color: var(--primary);
+        border-bottom: 0.1rem dotted transparent;
+        transition: border 0.1s linear;
+        text-decoration: none;
+
+        &:hover {
+            border-bottom: 0.1rem dotted var(--primary);
+        }
+    }
+
+    &>p {
+        margin-top: 1.5rem;
+    }
+}

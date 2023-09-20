@@ -1,0 +1,124 @@
+.woocommerce__message {
+    width: var(--max-width-page);
+    height: 9.6rem;
+    position: relative;
+    transition: height .5s linear;
+    margin-bottom: 4rem;
+}
+
+.woocommerce__message__content {
+    width: 100%;
+    height: 0;
+    display: flex;
+    align-items: center;
+    background-color: var(--white);
+    overflow: hidden;
+
+    &>svg {
+        font-size: 1.5rem;
+        color: var(--white);
+        background-color: transparent;
+        border-radius: 100%;
+        padding: .3rem;
+    }
+
+    &>span {
+        width: .5rem;
+        height: 3rem;
+        background-color: var(--color-green);
+        margin-right: 4rem;
+    }
+}
+
+.content {
+    padding-left: .5rem;
+
+    &>span {
+        padding-left: .5rem;
+        font-size: 1.5rem;
+        cursor: pointer;
+
+        &:hover {
+            border-bottom: .2rem dotted transparent;
+        }
+    }
+
+    &>button {
+        padding: 0;
+        border: none;
+        border-radius: 0;
+        text-transform: none;
+        background-color: var(--white);
+    }
+}
+
+.success {
+    &>svg {
+        font-size: 1rem;
+        background-color: var(--color-green);
+    }
+
+    &>span {
+        background-color: var(--color-green);
+    }
+
+    & .content {
+        &>button {
+            color: var(--primary);
+            border-bottom: .2rem dotted transparent;
+
+            &:hover {
+                border-color: var(--primary);
+                background-color: transparent;
+
+                &>span {
+                    color: var(--primary);
+                }
+            }
+        }
+    }
+}
+
+.fail {
+    &>svg {
+        color: var(--color-red);
+    }
+
+    &>span {
+        background-color: var(--color-red);
+    }
+
+    & .content {
+        &>button {
+            color: var(--color-red);
+            border-bottom: .2rem dotted transparent;
+
+            &:hover {
+                border-color: var(--color-red);
+                background-color: transparent;
+
+                &>span {
+                    color: var(--color-red);
+                }
+            }
+        }
+    }
+}
+
+@keyframes showMessage {
+    from {
+        height: 0;
+        overflow: hidden;
+    }
+
+    to {
+        height: 9.6rem;
+    }
+}
+
+.show-woocommerce {
+    margin-bottom: 4rem;
+    height: 9.6rem;
+    animation: showMessage .5s linear;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.09);
+}

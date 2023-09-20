@@ -1,12 +1,9 @@
-import { useReducer, useState } from "react";
+import { useState } from "react";
 import { useFormik } from "formik";
 
 import Context from "./Context";
-import { tourReducer, initialState } from "~/store";
-
 
 function Provider({ children }) {
-    const [state, dispatch] = useReducer(tourReducer, initialState);
 
     const formik = useFormik({
         initialValues: {
@@ -31,8 +28,6 @@ function Provider({ children }) {
     const [category, setCategory] = useState([]);
 
     const values = {
-        state,
-        dispatch,
         formik,
         search,
         setSearch,

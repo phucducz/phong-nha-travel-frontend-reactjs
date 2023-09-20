@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import classNames from "classnames/bind";
 import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,7 +8,11 @@ import styles from "./TaskListStyle.module.scss";
 
 const cx = classNames.bind(styles);
 
-function TaskList({ title, tasks, action }) {
+function TaskList({ 
+    title, 
+    tasks, 
+    action 
+}) {
     const [count, setCount] = useState(+0);
 
     const [activeTask, setActiveTask] = useState();
@@ -55,6 +60,12 @@ function TaskList({ title, tasks, action }) {
             </div>
         </div>
     )
+}
+
+TaskList.propTypes = {
+    title: PropTypes.string.isRequired,
+    tasks: PropTypes.array.isRequired,
+    action: PropTypes.object.isRequired,
 }
 
 export default TaskList;

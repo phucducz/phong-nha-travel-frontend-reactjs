@@ -1,141 +1,249 @@
-import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import classNames from "classnames/bind";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTruck } from "@fortawesome/free-solid-svg-icons";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { getService } from "~/services";
-import Pagination from "~/components/Pagination";
-import CartStyle from "~/components/CartStyles";
+import style from './CartStyle.module.scss';
+import { formatMoney } from "~/format";
+import Input from "~/components/Input";
+import Button from "~/components/Button";
+import ProductBox from "~/components/ProductBox";
+import WoocommerceMessage from "~/components/WoocommerceMessage";
+import { routes } from "~/config";
+import {
+    doGetExistCart,
+    doRemoveCartItem,
+    doRestoreCartItem,
+    handleDiscount,
+    handleFetchListCart
+} from "~/constant/reduxContants";
+import {
+    restoreCartItem,
+    setCartItemsCurrent,
+    setCartItemsPaid,
+    setPriceCartItem
+} from "~/reducers/cart";
+import { setMessage } from "~/reducers/message";
+
+const cx = classNames.bind(style);
+
+const thead = [
+    {
+        title: 'product',
+        colSpan: 3
+    }, {
+        title: 'price',
+        colSpan: 1
+    }, {
+        title: 'quantity',
+        colSpan: 1
+    }, {
+        title: 'subtotal',
+        colSpan: 1
+    }
+];
 
 function Cart() {
-    const [category, setCategory] = useState('');
-    const [name, setName] = useState('');
-    const [start, setStart] = useState('');
-    const [end, setEnd] = useState('');
-    const [price, setPrice] = useState('');
-    const [tours, setTours] = useState([]);
-    const [topics, setTopics] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const toursPerPage = 3;
-    const search = useRef();
+    const dispatch = useDispatch();
 
-    const navigate = useNavigate();
+    const coupon = useSelector(state => state.coupon);
+    const message = useSelector(state => state.message);
+    const { dataCart, totalPrice, cartItemsPaid,
+        activeCoupon, cartItemsDeleted, cartItemsCurrent
+    } = useSelector(state => state.cart);
+
+    const [activeShipping, setActiveShipping] = useState(false);
+
+    // fake user id
+    const userId = 1;
 
     useEffect(() => {
-        const fetchAPI = async () => {
-            const result = await getService('tours');
-            setTours(result);
+        const fetchCart = (userId) => {
+            handleFetchListCart(dispatch, {
+                userId: userId,
+            });
         }
 
-        const fetchCategories = async () => {
-            const result = await getService('topics');
-            setTopics(result);
+        const checkExistCart = async userId => {
+            const result = await doGetExistCart(userId);
+            dispatch(setCartItemsPaid(result));
         }
 
-        const fetch = () => {
-            fetchAPI();
-            fetchCategories();
+        const fetch = (userId) => {
+            fetchCart(userId);
+            checkExistCart(userId);
         }
 
-        fetch();
+        fetch(userId);
     }, []);
 
-    const indexOfLastTours = currentPage * toursPerPage;
-    const indexOfFirstTours = indexOfLastTours - toursPerPage;
-    const currentTours = tours.slice(indexOfFirstTours, indexOfLastTours);
+    const handleApplyCoupon = useCallback((couponCode, dataCoupon) => {
+        dispatch(restoreCartItem({
+            type: 'reset',
+            couponValue: dataCoupon.couponValue
+        }));
 
-    const handleOnclick = number => setCurrentPage(number);
+        if (dataCoupon.checked) {
+            dispatch(setMessage({
+                message: 'Bạn đã dùng hết số lần giảm giá. Vui lòng tiến hành thanh toán hóa đơn!',
+                status: 'fail'
+            }));
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        const fetchTour = async () => {
-            const result = await getService.get('tours', {
-                name: name
-            });
-            setTours(result);
+            return;
         }
 
-        fetchTour();
-    }
+        handleDiscount(dispatch, {
+            couponCode: couponCode,
+            // fake user id
+            userId: 1,
+        });
+    }, []);
+
+    const handleChangeQuantity = useCallback((id, value, couponValue) => {
+        dispatch(setPriceCartItem({
+            id: id,
+            quantity: value,
+            couponValue: couponValue
+        }));
+    }, []);
+
+    const handleRemoveItem = useCallback((data, couponValue) => {
+        doRemoveCartItem(dispatch, {
+            data: data,
+            couponValue: couponValue,
+        });
+    }, []);
+
+    const handleRestoreCartItem = useCallback((data, couponValue, itemRemove) => {
+        // fake user id
+        let userId = 1;
+        doRestoreCartItem(dispatch, {
+            data: data,
+            userId: userId,
+            couponValue: couponValue,
+            itemRemove: itemRemove
+        });
+    }, []);
+
+    useEffect(() => {
+        dispatch(setCartItemsCurrent({ couponValue: coupon.couponValue }));
+    }, [dataCart]);
 
     return (
-        <CartStyle>
-            <div style={{ marginTop: '15.5rem' }}>
-                <div className="container-tour">
-                    <div className="w">
-                        {currentTours.map(tour => (
-                            <div key={tour.id} className="tour-travel">
-                                <div className="containerImg">
-                                    <img className="imageTour"
-                                        src={tour.image}
-                                        alt={tour.name}
-                                    >
-                                    </img>
-                                </div>
-                                <div className="infoTour">
-                                    <div className="content">
-                                        <h3>{tour.name}</h3>
-                                        <p>{tour.description}</p>
-                                    </div>
-                                </div>
-                                <div className="price">
-                                    <h3>{tour.price}</h3>
-                                    <h3>per person</h3>
-                                    <button
-                                        onClick={() => {
-                                            navigate(`/cart/tour/${tour.id}`)
-                                        }}
-                                    >
-                                        VIEW MORE
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
-                        <Pagination
-                            toursPerPage={toursPerPage}
-                            totalTours={tours.length != 0 ? tours.length : 0}
-                            handleOnclick={handleOnclick}
-                        />
+        <div className={cx('woocommerce')}>
+            {cartItemsDeleted.length > 0
+                ? cartItemsDeleted.map(item => (
+                    <WoocommerceMessage
+                        key={item.id}
+                        data={{
+                            message: message,
+                            coupon: coupon,
+                            item: item,
+                            itemRemove: cartItemsDeleted
+                        }}
+                        action={handleRestoreCartItem}
+                    />
+                ))
+                : <WoocommerceMessage
+                    data={{ message: message }}
+                    action={handleRestoreCartItem}
+                />
+            }
+            <ProductBox
+                data={{
+                    cart: dataCart,
+                    coupon: coupon,
+                    cartPaid: cartItemsPaid,
+                    cartCurrent: cartItemsCurrent
+                }}
+                className={cx('box-shadow', 'woocommerce__product-box')}
+                thead={thead}
+                scrollY={5}
+                onChangeItem={handleChangeQuantity}
+                onRemoveItem={handleRemoveItem}
+                onApply={handleApplyCoupon}
+            />
+            <div className={cx('cart-collaterals')}>
+                <div className={cx('cart_collaterals__total')}>
+                    <h3>cart totals</h3>
+                    <div className={cx('cart-collaterals__product', 'box-shadow')}>
+                        <table className={cx('table')}>
+                            <tbody>
+                                <tr className={cx('height-auto')}>
+                                    <td className={cx('header', 'padding__1-2')}>
+                                        <p>subtotal</p>
+                                    </td>
+                                    <td>
+                                        <p>
+                                            {formatMoney(cartItemsCurrent.reduce((total, item) => {
+                                                return parseInt(total) + parseInt(item.totalPrice);
+                                            }, 0))}
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr className={cx('height-auto')}>
+                                    <td className={cx('header', 'header-shipping')}>
+                                        <p>giao hàng</p>
+                                    </td>
+                                    <td>
+                                        <p className={cx('padding-none')}>Giao hàng miễn phí</p>
+                                        <p className={cx('padding-none')}>Vận chuyển đến Đồng Tháp.</p>
+                                        <p className={cx('change-address', 'padding-none')}>
+                                            <span onClick={() => setActiveShipping(!activeShipping)}>Đổi địa chỉ</span>
+                                            <span><FontAwesomeIcon icon={faTruck} /></span>
+                                        </p>
+                                        <div className={cx('shipping-calculator', activeShipping && 'active')}>
+                                            <Input
+                                                small
+                                                required
+                                                value=''
+                                                name=''
+                                                content='Thành phố'
+                                                onChange={() => { }}
+                                            />
+                                            <Input
+                                                small
+                                                required
+                                                value=''
+                                                name=''
+                                                content='Mã bưu điện'
+                                                onChange={() => { }}
+                                            />
+                                            <Button>cập nhật</Button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {activeCoupon && coupon.id
+                                    && <tr className={cx('height-auto')}>
+                                        <td className={cx('header')}>
+                                            <p>giảm giá</p>
+                                        </td>
+                                        <td>
+                                            <p>{coupon.couponValue}%</p>
+                                        </td>
+                                    </tr>
+                                }
+                                <tr className={cx('height-auto')}>
+                                    <td className={cx('header')}>
+                                        <p>total</p>
+                                    </td>
+                                    <td>
+                                        <p>{formatMoney(totalPrice)}</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <Button
+                            to={routes.CheckOut}
+                            className={cx('cart-collaterals__product__button')}>
+                            tiến hành thanh toán
+                        </Button>
                     </div>
-                    <form
-                        className="search"
-                        style={{ height: '29.6rem' }}
-                        onSubmit={e => handleSubmit(e)}
-                    >
-                        <h3>Tìm kiếm Tour</h3>
-                        <p>Tìm kiếm Tour du lịch ưng ý ngay hôm nay!</p>
-                        <input
-                            ref={search}
-                            onChange={(e) => setName(e.target.value)}
-                            value={name}
-                            name="name" placeholder="Name" type="text" />
-                        {/* <div className="date">
-                            <input
-                                onChange={(e) => setStart(e.target.value)}
-                                value={start}
-                                className="start" name="dateStart" type="date" />
-                            <input
-                                onChange={(e) => setEnd(e.target.value)}
-                                value={end}
-                                className="end" name="dateEnd" type="date" />
-                        </div>
-                        <input
-                            onChange={(e) => setPrice(e.target.value)}
-                            value={price}
-                            name="search" placeholder="Name" type="text" /> */}
-                        <select
-                            value={category}
-                            onChange={(e) => setCategory(e.target.value)}
-                            className="category" name="category">
-                            {topics.map(topic => (
-                                <option>{topic.title}</option>
-                            ))}
-                        </select>
-                        <input className="find" name="find" value="FIND TOURS" type="submit" />
-                    </form>
                 </div>
             </div>
-        </CartStyle>
-    )
+        </div>
+    );
 }
 
 export default Cart;

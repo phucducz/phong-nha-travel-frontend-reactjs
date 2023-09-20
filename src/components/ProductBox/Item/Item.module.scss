@@ -1,0 +1,91 @@
+.table-product__remove {
+    padding: 1rem 3rem;
+
+    &>.remove__icon {
+        border-radius: 100%;
+        width: 3rem;
+        height: 3rem;
+        background-color: transparent;
+        cursor: pointer;
+        transition: all .1s linear;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &>svg {
+            color: var(--color-red);
+        }
+
+        &:hover {
+            background-color: var(--color-red);
+
+            &>svg {
+                color: var(--white);
+            }
+        }
+    }
+
+    .item-paid {
+        &>svg {
+            color: var(--color-green);
+        }
+
+        &:hover {
+            background-color: var(--color-green);
+        }
+    }
+}
+
+.table-product__thumbnail {
+    &>a>img {
+        width: 5rem;
+        height: auto;
+    }
+}
+
+.table-product__name {
+    & .name {
+        color: var(--primary);
+        border-bottom: .1rem dotted transparent;
+        transition: border .1s linear;
+        text-decoration: none;
+
+        &:hover {
+            border-color: var(--primary);
+        }
+    }
+
+    & .booking-date {
+        padding: 0 !important;
+        margin-top: 1.5rem;
+        width: max-content;
+
+        &>span {
+            font-size: 1.5rem;
+        }
+
+        &>span+span {
+            padding-left: .5rem;
+        }
+    }
+}
+
+.table-product__quantity {
+    width: max-content;
+
+    & .quantity {
+        width: 5rem;
+        padding: 1rem;
+    }
+}
+
+.table-product__subtotal {
+    min-width: 9rem;
+    max-width: 10rem;
+}
+
+.table-product__price,
+.table-product__quantity,
+.table-product__subtotal {
+    text-align: center;
+}

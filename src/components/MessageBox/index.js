@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import classNames from "classnames/bind";
 import { useEffect, useRef, useState } from "react";
 import { memo } from "react";
@@ -155,6 +156,13 @@ function MessageBox({
             </div>
         </>
     )
+}
+
+MessageBox.propTypes = {
+    visible: PropTypes.bool,
+    setVisible: PropTypes.func,
+    setVisibleContent: PropTypes.func,
+    className: PropTypes.string,
 }
 
 export default memo(MessageBox);

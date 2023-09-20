@@ -1,0 +1,159 @@
+ //@import '../GlobalStyles/GlobalStyles.scss';
+
+.button {
+    width: max-content;
+    height: max-content;
+    cursor: pointer;
+    padding: 1.5rem 2rem;
+    opacity: 1;
+    font-weight: 700;
+    background-color: var(--primary);
+    color: white;
+    border: .3rem solid #47a0ff;
+    transition: .25s ease-in-out;
+    font-size: 1.3rem;
+    border-radius: .5rem;
+    position: relative;
+
+    & + .button {
+        margin-left: 3rem;
+    }
+
+    &:hover {
+        transform: translateY(-.3rem);
+    }
+
+    & svg {
+        color: var(--white);
+    }    
+
+    .title {
+        font-size: 1.5rem;
+    }
+}
+
+.button_icon + .title,
+.title + .button_icon {
+    margin-left: 1rem;
+}
+
+.tiny {
+    min-width: 3rem;
+}
+
+.small {
+    min-width: 10rem;
+}
+
+.large {
+    min-width: 15rem;
+}
+
+.primary {
+    background-color: var(--primary);
+    color: var(--white);
+    border: .3rem solid #47a0ff;
+
+    &:hover {
+        background-color: var(--white);
+        color: var(--primary);
+        border-color: #47a0ff;
+    }
+
+    &:hover svg {
+        color: var(--primary);
+    }
+}
+
+.rounded {
+    border-radius: 5rem;
+}
+
+.outline {
+    background-color: var(--white);
+    color: #4baeef;
+
+    span svg {
+        color: #4baeef;
+    }
+
+    &:hover {
+        background-color: #7dc4f3;
+        
+        span svg,
+        span {
+            color: var(--white);
+        }
+    }
+}
+
+.create {
+    background-color: #4baeef;
+    color: var(--white);
+    border: .3rem solid #4baeef;
+
+    &:hover {
+        background-color: var(--white);
+        color: #4baeef;
+        border-color: #4baeef;
+    }
+
+    &:hover svg {
+        color: #4baeef;
+    }
+}
+
+.cancel {
+    background-color: #f9902e;
+    color: var(--white);
+    border: .3rem solid #faaf68;
+
+    &:hover {
+        background-color: var(--white);
+        color: #f9902e;
+        border-color: #faaf68;
+    }
+
+    &:hover svg {
+        color: #f9902e;
+    }
+}
+
+.deleteb {
+    background-color: #fc3838;
+    color: var(--white);
+    border: .3rem solid #f15f5f;
+
+    &:hover {
+        background-color: var(--white);
+        color: #fc3838;
+        border-color: #f15f5f;
+    }
+
+    &:hover svg {
+        color: #fc3838;
+    }
+}
+
+.disable {
+    background-color: #d7d7d7!important;
+    color: var(--white)!important;
+    border: .3rem solid #d7d7d7!important;
+    cursor: default!important;
+    opacity: 1!important;
+
+    &:hover {
+        transform: none!important;
+        background-color: #d7d7d7!important;
+        color: var(--white)!important;
+        border-color: #d7d7d7!important;
+    }
+
+    &:hover svg {
+        color: var(--white);
+    }
+}
+
+a.button {
+    text-decoration: none;
+}

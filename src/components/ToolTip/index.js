@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import classNames from "classnames/bind";
 
 import style from './ToolTip.module.scss';
@@ -22,6 +23,13 @@ function ToolTip({
             <p>{content}</p>
         </div>
     )
+}
+
+ToolTip.propTypes = {
+    content: PropTypes.string,
+    top: PropTypes.bool,
+    bottom: PropTypes.bool,
+    className: PropTypes.string,
 }
 
 export default ToolTip;

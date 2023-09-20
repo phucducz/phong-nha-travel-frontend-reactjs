@@ -1,16 +1,29 @@
 @import '../GlobalMixin.scss';
 
 .field {
+    width: max-content;
+
     &+.field {
-        margin-top: 3rem;
+        margin-top: 1rem;
+    }
+
+    &>label {
+        line-height: 3rem;
     }
 }
 
-.label-option {
-    font-size: 1.3rem;
+.divInput+.divInput {
+    margin-top: 3rem;
+}
+
+.label-optional {
     margin-left: .5rem;
-    
-    & abbr {
+
+    &>.colon {
+        font-size: 1.3rem;
+    }
+
+    &>abbr {
         font-size: 1.3rem;
         color: red;
         padding-left: .5rem;
@@ -22,16 +35,16 @@
     width: max-content;
     display: flex;
     flex-direction: column;
-    margin-top: 1rem;
 
     .label {
         position: absolute;
-        top: calc(50% + 1.5rem);
+        top: 50%;
         left: 0;
-        transform: translateY(calc(-50% - 1.5rem));
-        height: 1.5rem;
+        transform: translateY(-50%);
+        height: 2.5rem;
+        line-height: 2.5rem;
+        padding: 0 2rem;
         overflow: hidden;
-        padding-left: 2rem;
         color: #9e9e9e;
         pointer-events: none;
         transition: all .5s;
@@ -86,25 +99,65 @@
 .input {
     width: 46.6rem;
     height: 4.5rem;
-    padding-left: 2rem;
+    padding: 0 5rem 0 2rem;
     background-color: #f5f4f4;
     border: 0.1rem solid #cecece;
     outline: none;
     transition: all 0.5s;
     border-radius: .3rem;
 
-    &:valid+label {
+    // &:required {
+    //     &:valid+.label {
+    //         height: 0 !important;
+    //     }
+    // }
+
+    &:focus+.label {
         height: 0;
+    }
+
+    &+.label {
+        &.non-empty {
+            height: 0;
+        }
     }
 }
 
-.divInput+.divInput {
-    margin-top: 3rem;
+.divInput__error {
+    font-size: 1.3rem;
+    color: var(--white);
+    background-color: #eb7591;
+    padding: .5rem;
+    white-space: nowrap;
+    position: absolute;
+    top: -2rem;
+    left: 0;
+    z-index: 1;
+    border-radius: 3rem;
+    user-select: none;
+    pointer-events: none;
+
+    &::before {
+        content: "";
+        display: block;
+        width: 1.8rem;
+        height: 1.8rem;
+        position: absolute;
+        bottom: -1.4rem;
+        left: 2rem;
+        z-index: -1;
+        transform: rotate(45deg);
+        border-top: 1.3rem solid #eb7591;
+        border-left: 1.3rem solid transparent;
+    }
 }
 
 @mixin commonlyAttributes {
     pointer-events: none;
-    color: var(--primary);
+
+    &>svg {
+        color: var(--primary);
+    }
 }
 
 .leftIcon {
@@ -115,4 +168,20 @@
 .rightIcon {
     @include setPosition(absolute, 50%, 8%, 0, 0, true);
     @include commonlyAttributes;
+}
+
+.textarea {
+    &>textarea {
+        min-width: 49rem;
+        min-height: 20rem;
+        padding: 1.5rem;
+        line-height: 3rem;
+        resize: none;
+    }
+
+    &>label {
+        left: -.5rem !important;
+        top: 4.2rem !important;
+        height: auto !important;
+    }
 }
