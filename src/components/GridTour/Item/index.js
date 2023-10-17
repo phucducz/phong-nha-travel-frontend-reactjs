@@ -16,18 +16,24 @@ function Item({
     data,
     categories,
     round,
-    type,
     ...passProps
 }) {
     const navigate = useNavigate();
+
+    const { type } = data;
+
+    const handleNavigate = (name, id) => {
+        const listName = name.split(' ');
+        navigate(`/tours/${listName.join('-')}/${id}`);
+    }
 
     return (
         <div className={cx('gridtours__standout')} {...passProps}>
             <div className={cx('gridtours__standout__item')}>
                 <div className={cx('item__image', { round })}>
-                    <div onClick={() => navigate(`/tours/${data.name}/${data.id}`)}>
+                    <div onClick={() => handleNavigate(data.name, data.id)}>
                         <img
-                            src={data.image}
+                            src={data.listImage[0].image}
                             alt={data.name}
                         />
                     </div>
@@ -45,15 +51,12 @@ function Item({
                 </div>
                 <div className={cx('item__icons')}>
                     {categories.length && categories.map(category => {
-                        if (category.tours_id || category.tourId === data.id) {
-
-                            return CATEGORY_ICONS.map(icon =>
-                                icon.id === (category.categories_id || category.categoryId)
-                                && <Link to={`${icon.to}/${icon.title}`}>
-                                    <Icon id={category.id} key={icon.id} data={icon} toolTip />
-                                </Link>
-                            );
-                        }
+                        return CATEGORY_ICONS.map(icon =>
+                            icon.id === category
+                            && <Link to={icon.to}>
+                                <Icon id={category.id} key={icon.id} data={icon} toolTip />
+                            </Link>
+                        );
                     })}
                 </div>
             </div>
@@ -72,7 +75,6 @@ Item.propTypes = {
     data: PropTypes.object.isRequired,
     categories: PropTypes.array.isRequired,
     round: PropTypes.bool,
-    type: PropTypes.string.isRequired,
 }
 
 export default Item;

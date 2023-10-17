@@ -367,14 +367,14 @@ function Admin() {
                             <div className={cx('container-input')}>
                                 <Input
                                     fieldName={`${fieldNames[0]}`}
-                                    content={`${fieldNames[0]}`}
+                                    placeHolder={`${fieldNames[0]}`}
                                     value={formik.values.id}
                                     required
                                     readOnly
                                 />
                                 <Input
                                     fieldName={`${fieldNames[1]}`}
-                                    content={`${fieldNames[1]}`}
+                                    placeHolder={`${fieldNames[1]}`}
                                     value={formik.values.name}
                                     onChange={formik.handleChange}
                                     name='name'
@@ -382,7 +382,7 @@ function Admin() {
                                 />
                                 <Input
                                     fieldName={`${fieldNames[4]}`}
-                                    content={`${fieldNames[4]}`}
+                                    placeHolder={`${fieldNames[4]}`}
                                     value={formik.values.price}
                                     onChange={formik.handleChange}
                                     name='price'

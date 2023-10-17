@@ -1,115 +1,122 @@
-import {
-    // setDataCart,
-    // setCartTotalPrice,
-    // removeCartItem,
-    // restoreCartItem
-} from "~/actions/cart";
-// import { setDataCheckout } from "~/actions/checkout";
-// import { setDataCoupon } from "~/actions/coupon";
-// import { setMessage } from "~/actions/message";
 import { setDataCheckout } from "~/reducers/checkout";
 import { setDataCoupon } from "~/reducers/coupon";
 import { setMessage } from "~/reducers/message";
-import { removeCartItem, restoreCartItem, setCartTotalPrice, setDataCart } from "~/reducers/cart";
+import cart, { removeCartItem, restoreCartItem, setCartItemsPaid, setCartTotalPrice, setDataCart } from "~/reducers/cart";
 import { deleteService, getService, postService, putService } from "~/services";
+import { setDataCheckoutDetail } from "~/reducers/checkoutDetail";
 
-// checkout constants
-export const BOOKING_TOUR = 'BOOKING_TOUR';
-export const SET_DATA_CHECKOUT = 'SET_DATA_CHECKOUT';
-
-// cart constants
-export const GET_LIST_CART_ITEM = 'GET_LIST_CART_ITEM';
-export const ADD_CART_ITEM = 'ADD_CART_ITEM';
-export const SET_DATA_CART = 'SET_DATA_CART';
-export const SET_PRICE_CART_ITEM = 'SET_PRICE_CART_ITEM';
-export const SET_CART_COUPON = 'SET_CART_COUPON';
-export const SET_CART_TOTAL_PRICE = 'SET_CART_TOTAL_PRICE';
-export const UPDATE_CART_ITEM_COUPON = 'UPDATE_CART_ITEM_COUPON';
-export const REMOVE_CART_ITEM = 'REMOVE_CART_ITEM';
-export const RESTORE_CART_ITEM = 'RESTORE_CART_ITEM';
-
-// message constants
-export const SET_MESSAGE = 'SET_MESSAGE';
-
-// coupon constants
-export const SET_DATA_COUPON = 'SET_DATA_COUPON';
-export const GET_DATA_COUPON = 'GET_DATA_COUPON';
-
-const doBookingTour = async (dispatch, payload) => {
-    const { userId, phoneNumber,
-        fullName, emailAddress } = payload;
-
-    let listFullName = fullName !== ''
-        && fullName.split(' ');
-    const data = {
-        userId: userId,
-        phoneNumber: phoneNumber,
-        fullName: fullName,
-        firstName: listFullName[0],
-        lastName: listFullName[1],
-        emailAddress: emailAddress,
-        paymentMethodId: 1
-    }
-
-    await postService('checkoutsDetail', { ...data });
-    dispatch(setDataCheckout({ ...data }));
+const doCreateCheckoutDetail = async (dispatch, payload) => {
+    await postService('checkoutDetails', { ...payload });
+    dispatch(setDataCheckout({ ...payload }));
 }
 
 const doGetExistCart = userId => {
     return getService('checkouts', { userId: userId });
 }
 
-const doAddCartItem = payload => {
-    postService('cart', { type: 'add', ...payload });
+const doCreateCartItem = async payload => {
+    await postService('cart', { ...payload });
 }
 
-const doUpdateCartItemCoupon = async payload => {
-    await postService('cart', { type: 'update', ...payload });
+const doApplyCoupon = async payload => {
+    await postService('checkouts', payload);
 }
 
 const fetchListCart = id => {
     return getService('cart', { userId: id });
 }
 
-const handleFetchListCart = async (dispatch, payload, listCart = []) => {
+const fetchUserDataById = async userId => {
+    const result = await getService('users', { id: userId });
+
+    return result[0];
+}
+
+const handleFetchUserDataById = async (dispatch, payload, listCart = []) => {
     const { userId } = payload;
 
-    const result = listCart.length === 0
-        ? await fetchListCart(userId)
-        : listCart;
+    let result = {};
 
-    dispatch(setDataCart(result));
+    if (listCart.length === 0) {
+        const response = await fetchUserDataById(userId);
 
-    const existCoupon = result.find(item => item.couponId);
-    let couponValue = 0;
+        result = response.listCart;
+        await dispatch(setDataCheckoutDetail(response.checkoutDetail));
+    }
+    else
+        result = listCart;
 
-    if (existCoupon) {
-        const coupon = await getService('coupons', {
-            id: +existCoupon.couponId
-        });
-        couponValue = +coupon.value;
+    let dataCart = result.map(item => {
+        let { id, bookingDate, quantity, tour } = item;
 
+        return {
+            ...tour,
+            id: id,
+            tourId: tour.id,
+            bookingDate: bookingDate,
+            quantity: quantity,
+            totalPrice: quantity * tour.priceAdult,
+            checkout: item.checkout
+        }
+    });
+
+    let cartItem = result.find(item => {
+        let checkout = item.checkout;
+
+        return !checkout || checkout.status === 'unpaid' || checkout.date === null;
+    });
+
+    let coupon = {
+        id: null,
+        code: null,
+        value: 0,
+        checked: false
+    };
+
+    let checkout = null;
+
+    if (cartItem)
+        checkout = cartItem.checkout;
+
+    if (checkout && checkout.coupon)
+        coupon = {
+            ...coupon,
+            ...checkout.coupon,
+            checked: true
+        };
+
+    dispatch(setDataCart({ cart: dataCart, coupon: coupon }));
+    dispatch(setCartItemsPaid({
+        cartCurrent: dataCart.filter(item => !item.checkout || item.checkout.status === 'unpaid' || item.checkout.date === null),
+        cartPaid: dataCart.filter(item => item.checkout && item.checkout.date && item.checkout.status === 'paid'),
+        coupon: coupon
+    }));
+
+    if (coupon) {
         dispatch(setDataCoupon({
             id: coupon.id,
             couponCode: coupon.code,
-            couponValue: parseInt(coupon.value),
-            checked: true
+            couponValue: coupon.value,
+            checked: coupon.checked
         }));
     }
 
-    dispatch(setCartTotalPrice({ couponValue: couponValue }));
+    dispatch(setCartTotalPrice({ couponValue: coupon.value }));
 }
 
-const doCheckCouponCode = couponCode => {
-    const response = postService('coupons', {
-        couponCode: couponCode
-    });
+const doGetCouponByCode = async couponCode => {
+    const response = await getService('coupons', { code: couponCode });
 
     return response;
 }
 
 const doSetQuantity = data => {
     putService('cart', data);
+}
+
+const handleBookClick = (dispatch, cartData, checkoutDetailData) => {
+    doCreateCartItem(cartData);
+    doCreateCheckoutDetail(dispatch, checkoutDetailData);
 }
 
 const handleChangeQuantityItem = data => {
@@ -119,7 +126,7 @@ const handleChangeQuantityItem = data => {
         return data.list.map(item => {
             if (+item.id === +data.id) {
                 item.quantity = data.quantity;
-                item.totalPrice = item.quantity * item.price;
+                item.totalPrice = item.quantity * item.priceAdult;
 
                 doSetQuantity({
                     id: item.id,
@@ -134,17 +141,18 @@ const handleChangeQuantityItem = data => {
     return data.list;
 }
 
-const handleSetTotalPrice = (data, couponValue) => {
+const handleSetTotalPrice = (data, value) => {
     let discountPrice = (price, valueDiscount) => price - (price * valueDiscount / 100);
+
     return data
-        && data.reduce((total, item) => total + discountPrice(item.totalPrice, couponValue), 0);
+        && data.reduce((total, item) => total + discountPrice(item.totalPrice, value), 0);
 }
 
 const handleDiscount = async (dispatch, payload) => {
-    const response = await doCheckCouponCode(payload.couponCode);
+    const result = await doGetCouponByCode(payload.couponCode);
     let message;
 
-    if (+response.status === 0) {
+    if (!result.id) {
         message = `Mã giảm giá "${payload.couponCode}" không tồn tại. Vui lòng thử mã khác!`;
         dispatch(setMessage({
             message: message,
@@ -152,11 +160,10 @@ const handleDiscount = async (dispatch, payload) => {
         }));
     }
     else {
-        const { result } = response;
-
-        doUpdateCartItemCoupon({
+        doApplyCoupon({
             userId: payload.userId,
-            couponId: parseInt(result.id)
+            couponId: result.id,
+            type: 'apply coupon'
         });
 
         message = `Bạn được giảm giá ${result.value}%. Hãy tiến hành thanh toán hóa đơn của bạn!`;
@@ -167,24 +174,22 @@ const handleDiscount = async (dispatch, payload) => {
         }));
 
         dispatch(setDataCoupon({
+            id: result.id,
             couponCode: payload.couponCode,
-            id: +result.id,
-            couponValue: +result.value,
+            couponValue: result.value,
             checked: true
         }));
 
-        dispatch(setCartTotalPrice({ couponValue: +result.value }));
+        dispatch(setCartTotalPrice({ couponValue: result.value }));
     }
 }
 
 const doRemoveCartItem = async (dispatch, payload) => {
     const { data, couponValue } = payload;
 
-    const response = await deleteService('cart', {
-        id: data.id
-    });
+    const response = await deleteService('cart', { id: data.id });
 
-    if (response.status === 0) {
+    if (response.status === 500) {
         dispatch(setMessage({
             message: 'xóa không thành công',
             status: 'fail',
@@ -200,6 +205,7 @@ const doRemoveCartItem = async (dispatch, payload) => {
         actionMessage: 'Khôi phục?'
     }));
 
+
     dispatch(removeCartItem({
         ...data,
         couponValue
@@ -207,13 +213,17 @@ const doRemoveCartItem = async (dispatch, payload) => {
 }
 
 const doRestoreCartItem = (dispatch, payload) => {
-    const { data, userId, couponValue, itemRemove } = payload;
-    let dataAdd = {
-        ...data,
+    const { data, userId, couponValue, itemRemoved } = payload;
+    let dataRestore = {
+        id: data.id,
+        quantity: data.quantity,
+        tourId: data.tourId,
+        bookingDate: data.bookingDate,
         userId: userId
     }
 
-    let listItem = itemRemove.filter(item => item.id !== data.id);
+    let listItem = itemRemoved.filter(item => item.id !== data.id);
+
     if (listItem.length === 0) {
         dispatch(setMessage({
             message: '',
@@ -221,11 +231,11 @@ const doRestoreCartItem = (dispatch, payload) => {
         }));
     }
 
-    const getListCart = async (data) => {
-        const { dataAdd, userId } = data;
+    const handleRestore = async data => {
+        const { dataRestore, userId } = data;
 
-        await postService('cart', { type: 'add', ...dataAdd });
-        handleFetchListCart(dispatch, { userId: userId });
+        await postService('cart', { ...dataRestore });
+        handleFetchUserDataById(dispatch, { userId: userId });
     }
 
     dispatch(restoreCartItem({
@@ -235,24 +245,43 @@ const doRestoreCartItem = (dispatch, payload) => {
         couponValue: couponValue
     }));
 
-    getListCart({
-        dataAdd: dataAdd,
+    handleRestore({
+        dataRestore: dataRestore,
         userId: userId
     });
 }
 
-const doConfirmData = (userId) => {
-    postService('checkouts', { userId: userId });
+const doConfirmData = async (data, cartCurrentData) => {
+    const { companyName, country, zipcode, city, note, firstName, lastName, fullName, address,
+        apartment, phoneNumber, emailAddress, userId, paymentMethodId, couponId, checkoutDetailId } = data;
+
+    const postData = {
+        companyName, country, zipcode, city, note, firstName, lastName, fullName, address,
+        apartment, phoneNumber, emailAddress, userId, paymentMethodId, couponId, checkoutDetailId
+    }
+
+    let cartCurrent;
+
+    cartCurrent = cartCurrentData.find(item => {
+        let checkout = item.checkout;
+
+        return checkout && (checkout.status === 'unpaid' || checkout.date === null);
+    });
+
+    if (cartCurrent)
+        postData.checkoutsId = cartCurrent.checkout.id;
+
+    await postService('checkouts', { ...postData, type: 'pay' });
 }
 
 export {
-    doBookingTour,
-    doAddCartItem,
-    handleFetchListCart,
+    doCreateCheckoutDetail,
+    doCreateCartItem,
+    handleBookClick,
+    handleFetchUserDataById,
     handleDiscount,
     handleChangeQuantityItem,
     handleSetTotalPrice,
-    doUpdateCartItemCoupon,
     doRemoveCartItem,
     doRestoreCartItem,
     fetchListCart,

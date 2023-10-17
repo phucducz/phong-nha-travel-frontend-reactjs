@@ -12,7 +12,7 @@ import { setMenuActive } from "~/reducers/menu";
 const cx = classNames.bind(style);
 
 function Header() {
-    const { menu } = useSelector(state => state);
+    const menu = useSelector(state => state.menu);
     const dispatch = useDispatch();
     const { active } = menu;
 

@@ -4,7 +4,6 @@ import { useRef } from "react";
 
 import style from './ConfirmData.module.scss';
 import Button from "../Button";
-import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(style);
 
@@ -22,7 +21,6 @@ function ConfirmData({
     });
 
     const confirmRef = useRef();
-    const navigate = useNavigate();
 
     if (confirmRef.current) {
         if (visible) {
@@ -43,13 +41,11 @@ function ConfirmData({
         }
     }
 
-
     const handleConfirmClick = () => {
-        const { userId, destination, action } = onConfirmClick;
+        const { data, action } = onConfirmClick;
 
         setVisible(false);
-        action(userId);
-        navigate(destination);
+        action(data);
     }
 
     return (
@@ -70,8 +66,7 @@ function ConfirmData({
                 </Button>
                 <Button
                     className={cx('footer__btn-confirm')}
-                    onClick={() => handleConfirmClick(id)}
-                    href={onConfirmClick.destination}
+                    onClick={() => handleConfirmClick()}
                 >
                     xác nhận
                 </Button>

@@ -21,22 +21,20 @@ function TouCategory() {
     const [toursOfPage, setToursOfPage] = useState([]);
 
     useEffect(() => {
-        let listName = categoryName.split('-');
-
         const fetchTourByCategoryName = async name => {
-            const result = await getService('tours', {
-                categoryName: name
+            const result = await getService('categories', {
+                categoryCode: name
             });
 
-            setTours(result);
-            handlePagination(1, result);
+            setTours(result[0].listTour);
+            handlePagination(1, result[0].listTour);
         }
 
-        fetchTourByCategoryName(listName.join(' '));
+        fetchTourByCategoryName(categoryName);
     }, [categoryName]);
 
     let itemPerPage = 3;
-
+    
     const handlePagination = (currentPage = 1, data = []) => {
         let toursCurrent = data.slice(
             itemPerPage * (currentPage - 1),

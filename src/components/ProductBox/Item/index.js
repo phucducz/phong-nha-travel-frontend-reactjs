@@ -15,7 +15,7 @@ function Item({
     data,
     value,
     status,
-    coupon,
+    couponValue,
     onChange,
     onRemove,
     readOnly
@@ -32,15 +32,18 @@ function Item({
     }
 
     const handleRemove = data => {
-        onRemove && onRemove(data, coupon);
+        onRemove && onRemove(data, couponValue);
     }
 
     useEffect(() => {
         if (change === false)
             return;
 
-        onChange && onChange(id, quantity, coupon);
+        onChange && onChange(id, quantity, couponValue);
     }, [debounce]);
+
+    let listName = data.name.split(' ');
+    let tourName = listName.join('-');
 
     return (
         <tr>
@@ -55,19 +58,28 @@ function Item({
                 }
             </td>
             <td className={cx('table-product__thumbnail')}>
-                <Link to="phongnhatravel">
-                    <img src={data.image} alt={data.tourName} />
+                <Link
+                    to={`/tours/${tourName}/${data.tourId}`}
+                    target='_blank'
+                >
+                    <img src={data.listImage && data.listImage[0].image} alt={data.name} />
                 </Link>
             </td>
             <td className={cx('table-product__name')}>
-                <Link to="phongnhatravel" className={cx('name')}>{data.tourName}</Link>
+                <Link
+                    to={`/tours/${tourName}/${data.tourId}`}
+                    className={cx('name')}
+                    target='_blank'
+                >
+                    {data.name}
+                </Link>
                 <p className={cx('booking-date')}>
                     <span>Booking Date:</span>
                     <span>{data.bookingDate}</span>
                 </p>
             </td>
             <td className={cx('table-product__price')}>
-                <p>{formatMoney(data.price)}</p>
+                <p>{formatMoney(data.priceAdult)}</p>
             </td>
             <td className={cx('table-product__quantity')}>
                 {!readOnly && !status

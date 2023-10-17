@@ -28,7 +28,7 @@ function WoocommerceMessage({
             woocommerceMessageRef.current.setAttribute('class', cx(classes));
 
             setTimeout(() => {
-                woocommerceMessageRef.current.setAttribute('class', cx(
+                woocommerceMessageRef && woocommerceMessageRef.current.setAttribute('class', cx(
                     classes,
                     'show-woocommerce',
                     status === 'success' ? 'success' : 'fail',
@@ -38,8 +38,15 @@ function WoocommerceMessage({
         }
     }, [message]);
 
-    const handleActionClick = (dataItem, dataCoupon) => {
-        action(dataItem, dataCoupon.couponValue, data.itemRemove);
+    const handleActionClick = (data, dataCoupon) => {
+        const { item, itemRemoved } = data;
+
+        let postData = {
+            ...item,
+            userId: item.userId
+        };
+
+        action(postData, dataCoupon.couponValue, itemRemoved);
     }
 
     return (
@@ -48,12 +55,15 @@ function WoocommerceMessage({
                 <span></span>
                 {MESSAGE_ICONS.map(icon => icon.status === status && <FontAwesomeIcon key={icon.status} icon={icon.icon} />)}
                 <p className={cx('content')}>
-                    {data.item !== undefined ? `"${data.item.tourName} " ${message}. ` : message}
+                    {data.item !== undefined ? `"${data.item.name} " ${message}. ` : message}
                     {actionMessage
                         && <Button
                             outline
                             className={cx('action')}
-                            onClick={() => handleActionClick(data.item, data.coupon)}
+                            onClick={() => handleActionClick({
+                                item: data.item,
+                                itemRemoved: data.itemRemoved
+                            }, data.coupon)}
                         >
                             {actionMessage}
                         </Button>

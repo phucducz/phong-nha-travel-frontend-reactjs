@@ -12,20 +12,24 @@ const cx = classNames.bind(style);
 
 function GridTour({
     data,
-    dataItem,
-    categories,
-    slider = true,
-    flex = false,
-    round = false,
+    title,
     className,
     ...passProps
 }) {
     const [tours, setTours] = useState([]);
-    const [gridTourItems, setGridTourItems] = useState(dataItem);
+    const [gridTourItems, setGridTourItems] = useState({});
     const [action, setAction] = useState({
         count: 0,
         index: 0,
     });
+
+    let flex = false, round = false, slider = false;
+
+    if (title) {
+        flex = title.flex;
+        round = title.round;
+        slider = title.slider;
+    }
 
     const classes = cx('tour-item', {
         [className]: className,
@@ -36,28 +40,9 @@ function GridTour({
     const rounded = round;
 
     useEffect(() => {
-        setTours(() => []);
-    }, []);
+        const newArr = title && flex ? data.slice(0, 6) : data;
 
-    useEffect(() => {
-        let arrayItem = [];
-        let existItem = false;
-
-        dataItem.topic
-            ? data.map(tour => {
-                if (+tour.topicId === +dataItem.topic) {
-                    existItem = arrayItem.find(item => item.id === tour.id);
-                    !existItem && arrayItem.push(tour);
-                }
-                return 0;
-            })
-            : setTours(data);
-
-        let newArray = [];
-
-        flex ? newArray = arrayItem.slice(0, 6) : newArray = arrayItem;
-
-        setTours(newArray);
+        setTours(newArr);
     }, [data]);
 
     useEffect(() => {
@@ -73,15 +58,9 @@ function GridTour({
     const handlePrevious = () => {
         setAction(() => {
             if (action.count === 0)
-                return {
-                    count: 0,
-                    index: dataItem.id
-                }
+                return { count: 0 }
             else
-                return {
-                    count: action.count - 1,
-                    index: dataItem.id
-                }
+                return { count: action.count - 1 }
         });
     }
 
@@ -90,86 +69,66 @@ function GridTour({
 
         setAction(() => {
             if (tours.length <= itemCurrent)
-                return {
-                    count: 0,
-                    index: dataItem.id
-                }
+                return { count: 0 }
             else if (action.count === tours.length - itemCurrent)
-                return {
-                    count: tours.length - itemCurrent,
-                    index: dataItem.id,
-                }
+                return { count: tours.length - itemCurrent }
             else
-                return {
-                    count: action.count + 1,
-                    index: dataItem.id,
-                }
+                return { count: action.count + 1 }
         });
     }
 
     return (
-        <>
-            {tours.length > 0
-                && <div className={classes} {...passProps}>
-                    {dataItem.title && dataItem.title}
-                    {slider
-                        && <Button
-                            tiny
-                            className={cx('tour-item__prevButton')}
-                            leftIcon={<FontAwesomeIcon icon={faChevronLeft} />}
-                            onClick={() => handlePrevious()}
-                        />
-                    }
-                    <div className={cx('container-presented')}>
-                        <div
-                            style={{ width: `${data.length * 36}rem` }}
-                            className={cx('container-gridtour')}
-                        >
-                            {tours.map((tour, index) => {
-                                return (
-                                    index === 0
-                                        ? <Item
-                                            key={tour.id}
-                                            data={tour}
-                                            style={{ marginLeft: `${gridTourItems.marginLeft}rem` }}
-                                            categories={categories}
-                                            round={rounded}
-                                            type={tour.type && tour.type}
-                                        />
-                                        : <Item
-                                            key={tour.id}
-                                            data={tour}
-                                            categories={categories}
-                                            round={rounded}
-                                            type={tour.type && tour.type}
-                                        />
-                                )
-                            }
-                            )}
-                        </div>
+        <>{tours.length > 0
+            && <div className={classes} {...passProps}>
+                {title.title}
+                {slider
+                    && <Button
+                        tiny
+                        className={cx('tour-item__prevButton')}
+                        leftIcon={<FontAwesomeIcon icon={faChevronLeft} />}
+                        onClick={() => handlePrevious()}
+                    />
+                }
+                <div className={cx('container-presented')}>
+                    <div
+                        style={{ width: `${tours.length * 36}rem` }}
+                        className={cx('container-gridtour')}
+                    >
+                        {tours.map((tour, index) => (
+                            index === 0
+                                ? <Item
+                                    key={index}
+                                    data={tour}
+                                    style={{ marginLeft: `${gridTourItems.marginLeft}rem` }}
+                                    categories={tour.categoryIds}
+                                    round={rounded}
+                                />
+                                : <Item
+                                    key={index}
+                                    data={tour}
+                                    categories={tour.categoryIds}
+                                    round={rounded}
+                                />
+                        ))}
                     </div>
-                    {slider
-                        && <Button
-                            tiny
-                            className={cx('tour-item__nextButton')}
-                            rightIcon={<FontAwesomeIcon icon={faChevronRight} />}
-                            onClick={() => handleNext()}
-                        />
-                    }
                 </div>
-            }
-        </>
-    )
+                {slider
+                    && <Button
+                        tiny
+                        className={cx('tour-item__nextButton')}
+                        rightIcon={<FontAwesomeIcon icon={faChevronRight} />}
+                        onClick={() => handleNext()}
+                    />
+                }
+            </div>
+        }</>
+    );
 }
 
 GridTour.propTypes = {
     data: PropTypes.array.isRequired,
-    dataItem: PropTypes.object.isRequired,
-    categories: PropTypes.array.isRequired,
-    slider: PropTypes.bool,
-    flex: PropTypes.bool,
-    round: PropTypes.bool,
-    className: PropTypes.string,
+    title: PropTypes.object,
+    className: PropTypes.string
 }
 
 export default memo(GridTour);

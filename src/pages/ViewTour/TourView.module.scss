@@ -201,7 +201,7 @@ $widthTab: calc(var(--max-width-page) * 74 / 100);
     background-color: #ee202e;
 }
 
-.ordermost {
+.order-most {
     background-color: var(--primary);
 }
 
@@ -213,10 +213,10 @@ $widthTab: calc(var(--max-width-page) * 74 / 100);
 
 .container__image {
     & h3 {
-        font-size: 4.2rem;
+        font-size: 4.2rem!important;
         color: var(--white);
         position: absolute;
-        top: 30%;
+        top: 40%;
         left: 50%;
         transform: translate(-50%, -50%);
         text-align: center;

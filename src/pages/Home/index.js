@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { image } from '~/images';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import style from './HomeStyle.module.scss';
@@ -13,7 +13,6 @@ import Button from '~/components/Button';
 import {
     PAGESINGLE_ITEMS,
     GRIDTOUR_ITEMS,
-    GRIDTOUR_ITEMS_PREFERENTIAL,
     TOURSTYPE_ITEMS,
     TOURREIVEW_ITEMS
 } from '~/constant';
@@ -23,33 +22,27 @@ import SearchBox from '~/components/SearchBox';
 import { TourReview } from '~/components/TourReview';
 import ToursType from '~/components/TourType';
 import Slider from '~/components/Slider';
-import { setTourCategories } from '~/reducers/tourCategories';
 import { setMenuActive } from '~/reducers/menu';
+import { handleFetchUserDataById } from '~/constant/reduxContants';
 
 const cx = classNames.bind(style);
 
 function Home() {
     const dispatch = useDispatch();
-    const tourCategories = useSelector(state => state.tourCategories);
 
     const navigate = useNavigate();
 
-    const [tours, setTours] = useState([]);
     const [categories, setCategories] = useState({ data: [] });
+    const [topics, setTopics] = useState([]);
+
+    // fake user id
+    const userId = 1;
 
     useEffect(() => {
-        const fetchTours = async () => {
-            // php service
+        const fetchTopics = async () => {
+            const result = await getService('/topics');
 
-            const result = await getService('tours', {
-                q: 'hot_order'
-            });
-            
-            // java service
-
-            // const result = await getService('tours');
-            
-            setTours(result);
+            setTopics(result);
         }
 
         const fetchCategories = async () => {
@@ -59,16 +52,14 @@ function Home() {
             setCategories({ data: result });
         }
 
-        const fetchToursCategories = async () => {
-            const result = await getService('tourCategories');
-
-            dispatch(setTourCategories(result));
+        const fetchUserById = userId => {
+            handleFetchUserDataById(dispatch, { userId: userId, });
         }
 
         const fetchData = () => {
-            fetchTours();
+            fetchTopics();
             fetchCategories();
-            fetchToursCategories();
+            fetchUserById(userId);
         }
 
         fetchData();
@@ -99,7 +90,7 @@ function Home() {
                     rounded
                     rightIcon={<FontAwesomeIcon icon={faArrowRight} />}
                     className={cx('gridtour__regular__button')}
-                    onClick={() => handleNavigate(1, '/tour-category/tour-hằng-ngày')}
+                    onClick={() => handleNavigate(1, '/tour-category/tour-hang-ngay')}
                 >
                     xem chi tiết
                 </Button>
@@ -107,8 +98,8 @@ function Home() {
         </div>
     );
 
-    GRIDTOUR_ITEMS_PREFERENTIAL[0].title = (
-        <div style={{ paddingTop: '3rem' }} className={cx('gridtour')}>
+    GRIDTOUR_ITEMS[2].title = (
+        <div className={cx('gridtour')}>
             <h3 className={cx('cm__title')}>tour đang ưu đãi</h3>
             <div className={cx('gridtour__regular')}>
                 <p className={cx('cm__content')}>Những tour có giá được tối ưu hấp dẫn trên Phong Nha Travel</p>
@@ -118,6 +109,7 @@ function Home() {
                     rounded
                     rightIcon={<FontAwesomeIcon icon={faArrowRight} />}
                     className={cx('gridtour__regular__button')}
+                    onClick={() => handleNavigate(-1, '/tour-category/tour-deal')}
                 >
                     xem chi tiết
                 </Button>
@@ -128,14 +120,12 @@ function Home() {
     return (
         <div className={cx('home-body')}>
             <Slider images={SLIDER_IMAGES} />
-            {GRIDTOUR_ITEMS.map(item => (
-                <GridTour
-                    key={item.id}
-                    data={tours}
-                    dataItem={item}
-                    categories={tourCategories.listData}
-                    slider={item.slider}
-                    flex={item.flex}
+            {topics && topics.map((topic, index) => (
+                (topic.id === 1 || topic.id === 2)
+                && <GridTour
+                    key={topic.id}
+                    data={topic.listTour.length > 0 ? topic.listTour : []}
+                    title={GRIDTOUR_ITEMS.length === 0 ? {} : GRIDTOUR_ITEMS[index]}
                 />
             ))}
             <div className={cx('cn-page')}>
@@ -149,32 +139,8 @@ function Home() {
                 </div>
             </div>
             <GridTour
-                data={tours}
-                dataItem={{
-                    title: (
-                        <div className={cx('gridtour')}>
-                            <h3 className={cx('cm__title')}>tour đang ưu đãi</h3>
-                            <div className={cx('gridtour__regular')}>
-                                <p className={cx('cm__content')}>Những tour có giá được tối ưu hấp dẫn trên Phong Nha Travel</p>
-                                <Button
-                                    primary
-                                    large
-                                    rounded
-                                    rightIcon={<FontAwesomeIcon icon={faArrowRight} />}
-                                    className={cx('gridtour__regular__button')}
-                                    onClick={() => handleNavigate(-1, '/tour-category/tour-deal')}
-                                >
-                                    xem chi tiết
-                                </Button>
-                            </div>
-                        </div>
-                    ),
-                    topic: 3
-                }}
-                categories={tourCategories.listData}
-                slider={false}
-                flex
-                round
+                data={topics.length > 0 ? topics[topics.length - 1].listTour : []}
+                title={GRIDTOUR_ITEMS.length === 0 ? {} : GRIDTOUR_ITEMS[topics.length - 1] }
             />
             <div className={cx('wrapper-find')}>
                 <div className={cx('tours-type')}>

@@ -52,7 +52,7 @@ function CouponForm({
                 className={cx('group-coupon__input')}
                 value={value}
                 name='coupon'
-                content='Mã ưu đãi'
+                placeHolder='Mã ưu đãi'
                 onChange={onChange}
             />
             <Button

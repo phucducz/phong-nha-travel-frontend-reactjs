@@ -2,6 +2,8 @@ import {
     faCheck,
     faChevronDown,
     faChevronRight,
+    faEye,
+    faEyeSlash,
     faTriangleExclamation
 } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -25,14 +27,7 @@ import SLIDER_3 from '~/images/con-duong-da-lat-quang-binh-2-720x530.jpg';
 import zalo from '~/images/zalo-icon.png';
 import phone from '~/images/phone-icon.png';
 import instagram from '~/images/Instagram-Icon.png';
-
-const today = () => {
-    let newDate = new Date();
-    let bookeDate = `${newDate.getFullYear()}-${newDate.getMonth() + 1 < 10 ? `0${newDate.getMonth() + 1}` :
-        `${newDate.getMonth() + 1}`}-${newDate.getDate() < 10 ? `0${newDate.getDate()}` : newDate.getDate()}`;
-
-    return bookeDate;
-};
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const SLIDER_IMAGES = [
     {
@@ -50,7 +45,7 @@ const SLIDER_IMAGES = [
 const TOUR_TYPES = [
     {
         id: 0,
-        type: 'ordermost',
+        type: 'order-most',
         content: 'tour book nhiều'
     }, {
         id: 1,
@@ -217,17 +212,41 @@ const MENU_ITEMS = [
 const GRIDTOUR_ITEMS = [
     {
         id: 0,
-        topic: 1,
         marginLeft: 0,
         slider: true,
         flex: false
     }, {
         id: 1,
-        topic: 2,
         slider: false,
         flex: true
+    }, {
+        id: 2,
+        marginLeft: 0,
+        slider: false,
+        flex: false,
+        round: true
     }
 ];
+// const GRIDTOUR_ITEMS = [
+//     {
+//         id: 0,
+//         topic: 1,
+//         marginLeft: 0,
+//         slider: true,
+//         flex: false
+//     }, {
+//         id: 1,
+//         topic: 2,
+//         slider: false,
+//         flex: true
+//     }, {
+//         id: 2,
+//         topic: 1,
+//         marginLeft: 0,
+//         slider: true,
+//         flex: false
+//     }
+// ];
 
 const GRIDTOUR_ITEMS_PREFERENTIAL = [
     {
@@ -313,24 +332,24 @@ const TOURSTYPE_ITEMS = [
 const CATEGORY_ICONS = [
     {
         id: 6,
-        title: 'tour-nổi-bật',
+        title: 'tour nổi bật',
         code: 'td__star',
-        to: 'tour-category'
+        to: 'tour-category/tour-noi-bat'
     }, {
         id: 4,
-        title: 'tour-hằng-ngày',
+        title: 'tour hằng ngày',
         code: 'td__earth',
-        to: 'tour-category'
+        to: 'tour-category/tour-hang-ngay'
     }, {
         id: 7,
-        title: 'tour-deal',
+        title: 'tour deal',
         code: 'td__deal',
-        to: 'tour-category'
+        to: 'tour-category/tour-deal'
     }, {
         id: 5,
-        title: 'tour-phong-nha-trọn-gói',
+        title: 'tour phong nha trọn gói',
         code: 'td__pn',
-        to: 'tour-category'
+        to: 'tour-category/tour-phong-nha-tron-goi'
     }
 ];
 
@@ -443,10 +462,35 @@ const MESSAGE_ICONS = [
         icon: faTriangleExclamation,
         status: 'fail'
     }
-]
+];
+
+const PASSWORD_RIGHT_ICONS = [
+    {
+        id: 1,
+        icon: <FontAwesomeIcon icon={faEye} />
+    }, {
+        id: 2,
+        icon: <FontAwesomeIcon icon={faEyeSlash} />
+    }
+];
+
+const today = () => {
+    let newDate = new Date();
+    let bookeDate = `${newDate.getFullYear()}-${newDate.getMonth() + 1 < 10 ? `0${newDate.getMonth() + 1}` :
+        `${newDate.getMonth() + 1}`}-${newDate.getDate() < 10 ? `0${newDate.getDate()}` : newDate.getDate()}`;
+
+    return bookeDate;
+};
+
+const toLocalDate = date => {
+    const list = date.split('/');
+
+    return `${list[list.length - 1]}-${list[1]}-${list[0]}`;
+}
 
 export {
     today,
+    toLocalDate,
     SLIDER_IMAGES,
     TOUR_TYPES,
     fieldNames,
@@ -461,5 +505,6 @@ export {
     INFO_TOUR,
     CATEGORIES_HREF,
     SHARE_BUTTONS,
-    MESSAGE_ICONS
+    MESSAGE_ICONS,
+    PASSWORD_RIGHT_ICONS
 }

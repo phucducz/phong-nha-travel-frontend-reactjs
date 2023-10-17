@@ -102,40 +102,22 @@ const cartReducer = createSlice({
     initialState,
     reducers: {
         setDataCart: (state, action) => {
-            state.dataCart = action.payload;
-            state.totalPrice = handleSetTotalPrice(state.cartItemsCurrent, action.payload.couponValue);
+            const { cart, coupon } = action.payload;
+            state.dataCart = cart;
+            state.totalPrice = handleSetTotalPrice(state.cartItemsCurrent, coupon.value);
         },
         setCartItemsCurrent: (state, action) => {
-            const { dataCart, cartItemsPaid } = state;
-
-            let itemArray = dataCart.map(item => {
-                let itemCurrent = cartItemsPaid.find(itemPaid => itemPaid.id === item.id);
-
-                if (!itemCurrent)
-                    return item;
-                return null;
-            });
-            let itemsCurrent = itemArray.filter(item => item !== null);
-            
-            state.cartItemsCurrent = itemsCurrent;
-            state.totalPrice = handleSetTotalPrice(state.cartItemsCurrent, action.payload.couponValue);
-        },
-        setCartItemsPaid: (state, action) => {
-            const { dataCart } = state;
             const { payload } = action;
 
-            let itemArray = dataCart.map(item => {
-                let itemCurrent = payload.find(itemPaid => itemPaid.id === item.id);
+            state.cartItemsCurrent = payload.cartCurrent;
+            state.totalPrice = handleSetTotalPrice(payload.cartCurrent, payload.coupon.couponValue);
+        },
+        setCartItemsPaid: (state, action) => {
+            const { payload } = action;
 
-                if (!itemCurrent)
-                    return item;
-                return null;
-            });
-            let itemsCurrent = itemArray.filter(item => item !== null);
-
-            state.cartItemsCurrent = itemsCurrent;
-            state.totalPrice = handleSetTotalPrice(state.cartItemsCurrent, action.payload.couponValue);
-            state.cartItemsPaid = payload;
+            state.cartItemsCurrent = payload.cartCurrent;
+            state.totalPrice = handleSetTotalPrice(payload.cartCurrent, payload.coupon.value);
+            state.cartItemsPaid = payload.cartPaid;
         },
         setPriceCartItem: (state, action) => {
             let newList = handleChangeQuantityItem({
@@ -154,14 +136,15 @@ const cartReducer = createSlice({
             state.activeCoupon = couponValue !== 0 ? true : false
         },
         removeCartItem: (state, action) => {
-            let newData = state.dataCart;
-            let itemsDeleted = newData.find(item => item.id === action.payload.id);
-            let dataCurrent = newData.filter(item => item.id !== action.payload.id);
+            const { dataCart, cartItemsCurrent } = state;
+            const { payload } = action;
+
+            let itemsDeleted = dataCart.find(item => item.id === payload.id);
             let dataDeleted = [...state.cartItemsDeleted, itemsDeleted];
 
-            state.dataCart = dataCurrent;
+            state.dataCart = dataCart.filter(item => item.id !== payload.id);
             state.cartItemsDeleted = dataDeleted;
-            state.totalPrice = handleSetTotalPrice(state.cartItemsCurrent, action.payload.couponValue)
+            state.totalPrice = handleSetTotalPrice(cartItemsCurrent, payload.couponValue)
         },
         restoreCartItem: (state, action) => {
             const { dataCart } = state;
@@ -170,11 +153,10 @@ const cartReducer = createSlice({
 
             if (action.payload.type === 'reset')
                 newCartItemDeleted = [];
-            else {
+            else
                 newDataStore.push(action.payload.data);
-            }
 
-            state.dataCart = newDataStore;
+            state.dataCart = dataCart;
             state.cartItemsDeleted = newCartItemDeleted;
             state.totalPrice = handleSetTotalPrice(state.cartItemsCurrent, action.payload.couponValue)
         }

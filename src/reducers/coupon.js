@@ -26,7 +26,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     id: null,
     couponCode: '',
-    couponValue: +0,
+    couponValue: 0,
     checked: false
 }
 
@@ -41,10 +41,13 @@ const couponReducer = createSlice({
             state.couponCode = couponCode
             state.couponValue = couponValue;
             state.checked = checked;
+        },
+        clearCoupon: (state, action) => {
+            state = initialState;
         }
     }
 });
 
-export const { setDataCoupon } = couponReducer.actions;
+export const { setDataCoupon, clearCoupon } = couponReducer.actions;
 
 export default couponReducer.reducer;

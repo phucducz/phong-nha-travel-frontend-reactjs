@@ -1,0 +1,140 @@
+.account {
+    width: var(--max-width-page);
+    min-height: 50rem;
+    margin: 15rem auto 0 auto;
+    background-color: var(--white);
+    padding: 4rem 5rem;
+    border-radius: .3rem;
+
+    & .login__title,
+    .sign-up__title {
+        font-size: 3.5rem !important;
+        font-family: var(--font-family-sub);
+        width: max-content;
+        margin: 0 auto 2rem auto;
+    }
+}
+
+.account__login__button,
+.account__signup__button {
+    text-transform: uppercase;
+    margin-top: 2rem;
+    opacity: .8;
+
+    &:hover {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+.account__login__lost-pass {
+    & .lost-pass {
+        font-size: 1.5rem;
+        width: max-content;
+        color: var(--primary);
+        cursor: pointer;
+        margin-top: 2rem;
+        border-bottom: .2rem dotted transparent;
+        transition: border-bottom .3s;
+
+        &:hover {
+            border-bottom: .2rem dotted var(--primary);
+        }
+    }
+
+    & .sigin-up {
+        & span {
+            font-size: 1.5rem;
+            width: max-content;
+        }
+
+        & span:nth-child(1) {
+            padding-right: 1rem;
+        }
+
+        & span:nth-child(2) {
+            color: var(--primary);
+            cursor: pointer;
+            margin-top: 2rem;
+            border-bottom: .2rem dotted transparent;
+            transition: border-bottom .3s;
+
+            &:hover {
+                border-bottom: .2rem dotted var(--primary);
+            }
+        }
+    }
+
+    & p+p {
+        margin-top: 2rem;
+    }
+}
+
+.signup__password__input,
+.login__password__input {
+    padding: 0 2rem;
+
+    &~div {
+        right: 2%;
+        pointer-events: all;
+        
+        & svg {
+            cursor: pointer;
+        }
+    }
+}
+
+.account__signup__already {
+    margin-top: 2rem;
+
+    & span:nth-child(1) {
+        padding-right: 1rem;
+    }
+
+    & span:nth-child(2) {
+        color: var(--primary);
+        cursor: pointer;
+        margin-top: 2rem;
+        border-bottom: .2rem dotted transparent;
+        transition: border-bottom .3s;
+
+        &:hover {
+            border-bottom: .2rem dotted var(--primary);
+        }
+    }
+
+    & span {
+        font-size: 1.5rem;
+        width: max-content;
+    }
+}
+
+.account__sigin__login {
+    font-size: 1.5rem;
+    width: max-content;
+    color: var(--primary);
+    cursor: pointer;
+    margin-top: 2rem;
+    border-bottom: .2rem dotted transparent;
+    transition: border-bottom .3s;
+
+    &:hover {
+        border-bottom: .2rem dotted var(--primary);
+    }
+}
+
+.account__login {
+    display: block;
+
+    &.disable {
+        display: none;
+    }
+}
+
+.account__sign-up {
+    display: none;
+
+    &.active {
+        display: block;
+    }
+}

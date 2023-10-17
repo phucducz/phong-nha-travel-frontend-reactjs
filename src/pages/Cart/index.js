@@ -12,19 +12,17 @@ import ProductBox from "~/components/ProductBox";
 import WoocommerceMessage from "~/components/WoocommerceMessage";
 import { routes } from "~/config";
 import {
-    doGetExistCart,
     doRemoveCartItem,
     doRestoreCartItem,
     handleDiscount,
-    handleFetchListCart
+    handleFetchUserDataById
 } from "~/constant/reduxContants";
 import {
     restoreCartItem,
     setCartItemsCurrent,
-    setCartItemsPaid,
     setPriceCartItem
 } from "~/reducers/cart";
-import { setMessage } from "~/reducers/message";
+import { clearMessage, setMessage } from "~/reducers/message";
 
 const cx = classNames.bind(style);
 
@@ -49,6 +47,7 @@ function Cart() {
 
     const coupon = useSelector(state => state.coupon);
     const message = useSelector(state => state.message);
+    
     const { dataCart, totalPrice, cartItemsPaid,
         activeCoupon, cartItemsDeleted, cartItemsCurrent
     } = useSelector(state => state.cart);
@@ -57,25 +56,15 @@ function Cart() {
 
     // fake user id
     const userId = 1;
-
+    
     useEffect(() => {
-        const fetchCart = (userId) => {
-            handleFetchListCart(dispatch, {
+        const fetchCart = userId => {
+            handleFetchUserDataById(dispatch, {
                 userId: userId,
             });
         }
 
-        const checkExistCart = async userId => {
-            const result = await doGetExistCart(userId);
-            dispatch(setCartItemsPaid(result));
-        }
-
-        const fetch = (userId) => {
-            fetchCart(userId);
-            checkExistCart(userId);
-        }
-
-        fetch(userId);
+        fetchCart(userId);
     }, []);
 
     const handleApplyCoupon = useCallback((couponCode, dataCoupon) => {
@@ -96,38 +85,43 @@ function Cart() {
         handleDiscount(dispatch, {
             couponCode: couponCode,
             // fake user id
-            userId: 1,
+            userId: 1
         });
     }, []);
 
-    const handleChangeQuantity = useCallback((id, value, couponValue) => {
+    const handleChangeQuantity = useCallback((id, quantity, couponValue) => {
         dispatch(setPriceCartItem({
             id: id,
-            quantity: value,
-            couponValue: couponValue
+            quantity: parseInt(quantity),
+            coupon: couponValue
         }));
     }, []);
 
     const handleRemoveItem = useCallback((data, couponValue) => {
         doRemoveCartItem(dispatch, {
             data: data,
-            couponValue: couponValue,
+            coupon: couponValue
         });
     }, []);
 
-    const handleRestoreCartItem = useCallback((data, couponValue, itemRemove) => {
+    const handleRestoreCartItem = useCallback((data, couponValue, itemRemoved) => {
         // fake user id
         let userId = 1;
         doRestoreCartItem(dispatch, {
             data: data,
             userId: userId,
             couponValue: couponValue,
-            itemRemove: itemRemove
+            itemRemoved: itemRemoved
         });
     }, []);
 
     useEffect(() => {
-        dispatch(setCartItemsCurrent({ couponValue: coupon.couponValue }));
+        let data = dataCart.filter(item => !item.checkout || item.checkout.status === 'unpaid' || item.checkout.date === null);
+
+        dispatch(setCartItemsCurrent({
+            cartCurrent: data,
+            coupon: coupon
+        }));
     }, [dataCart]);
 
     return (
@@ -140,7 +134,7 @@ function Cart() {
                             message: message,
                             coupon: coupon,
                             item: item,
-                            itemRemove: cartItemsDeleted
+                            itemRemoved: cartItemsDeleted
                         }}
                         action={handleRestoreCartItem}
                     />
@@ -199,7 +193,7 @@ function Cart() {
                                                 required
                                                 value=''
                                                 name=''
-                                                content='Thành phố'
+                                                placeHolder='Thành phố'
                                                 onChange={() => { }}
                                             />
                                             <Input
@@ -207,7 +201,7 @@ function Cart() {
                                                 required
                                                 value=''
                                                 name=''
-                                                content='Mã bưu điện'
+                                                placeHolder='Mã bưu điện'
                                                 onChange={() => { }}
                                             />
                                             <Button>cập nhật</Button>

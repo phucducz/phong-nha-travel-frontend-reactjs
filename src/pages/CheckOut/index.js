@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
-import format from "date-fns/format";
+import { useNavigate } from "react-router-dom";
 
 import style from './CheckOut.module.scss';
 import Input from "~/components/Input";
@@ -19,17 +19,14 @@ import { getService } from "~/services";
 import ConfirmData from "~/components/ConfirmData";
 import {
     doConfirmData,
-    doGetExistCart,
-    fetchListCart,
     handleDiscount,
-    handleFetchListCart
+    handleFetchUserDataById
 } from "~/constant/reduxContants";
 import WoocommerceMessage from "~/components/WoocommerceMessage";
 import TableProduct from "~/components/TableProduct";
-import { setMessage } from "~/reducers/message";
-import { getDataPayment } from "~/reducers/payment";
-import { setDataCheckout } from "~/reducers/checkout";
-import { setCartItemsPaid } from "~/reducers/cart";
+import { clearMessage, setMessage } from "~/reducers/message";
+import { setDataPayment } from "~/reducers/payment";
+import { clearCoupon, setDataCoupon } from "~/reducers/coupon";
 
 const cx = classNames.bind(style);
 
@@ -51,11 +48,12 @@ const thead = [
 
 function CheckOut() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const checkout = useSelector(state => state.checkout.dataCheckout);
-    const { coupon } = useSelector(state => state);
-    const { message } = useSelector(state => state);
-    const { cart } = useSelector(state => state);
+    const coupon = useSelector(state => state.coupon);
+    const message = useSelector(state => state.message);
+    const cart = useSelector(state => state.cart);
+    const checkoutDetail = useSelector(state => state.checkoutDetail);
 
     const [active, setActive] = useState(false);
     const [couponCode, setCouponCode] = useState('');
@@ -63,15 +61,10 @@ function CheckOut() {
 
     // fake user id
     const userId = 1;
-    let listDate = [], date;
-
-    if (checkout.bookingDate) {
-        listDate = checkout.bookingDate.split('/');
-        date = new Date(`${listDate[2]}/${listDate[1]}/${listDate[0]}`);
-    }
 
     const formik = useFormik({
         initialValues: {
+            id: 0,
             companyName: '',
             address: '',
             country: '',
@@ -80,18 +73,20 @@ function CheckOut() {
             city: '',
             addressOther: '',
             note: '',
-            bookingDate: date && format(date, 'yyyy-MM-dd'),
             firstName: '',
             lastName: '',
             emailAddress: '',
             fullName: '',
             paymentMethodId: 1,
             userId: userId,
+            bookingDate: '',
             phoneNumber: '',
             totalPrice: 0,
             coupon: '',
             couponId: 0,
-            couponValue: 0
+            couponValue: 0,
+            cart: [],
+            payments: []
         },
         initialTouched: {
             companyName: false,
@@ -107,11 +102,8 @@ function CheckOut() {
             phoneNumber: false,
             emailAddress: false
         },
-        onSubmit: values => {
-            setVisibleModalConfirm(!visibleModalConfirm);
-            // console.log(values);
-        },
-
+        onSubmit: () => formik.values.cart.length > 0
+            && setVisibleModalConfirm(!visibleModalConfirm),
         validationSchema: Yup.object({
             companyName: Yup.string()
                 .matches(/[A-Za-z0-9'\.\-\s\,]/, "Vui lòng nhập tên công ty đúng định dạng(Không dùng ký tự đặc biệt)"),
@@ -138,55 +130,43 @@ function CheckOut() {
     });
 
     useEffect(() => {
-        const listPayment = async () => {
+        const getListPayment = async () => {
             const result = await getService('payments');
-            dispatch(getDataPayment(result));
+            dispatch(setDataPayment(result));
 
             return result;
         }
 
-        const informationUser = async (userId) => {
-            const result = await getService('checkoutsDetail', {
-                // fake user id
-                userId: userId
+        const fetchCart = userId => {
+            handleFetchUserDataById(dispatch, {
+                userId: userId,
             });
-            dispatch(setDataCheckout({ ...checkout, ...result }));
-
-            return result;
-        }
-
-        const listCartOfUSer = async (dispatch, userId) => {
-            const result = await fetchListCart(userId);
-            handleFetchListCart(dispatch, userId, result);
-        }
-
-        const listCartPaid = async userId => {
-            const result = await doGetExistCart(userId);
-            dispatch(setCartItemsPaid(result));
-        }
-
-        const handleGetListCart = (dispatch, userId) => {
-            listCartOfUSer(dispatch, userId);
-            listCartPaid(userId);
         }
 
         const fetchData = async () => {
-            const payments = await listPayment();
-            const info = await informationUser(userId);
+            const payments = await getListPayment();
 
-            handleGetListCart(dispatch, userId);
+            fetchCart(userId);
 
-            formik.setValues({
-                ...formik.values,
-                ...info,
-                payments: payments
-            });
+            formik.setFieldValue('payments', payments);
         }
 
         fetchData();
     }, []);
 
-    const CHECK_BOX_INPUTS = [
+    useEffect(() => {
+        formik.setValues({
+            ...formik.values,
+            ...coupon,
+            totalPrice: cart.totalPrice,
+            cart: cart.cartItemsCurrent,
+            ...checkoutDetail.information,
+            couponId: coupon.id,
+            checkoutDetailId: checkoutDetail.information.id
+        });
+    }, [cart, checkoutDetail.information, coupon]);
+
+    const checkBoxInputs = [
         {
             className: 'first-name',
             fieldName: 'Tên:',
@@ -230,7 +210,7 @@ function CheckOut() {
             touched: formik.touched.address
         }, {
             className: false,
-            fieldName: false,
+            fieldName: '',
             value: formik.values.apartment,
             error: formik.errors.apartment,
             name: 'apartment',
@@ -273,43 +253,7 @@ function CheckOut() {
         }
     ];
 
-    useEffect(() => {
-        if (coupon.checked === false)
-            return;
-
-        formik.setValues({
-            ...formik.values,
-            coupon: coupon.couponCode,
-            couponId: coupon.couponId,
-            couponValue: coupon.couponValue,
-            totalPrice: cart.totalPrice,
-            cart: cart.cartItemsCurrent
-        });
-
-        setActive(false);
-    }, [cart, coupon]);
-
-    const handleApplyCoupon = useCallback((couponCode) => {
-        setCouponCode('');
-
-        if (coupon.checked) {
-            dispatch(setMessage({
-                message: 'Bạn đã dùng hết số lần giảm giá. Vui lòng tiến hành thanh toán hóa đơn!',
-                status: 'fail'
-            }));
-
-            setActive(false);
-            return;
-        }
-
-        handleDiscount(dispatch, {
-            couponCode: couponCode,
-            // fake user id
-            userId: 1
-        });
-    }, [coupon]);
-
-    const CONFIRM_DATA = [
+    const confirmData = [
         {
             title: 'Họ tên',
             content: formik.values.fullName
@@ -340,11 +284,11 @@ function CheckOut() {
         }
     ];
 
-    const CONFIRM_DATA_MORE = [
+    const confirmDataMore = [
         {
             title: 'Mã giảm giá',
             content: coupon.checked === true
-                ? formik.values.coupon : 'Không áp dụng'
+                ? formik.values.couponCode : 'Không áp dụng'
         }, {
             title: 'Giảm giá',
             content: coupon.checked === true
@@ -354,13 +298,45 @@ function CheckOut() {
             content: formatMoney(formik.values.totalPrice)
         }, {
             title: 'Phương thức thanh toán',
-            content: +formik.values.paymentMethodId === 1
+            content: formik.values.paymentMethodId === 1
                 ? 'Thanh toán trực tuyến' : 'Thanh toán trực tiếp'
         }
     ];
 
-    const handleConfirmData = userId => {
-        doConfirmData(userId);
+    const handleApplyCoupon = useCallback((couponCode) => {
+        setCouponCode('');
+
+        if (coupon.checked) {
+            dispatch(setMessage({
+                message: 'Bạn đã dùng hết số lần giảm giá. Vui lòng tiến hành thanh toán hóa đơn!',
+                status: 'fail'
+            }));
+
+            setActive(false);
+            return;
+        }
+
+        handleDiscount(dispatch, {
+            couponCode: couponCode,
+            // fake user id
+            userId: 1
+        });
+    }, [coupon]);
+
+    const handleConfirmData = async data => {
+        if (data.cart.length) {
+            await doConfirmData(data, cart.cartItemsCurrent);
+
+            dispatch(setMessage({
+                message: '',
+                status: '',
+                actionMessage: null
+            }));
+
+            navigate('/cart');
+
+            return;
+        }
     }
 
     return (
@@ -395,7 +371,7 @@ function CheckOut() {
                 <div className={cx('form__box')}>
                     <div className={cx('form__box__1')}>
                         <p>Thông tin thanh toán</p>
-                        {CHECK_BOX_INPUTS.map((input, index) => (
+                        {checkBoxInputs.map((input, index) => (
                             <div
                                 key={index}
                                 className={cx(input.className)}
@@ -405,13 +381,13 @@ function CheckOut() {
                                     fieldName={input.fieldName}
                                     value={input.value}
                                     name={input.name}
-                                    content={input.content}
+                                    placeHolder={input.content}
                                     optional={input.optional && input.optional}
                                     error={input.error}
                                     onChange={formik.handleChange}
                                     onFocus={() => formik.setFieldTouched(`${input.name}`, true)}
                                     touched={input.touched}
-                                    small={input.className === 'first-name' || input.className === 'last-name' && true}
+                                    small={(input.className === 'first-name' || input.className === 'last-name') && true}
                                 />
                             </div>
                         ))}
@@ -432,7 +408,7 @@ function CheckOut() {
                             fieldName='Ghi chú đơn hàng:'
                             value={formik.values.note}
                             name='note'
-                            content={'Ghi chú về đơn hàng, ví dụ: thời gian hay chỉ dẫn địa điểm giao hàng chi tiết hơn.'}
+                            placeHolder='Ghi chú về đơn hàng, ví dụ: thời gian hay chỉ dẫn địa điểm giao hàng chi tiết hơn.'
                             optional={true}
                             onChange={formik.handleChange}
                         />
@@ -455,7 +431,7 @@ function CheckOut() {
                                     && formik.values.cart.map(item => (
                                         <tr key={item.id}>
                                             <td>
-                                                <span className={cx('title')}>{item.tourName}</span>
+                                                <span className={cx('title')}>{item.name}</span>
                                                 <span className={cx('quantity')}> x {item.quantity}</span>
                                                 <span className={cx('booking-date')}>Booking Date: {item.bookingDate}</span>
                                             </td>
@@ -519,7 +495,12 @@ function CheckOut() {
                                 <a target='_blank' rel="noreferrer" href={routes.Policy}> chính sách riêng tư.</a>
                             </p>
                             <div className={cx('box__place-order__button')}>
-                                <Button type='submit'>Đặt hàng</Button>
+                                <Button
+                                    type='submit'
+                                    disable={!formik.values.cart.length > 0}
+                                >
+                                    Đặt hàng
+                                </Button>
                             </div>
                         </div>
                     </div>
@@ -531,7 +512,7 @@ function CheckOut() {
                 visible={visibleModalConfirm}
                 setVisible={setVisibleModalConfirm}
                 onConfirmClick={{
-                    userId: userId,
+                    data: { ...formik.values, type: 'pay' },
                     destination: '/cart',
                     action: handleConfirmData
                 }}
@@ -555,7 +536,7 @@ function CheckOut() {
                                 <p>Thông tin khách hàng:</p>
                             </div>
                             <div className={cx('user__content')}>
-                                {CONFIRM_DATA.map((data, index) => (
+                                {confirmData.map((data, index) => (
                                     <div key={index} className={cx('content')}>
                                         <p>{data.title}: </p>
                                         <p>{data.content}</p>
@@ -569,7 +550,7 @@ function CheckOut() {
                                 <p>Thông tin thanh toán:</p>
                             </div>
                             <div className={cx('ship__content')}>
-                                {CONFIRM_DATA_MORE.map((data, index) => (
+                                {confirmDataMore.map((data, index) => (
                                     <div key={index} className={cx('content')}>
                                         <p>{data.title}: </p>
                                         <p>{data.content}</p>

@@ -161,7 +161,7 @@ function SearchBox({
                     rightIcon={<FontAwesomeIcon icon={faSearch} />}
                     name='name'
                     value={formik.values.tourName}
-                    content='Search name'
+                    placeHolder='Search name'
                     className={cx('inputs__search')}
                     onChange={e => formik.setFieldValue('tourName', e.target.value)}
                 />
@@ -170,7 +170,7 @@ function SearchBox({
                         mini
                         name='start'
                         value={formik.values.startDate}
-                        content='Start'
+                        placeHolder='Start'
                         type='text'
                         error={formik.errors.startDate}
                         touched={formik.touched.startDate}
@@ -181,7 +181,7 @@ function SearchBox({
                         mini
                         name='end'
                         value={formik.values.endDate}
-                        content='End'
+                        placeHolder='End'
                         type='text'
                         error={formik.errors.endDate}
                         touched={formik.touched.endDate}

@@ -8,6 +8,8 @@ import messageReducer from "./message";
 import searchReducer from './search';
 import tourCategoriesReducer from "./tourCategories";
 import menuReducer from './menu';
+import checkoutDetailReducer from "./checkoutDetail";
+import loadingReducer from "./loading";
 
 const rootReducer = combineReducers({
     checkout: checkoutReducer,
@@ -17,7 +19,9 @@ const rootReducer = combineReducers({
     message: messageReducer,
     search: searchReducer,
     tourCategories: tourCategoriesReducer,
-    menu: menuReducer
+    menu: menuReducer,
+    checkoutDetail: checkoutDetailReducer,
+    loading: loadingReducer
 });
 
 export default rootReducer;

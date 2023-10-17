@@ -161,26 +161,25 @@
 }
 
 .item__image__price {
-    &.ordermost {
-        & span {
-            &::after {
-                background:
-                    linear-gradient(115deg, #ee202e 0%, #ee202e 50%, #f25862 54%) !important;
-            }
-        }
-    }
-
-    &.hot {
+    &.order-most {
         & span {
             &::after {
                 background: linear-gradient(115deg, #47a0ff 0%, #47a0ff 50%, #75b8ff 54%) !important;
             }
         }
     }
+    
+    &.hot {
+        & span {
+            &::after {
+                background: linear-gradient(115deg, #ee202e 0%, #ee202e 50%, #f25862 54%) !important;
+            }
+        }
+    }
 }
 
 .item__label {
-    &.ordermost {
+    &.order-most {
         background-color: var(--primary);
     }
 

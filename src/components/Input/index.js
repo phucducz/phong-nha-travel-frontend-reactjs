@@ -6,10 +6,10 @@ import style from "./InputStyle.module.scss";
 
 const cx = classNames.bind(style);
 
-function Input({
+const Input = forwardRef(({
     type,
     value,
-    content,
+    placeHolder,
     name,
     fieldName,
     optional,
@@ -17,16 +17,17 @@ function Input({
     tiny = false,
     small = false,
     large = false,
-    error = false,
+    error = '',
     touched = false,
-    onFocus,
-    onChange,
-    onClick,
     className,
     leftIcon,
     rightIcon,
+    onFocus,
+    onChange,
+    onClick,
+    onRightIconClick,
     ...passProps
-}, ref) {
+}, ref) => {
     const props = { ...passProps };
     let Comp = 'input';
 
@@ -47,8 +48,17 @@ function Input({
         mini
     });
 
+    if (ref && ref.current)
+        props.ref = ref;
+
+    if (props.width)
+        props.style = { width: passProps.width };
+
     return (
-        <div className={cx('field')}>
+        <div
+            className={cx('field')}
+            style={props.style}
+        >
             {fieldName
                 && <label>
                     {fieldName}
@@ -62,7 +72,10 @@ function Input({
                     }
                 </label>
             }
-            <div className={cx('divInput', Comp === 'textarea' && 'textarea')}>
+            <div
+                className={cx('divInput', Comp === 'textarea' && 'textarea')}
+                style={props.style}
+            >
                 {leftIcon
                     && <div className={cx('leftIcon')}>{leftIcon}</div>
                 }
@@ -75,20 +88,19 @@ function Input({
                     onFocus={onFocus}
                     onBlur={() => setShowError(error && touched)}
                     {...props}
-                    ref={ref}
                 />
-                <label className={cx('label', value !== '' && 'non-empty')}>{content}</label>
+                <label className={cx('label', value !== '' && 'non-empty')}>{placeHolder}</label>
                 {showError
                     && <div className={cx('divInput__error')}>
                         {error}
                     </div>}
                 {rightIcon
-                    && <div className={cx('rightIcon')}>{rightIcon}</div>
+                    && <div className={cx('rightIcon')} onClick={onRightIconClick}>{rightIcon}</div>
                 }
             </div>
         </div>
-    )
-}
+    );
+});
 
 Input.propTypes = {
     type: PropTypes.string,
@@ -96,7 +108,7 @@ Input.propTypes = {
         PropTypes.string,
         PropTypes.number
     ]),
-    content: PropTypes.string,
+    placeHolder: PropTypes.string,
     name: PropTypes.string,
     fieldName: PropTypes.string,
     optional: PropTypes.bool,
@@ -104,15 +116,18 @@ Input.propTypes = {
     tiny: PropTypes.bool,
     small: PropTypes.bool,
     large: PropTypes.bool,
-    error: PropTypes.bool,
+    error: PropTypes.string,
     touched: PropTypes.bool,
     ref: PropTypes.node,
-    onFocus: PropTypes.func,
-    onChange: PropTypes.func,
-    onClick: PropTypes.func,
     className: PropTypes.string,
     leftIcon: PropTypes.object,
     rightIcon: PropTypes.object,
+    onFocus: PropTypes.func,
+    onChange: PropTypes.func,
+    onClick: PropTypes.func,
+    onRightIconClick: PropTypes.func
 }
 
-export default forwardRef(Input);
+Input.displayName = 'Input';
+
+export default Input;

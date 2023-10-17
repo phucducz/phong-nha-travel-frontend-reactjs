@@ -5,7 +5,7 @@ const routes = {
     ViewTour: '/tours/:tourName/:tourId',
     CheckOut: '/checkout',
     Cart: '/cart',
-    Account: '/account',
+    Account: '/my-account',
     Admin: '/admin',
     TourCategory: '/tour-category/:categoryName',
     Policy: '/policy',

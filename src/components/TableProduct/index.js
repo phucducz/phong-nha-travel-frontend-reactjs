@@ -22,9 +22,7 @@ function TableProduct({
         <table className={classes}>
             <thead>
                 <tr>
-                    {thead.map((item, index) =>
-                        <th key={index} colSpan={item.colSpan}><p>{item.title}</p></th>
-                    )}
+                    {thead.map((item, index) => <th key={index} colSpan={item.colSpan}><p>{item.title}</p></th>)}
                 </tr>
             </thead>
             <tbody>
@@ -38,28 +36,7 @@ function TableProduct({
                             readOnly={readOnly}
                             {...actionItem}
                         />
-                    )
-                    )}
-                {/* {data.cart
-                    && data.cart.map(item => {
-                        let isExist = false;
-
-                        data.cartPaid && data.cartPaid.map(cartItem => {
-                            if (+cartItem.id === +item.id)
-                                isExist = true;
-                        });
-
-                        return (
-                            <Item
-                                key={item.id}
-                                data={item}
-                                status={isExist}
-                                value={item.quantity}
-                                readOnly={readOnly}
-                                {...actionItem}
-                            />
-                        )
-                    })} */}
+                    ))}
                 {trMore && trMore}
             </tbody>
         </table>

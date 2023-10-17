@@ -25,12 +25,12 @@ const paymentReducer = createSlice({
     name: 'payment',
     initialState,
     reducers: {
-        getDataPayment: (state, action) => {
+        setDataPayment: (state, action) => {
             state.listPayment = action.payload;
         }
     }
 });
 
-export const { getDataPayment } = paymentReducer.actions;
+export const { setDataPayment } = paymentReducer.actions;
 
 export default paymentReducer.reducer;

@@ -23,16 +23,24 @@ function Item({
         [className]: className
     });
 
+    const { image } = data.listImage[0];
+
+    const handleNavigate = (name, id) => {
+        const listName = name.split(' ');
+
+        return `/tours/${listName.join('-')}/${id}`;
+    }
+
     return (
         <div className={classes} {...passProps}>
-            <div className={cx('tours__item__image')} onClick={() => navigate(`/tours/${data.name}/${data.id}`)}>
-                <img src={data.image} alt={data.name} />
+            <div className={cx('tours__item__image')} onClick={() => navigate(handleNavigate(data.name, data.id))}>
+                <img src={image} alt={data.name} />
             </div>
             <div className={cx('item__image_category')}>
-                {categories.map(category => {
+                {data.categoryIds.map(category => {
                     return CATEGORY_ICONS.map(icon => {
-                        return +icon.id === +category.categories_id
-                            && <Link to={`/tour-category/${icon.title}`}>
+                        return icon.id === category
+                            && <Link to={`/${icon.to}`}>
                                 <Icon
                                     id={category.id}
                                     key={icon.id}
@@ -46,13 +54,13 @@ function Item({
             </div>
             <div className={cx('tours__item__content')}>
                 <div className={cx('tours__item__content__item')}>
-                    <Link to={`/tours/${data.name}/${data.id}`}>{data.name}</Link>
+                    <Link to={handleNavigate(data.name, data.id)}>{data.name}</Link>
                     <p>{data.description}</p>
                 </div>
                 <div className={cx('tours__item__content__price')}>
                     <h3>{formatMoney(data.priceAdult)}</h3>
                     <p>per person</p>
-                    <Button rounded to={`/tours/${data.name}/${data.id}`}>view tour</Button>
+                    <Button rounded to={handleNavigate(data.name, data.id)}>view tour</Button>
                 </div>
             </div>
         </div>

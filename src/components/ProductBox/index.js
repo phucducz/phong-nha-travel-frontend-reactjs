@@ -82,7 +82,7 @@ function ProductBox({
             <div key={item.id} className={classes}>
                 {Object.keys(item.data).length > 0
                     ? <div className={cx(item.classScroll, item.status && 'none-action')}>
-                        <TableProduct
+                        <TableProduct   
                             thead={thead}
                             data={item.data}
                             status={item.status}
@@ -100,7 +100,7 @@ function ProductBox({
                                 </tr>
                             }
                             dispatch={dispatch}
-                            coupon={data.coupon.couponValue}
+                            couponValue={data.coupon.couponValue}
                             onChange={onChangeItem}
                             onRemove={onRemoveItem}
                         />

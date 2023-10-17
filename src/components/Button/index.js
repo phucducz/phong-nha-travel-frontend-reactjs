@@ -49,11 +49,14 @@ function Button({
     if (type)
         props.type = type;
 
-    if (disable)
+    if (disable) {
         if (Object.keys(props).forEach(key => {
-            if (key.startsWith('on') && typeof props[key] === 'function')
+            if (key.startsWith('on') && typeof props[key] === 'function') {
+                console.log(props[key]);
                 delete props[key];
+            }
         }));
+    }
 
     const classes = cx('button', {
         [className]: className,
