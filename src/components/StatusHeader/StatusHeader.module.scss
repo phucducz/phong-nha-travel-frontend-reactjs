@@ -1,0 +1,34 @@
+.status-header {
+    display: flex;
+    align-items: center;
+    padding: 0;
+
+    &>li {
+        display: flex;
+        align-items: center;
+        list-style-type: none;
+
+        &>a {
+            text-decoration: none;
+        }
+    }
+}
+
+.status-header__arrow {
+    font-size: 1rem;
+    padding: 0 .5rem;
+    color: var(--color-word-2);
+}
+
+.status-header {
+    & li {
+        &>p,
+        &>a {
+            color: var(--color-word-2);
+        }
+
+        & .item-lastest {
+            color: var(--color-word);
+        }
+    }
+}

@@ -13,7 +13,7 @@ import Button from "~/components/Button";
 import CouponForm from "~/components/CouponForm";
 import { CheckBox } from "~/components/CheckBox";
 import { formatMoney } from "~/format";
-import RadioButton from "~/components/RadioButton";
+import { RadioButton } from "~/components/RadioButton";
 import { routes } from "~/config";
 import { getService } from "~/services";
 import ConfirmData from "~/components/ConfirmData";
@@ -24,9 +24,8 @@ import {
 } from "~/constant/reduxContants";
 import WoocommerceMessage from "~/components/WoocommerceMessage";
 import TableProduct from "~/components/TableProduct";
-import { clearMessage, setMessage } from "~/reducers/message";
+import { setMessage } from "~/reducers/message";
 import { setDataPayment } from "~/reducers/payment";
-import { clearCoupon, setDataCoupon } from "~/reducers/coupon";
 
 const cx = classNames.bind(style);
 
@@ -323,6 +322,8 @@ function CheckOut() {
         });
     }, [coupon]);
 
+    console.log(formik.values);
+
     const handleConfirmData = async data => {
         if (data.cart.length) {
             await doConfirmData(data, cart.cartItemsCurrent);
@@ -469,9 +470,7 @@ function CheckOut() {
                                 && formik.values.payments.map(payment => (
                                     <div key={payment.id}>
                                         <RadioButton
-                                            data={{
-                                                title: payment.name
-                                            }}
+                                            title={payment.name}
                                             checked={+formik.values.paymentMethodId === +payment.id && true}
                                             onChange={() => formik.setValues({
                                                 ...formik.values,

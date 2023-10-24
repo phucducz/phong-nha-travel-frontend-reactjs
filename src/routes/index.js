@@ -6,11 +6,13 @@ import ViewTour from '~/pages/ViewTour';
 import Cart from '~/pages/Cart';
 import CheckOut from '~/pages/CheckOut';
 import Account from '~/pages/Account';
-import Admin from '~/pages/Admin';
-import AdminLayout from '~/layouts/AdminLayout';
+import AdminV2 from '~/pages/AdminV2';
+import AdminLayoutV2 from '~/layouts/AdminLayoutV2';
 import TourCategory from '~/pages/TourCategory';
 import Policy from '~/pages/Policy';
 import ToursSearch from '~/pages/ToursSearch';
+import UserManagement from '~/pages/UserManagement';
+import UserEdit from '~/pages/UserEdit';
 
 const publicRoutes = [
     { path: routes.Home, component: Home },
@@ -20,10 +22,12 @@ const publicRoutes = [
     { path: routes.Cart, component: Cart },
     { path: routes.CheckOut, component: CheckOut },
     { path: routes.Account, component: Account },
-    { path: routes.Admin, component: Admin, layout: AdminLayout },
+    { path: routes.Admin, component: AdminV2, layout: AdminLayoutV2 },
     { path: routes.TourCategory, component: TourCategory },
     { path: routes.ToursSearch, component: ToursSearch },
-    { path: routes.Policy, component: Policy }
+    { path: routes.Policy, component: Policy },
+    { path: routes.UserManagement, component: UserManagement, layout: AdminLayoutV2 },
+    { path: routes.UserEdit, component: UserEdit, layout: AdminLayoutV2 }
 ];
 
 export { publicRoutes }

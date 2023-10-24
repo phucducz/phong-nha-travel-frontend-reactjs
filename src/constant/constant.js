@@ -1,10 +1,13 @@
 import {
+    faCartShopping,
     faCheck,
     faChevronDown,
     faChevronRight,
     faEye,
     faEyeSlash,
-    faTriangleExclamation
+    faTriangleExclamation,
+    faTruck,
+    faUser
 } from "@fortawesome/free-solid-svg-icons";
 import {
     faFacebookF,
@@ -474,6 +477,55 @@ const PASSWORD_RIGHT_ICONS = [
     }
 ];
 
+const SIDEBAR_NAV_ITEMS = [
+    {
+        id: 1,
+        icon: faCartShopping,
+        title: 'Products',
+        children: [
+            {
+                id: '1_1',
+                title: 'Product Management',
+                to: '/products'
+            }, {
+                id: '1_2',
+                title: 'Edit Product',
+                to: '/edit-product'
+            }
+        ]
+    }, {
+        id: 2,
+        icon: faTruck,
+        title: 'E-commerce',
+        children: [
+            {
+                id: '2_1',
+                title: 'Order management',
+                to: '/order-management'
+            }
+        ]
+    }, {
+        id: 3,
+        icon: faUser,
+        title: 'Users',
+        children: [
+            {
+                id: '3_1',
+                title: 'User Management',
+                to: routes.UserManagement
+            }, {
+                id: '3_2',
+                title: 'Edit Profile',
+                to: routes.EditProfile
+            }, {
+                id: '3_3',
+                title: 'Change Password',
+                to: '/change-password'
+            }
+        ]
+    }
+]
+
 const today = () => {
     let newDate = new Date();
     let bookeDate = `${newDate.getFullYear()}-${newDate.getMonth() + 1 < 10 ? `0${newDate.getMonth() + 1}` :
@@ -506,5 +558,6 @@ export {
     CATEGORIES_HREF,
     SHARE_BUTTONS,
     MESSAGE_ICONS,
-    PASSWORD_RIGHT_ICONS
+    PASSWORD_RIGHT_ICONS,
+    SIDEBAR_NAV_ITEMS
 }

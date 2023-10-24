@@ -27,7 +27,7 @@ const fetchListCart = id => {
 }
 
 const fetchUserDataById = async userId => {
-    const result = await getService('users', { id: userId });
+    const result = await getService('users', { id: userId, type: 'more' });
 
     return result[0];
 }

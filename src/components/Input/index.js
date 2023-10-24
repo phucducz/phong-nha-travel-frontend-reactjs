@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import classNames from "classnames/bind";
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 
 import style from "./InputStyle.module.scss";
 
@@ -19,6 +19,7 @@ const Input = forwardRef(({
     large = false,
     error = '',
     touched = false,
+    outline,
     className,
     leftIcon,
     rightIcon,
@@ -40,23 +41,31 @@ const Input = forwardRef(({
             props.type = type;
     }
 
-    const classes = cx('input', {
-        [className]: className,
-        small,
-        large,
-        tiny,
-        mini
-    });
-
     if (ref && ref.current)
         props.ref = ref;
 
     if (props.width)
         props.style = { width: passProps.width };
 
+    if (outline)
+        outline = `outline-${outline}`;
+
+    const classes = cx('input', {
+        [className]: className,
+        [outline]: outline,
+        small,
+        large,
+        tiny,
+        mini
+    });
+
+    useEffect(() => {
+        setShowError(false);
+    }, [touched]);
+
     return (
         <div
-            className={cx('field')}
+            className={cx('form-group')}
             style={props.style}
         >
             {fieldName
@@ -73,11 +82,11 @@ const Input = forwardRef(({
                 </label>
             }
             <div
-                className={cx('divInput', Comp === 'textarea' && 'textarea')}
+                className={cx('form-group__col', Comp === 'textarea' && 'textarea')}
                 style={props.style}
             >
                 {leftIcon
-                    && <div className={cx('leftIcon')}>{leftIcon}</div>
+                    && <div className={cx('form-group__col__left-icon')}>{leftIcon}</div>
                 }
                 <Comp
                     className={classes}
@@ -89,13 +98,13 @@ const Input = forwardRef(({
                     onBlur={() => setShowError(error && touched)}
                     {...props}
                 />
-                <label className={cx('label', value !== '' && 'non-empty')}>{placeHolder}</label>
+                <label className={cx('form-group__col__label', value !== '' && 'non-empty')}>{placeHolder}</label>
                 {showError
-                    && <div className={cx('divInput__error')}>
+                    && <div className={cx('form-group__col__error')}>
                         {error}
                     </div>}
                 {rightIcon
-                    && <div className={cx('rightIcon')} onClick={onRightIconClick}>{rightIcon}</div>
+                    && <div className={cx('form-group__col__right-icon')} onClick={onRightIconClick}>{rightIcon}</div>
                 }
             </div>
         </div>

@@ -17,7 +17,7 @@ function Menu({
     const classes = cx('menu-item', {
         [className]: className
     });
-
+    console.log(data);
     return (
         <ul className={classes} {...passProps}>
             {data.map(item => (

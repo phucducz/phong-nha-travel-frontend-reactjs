@@ -13,6 +13,7 @@ function DropDown({
     className,
     active,
     onlyChoose = false,
+    iconPosition,
     onClick
 }) {
     let classes;
@@ -37,6 +38,7 @@ function DropDown({
                     id={item.id}
                     data={item}
                     active={active}
+                    iconPosition={iconPosition}
                     onClick={onClick}
                     onlyChoose={onlyChoose}
                 />

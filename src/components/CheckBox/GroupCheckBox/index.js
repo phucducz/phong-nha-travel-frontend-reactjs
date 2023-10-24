@@ -2,15 +2,14 @@ import PropTypes from 'prop-types';
 import classNames from "classnames/bind";
 
 import style from './Wrapper.module.scss';
-import Item from "../Item";
+import Item from "../CheckBoxItem";
 
 const cx = classNames.bind(style);
 
-function Wrapper({
+function GroupCheckBox({
     data,
-    defaultChecked,
     title,
-    optinal,
+    optional,
     onChange,
     className
 }) {
@@ -22,7 +21,7 @@ function Wrapper({
         <div className={classes}>
             <label className={cx('wrapper__title')}>
                 {title}
-                {optinal
+                {optional
                     ? <span className={cx('label-option')}>
                         (optional)
                         <span className={cx('colon')}>:</span>
@@ -39,22 +38,21 @@ function Wrapper({
                     <Item
                         key={item.id}
                         data={item}
-                        defaultChecked={defaultChecked}
                         onChange={onChange}
                     />
                 ))}
             </div>
         </div>
-    )
+    );
 }
 
-Wrapper.propTypes = {
+GroupCheckBox.propTypes = {
     data: PropTypes.array.isRequired,
     defaultChecked: PropTypes.array,
     title: PropTypes.string.isRequired,
-    optinal: PropTypes.bool,
+    optional: PropTypes.bool,
     onChange: PropTypes.func,
     className: PropTypes.string,
 }
 
-export default Wrapper;
+export default GroupCheckBox;

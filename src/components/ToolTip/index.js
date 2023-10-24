@@ -7,14 +7,12 @@ const cx = classNames.bind(style);
 
 function ToolTip({
     content,
-    top = false,
-    bottom = false,
+    placement,
     className
 }) {
     const classes = cx('tooltip', {
         [className]: className,
-        top,
-        bottom
+        [placement]: placement
     });
 
     return (

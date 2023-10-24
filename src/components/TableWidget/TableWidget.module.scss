@@ -1,0 +1,38 @@
+thead>tr>th {
+    background-color: rgb(48 50 76);
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    color: var(--white);
+}
+
+tbody>tr>td {
+    text-align: center;
+}
+
+tbody>tr>td>img {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+tbody>tr>td>button {
+    width: max-content!important;
+    height: 2rem!important;
+    padding: 0 .6rem!important;
+
+    &>span {
+        font-size: 1rem !important;
+        text-transform: capitalize;
+    }
+
+    &:nth-child(2) {
+        background-color: #26cd5f;
+        border-color: #26cd5f;
+    }
+
+    &:nth-child(3) {
+        background-color: #ff5574;
+        border-color: #ff5574;
+    }
+}

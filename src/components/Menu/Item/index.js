@@ -15,6 +15,7 @@ function Item({
     active,
     onClick,
     onlyChoose,
+    iconPosition = 'right',
     ...passProps
 }) {
     const { icon, title, url } = data;
@@ -22,10 +23,11 @@ function Item({
     const classes = cx('menu_li', {
         [className]: className,
     }, active === data.id && 'active');
-    
+
     return (
         <li className={classes}>
             <div className={cx('d-item')}>
+                {icon && iconPosition === 'left' && <FontAwesomeIcon icon={icon} className={cx('item_icon')} /> }
                 {onlyChoose
                     ? title &&
                     <p
@@ -54,7 +56,7 @@ function Item({
                     >
                         <i className={cx('td-bag')}></i>
                     </Link>
-                    : icon && <FontAwesomeIcon icon={icon} className={cx('item_icon')} />}
+                    : icon && iconPosition !== 'left' && <FontAwesomeIcon icon={icon} className={cx('item_icon')} />}
             </div>
             {data.subMenu !== null && data.subMenu
                 && <DropDown

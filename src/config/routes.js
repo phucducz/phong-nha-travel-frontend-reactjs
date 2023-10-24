@@ -9,7 +9,10 @@ const routes = {
     Admin: '/admin',
     TourCategory: '/tour-category/:categoryName',
     Policy: '/policy',
-    ToursSearch: '/tours/search'    
+    ToursSearch: '/tours/search',
+    UserManagement: '/admin/users',
+    UserEdit: '/admin/users/edit/:userId',
+    EditProfile: '/admin/edit-profile'
 }
 
 export { routes };

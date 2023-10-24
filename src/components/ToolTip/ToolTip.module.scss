@@ -9,16 +9,21 @@ $border_space: 1.3rem;
     opacity: .9;
     text-align: center;
     display: none;
+    pointer-events: none;
+    user-select: none;
 
     p {
         margin: 0;
         padding: .3rem .8rem;
         text-transform: capitalize;
         color: var(--white);
+        font-size: 1.3rem;
     }
 }
 
 .tooltip__arrow {
+    width: 1rem;
+    height: 1rem;
     position: absolute;
     bottom: calc(1% - (1.3rem/2));
     left: 38%;
@@ -32,10 +37,19 @@ $border_space: 1.3rem;
     bottom: 140%;
     left: 50%;
     transform: translateX(-50%);
+
+    &>div {
+        bottom: calc(0rem - .5rem);
+    }
 }
 
 .bottom {
     top: 140%;
     left: 50%;
     transform: translateX(-50%);
+
+    &>div {
+        top: calc(0rem - .5rem);
+        transform: rotate(315deg);
+    }
 }

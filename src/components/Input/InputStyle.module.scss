@@ -1,9 +1,9 @@
 @import '../GlobalMixin.scss';
 
-.field {
+.form-group {
     width: max-content;
 
-    &+.field {
+    &+.form-group {
         margin-top: 1rem;
     }
 
@@ -12,7 +12,7 @@
     }
 }
 
-.divInput+.divInput {
+.form-group__col+.form-group__col {
     margin-top: 3rem;
 }
 
@@ -30,13 +30,13 @@
     }
 }
 
-.divInput {
+.form-group__col {
     position: relative;
     width: max-content;
     display: flex;
     flex-direction: column;
 
-    .label {
+    .form-group__col__label {
         position: absolute;
         top: 50%;
         left: 0;
@@ -70,7 +70,7 @@
     }
 
     &:focus-within {
-        .label {
+        .form-group__col__label {
             height: 0;
         }
     }
@@ -112,18 +112,23 @@
     //     }
     // }
 
-    &:focus+.label {
+    &:focus+.form-group__col__label {
         height: 0;
     }
 
-    &+.label {
+    &+.form-group__col__label {
         &.non-empty {
             height: 0;
         }
     }
+
+    &.outline-none {
+        border: none;
+        background-color: transparent;
+    }
 }
 
-.divInput__error {
+.form-group__col__error {
     font-size: 1.3rem;
     color: var(--white);
     background-color: #eb7591;
@@ -160,12 +165,12 @@
     }
 }
 
-.leftIcon {
+.form-group__col__left-icon {
     @include setPosition(absolute, 50%, 0, 0, 8%, true);
     @include commonlyAttributes;
 }
 
-.rightIcon {
+.form-group__col__right-icon {
     @include setPosition(absolute, 50%, 8%, 0, 0, true);
     @include commonlyAttributes;
 }

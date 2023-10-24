@@ -53,7 +53,7 @@ function Home() {
         }
 
         const fetchUserById = userId => {
-            handleFetchUserDataById(dispatch, { userId: userId, });
+            handleFetchUserDataById(dispatch, { userId: userId });
         }
 
         const fetchData = () => {

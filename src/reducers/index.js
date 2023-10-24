@@ -10,6 +10,8 @@ import tourCategoriesReducer from "./tourCategories";
 import menuReducer from './menu';
 import checkoutDetailReducer from "./checkoutDetail";
 import loadingReducer from "./loading";
+import userReducer from "./user";
+import roleReducer from './role';
 
 const rootReducer = combineReducers({
     checkout: checkoutReducer,
@@ -21,7 +23,9 @@ const rootReducer = combineReducers({
     tourCategories: tourCategoriesReducer,
     menu: menuReducer,
     checkoutDetail: checkoutDetailReducer,
-    loading: loadingReducer
+    loading: loadingReducer,
+    userfAdmin: userReducer,
+    rolefAdmin: roleReducer
 });
 
 export default rootReducer;

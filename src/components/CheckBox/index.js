@@ -1,2 +1,2 @@
-export { default as Wrapper } from './Wrapper';
-export { default as CheckBox } from './Item';
+export { default as GroupCheckBox } from './GroupCheckBox';
+export { default as CheckBox } from './CheckBoxItem';

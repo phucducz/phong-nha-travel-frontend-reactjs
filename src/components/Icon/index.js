@@ -20,7 +20,7 @@ function Icon({
     return (
         <div className={classes} {...passProps}>
             <i className={data.code} />
-            {toolTip && <ToolTip top content={data.title} />}
+            {toolTip && <ToolTip placement='top' content={data.title} />}
         </div>
     );
 }
