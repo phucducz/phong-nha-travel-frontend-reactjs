@@ -126,9 +126,14 @@
         border: none;
         background-color: transparent;
     }
+
+    &:read-only {
+        color: gray;
+    }
 }
 
 .form-group__col__error {
+    width: max-content;
     font-size: 1.3rem;
     color: var(--white);
     background-color: #eb7591;
@@ -159,7 +164,7 @@
 
 @mixin commonlyAttributes {
     pointer-events: none;
-
+    
     &>svg {
         color: var(--primary);
     }

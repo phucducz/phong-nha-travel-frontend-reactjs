@@ -1,23 +1,28 @@
 import classNames from "classnames/bind";
-import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from 'yup';
 
-import style from './EditUser.module.scss';
-import StatusHeader from "~/components/StatusHeader";
-import Input from "~/components/Input";
+import Button from "~/components/Button";
 import { CheckBox } from "~/components/CheckBox";
+import Input from "~/components/Input";
 import { GroupRadioButton } from "~/components/RadioButton";
+import StatusHeader from "~/components/StatusHeader";
+import { saveChangesUser } from "~/reducers/user";
+import style from './UserEdit.module.scss';
+import { routes } from "~/config";
 
 const cx = classNames.bind(style);
 
 function UserEdit() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const { userId } = useParams();
-    const user = useSelector(state => state.userfAdmin);
+    const user = useSelector(state => state.user);
     const role = useSelector(state => state.rolefAdmin);
-    const { roleList } = role;
 
     const DATA_STATUS_HEADER = [
         {
@@ -47,18 +52,60 @@ function UserEdit() {
             phoneNumber: '',
             userName: '',
             roleId: 0,
-            role: {},
-            roles: []
+            roles: [],
+            file: null
         },
         validationSchema: Yup.object({
             firstName: Yup.string()
-                .required('Please enter the first name')
-                .matches(/^[a-zA-Z]+$/, "Vui lòng không nhập ký tự đặc biệt"),
+                .required('Please enter the first name'),
             lastName: Yup.string()
                 .required('Please enter the first name')
-                .matches(/^[a-zA-Z]+$/, "Vui lòng không nhập số và ký tự đặc biệt"),
-        })
+        }),
+        onSubmit: async values => {
+            const { id, active, email, firstName, file, lastName,
+                password, phoneNumber, userName, roleId } = values;
+
+            console.log({
+                id,
+                active,
+                avatar: file,
+                email,
+                firstName,
+                lastName,
+                password,
+                phoneNumber,
+                userName,
+                roleId
+            });
+
+            dispatch(saveChangesUser({
+                id,
+                active,
+                avatar: file,
+                email,
+                firstName,
+                lastName,
+                password,
+                phoneNumber,
+                userName,
+                roleId
+            }));
+
+            navigate(routes.UserManagement);
+        }
     });
+
+    const getBase64 = (file) => {
+        let reader = new FileReader();
+        reader.addEventListener('load', () => {
+            formik.setValues({
+                ...formik.values,
+                file: reader.result,
+                avatar: URL.createObjectURL(file)
+            });
+        });
+        reader.readAsDataURL(file);
+    }
 
     useEffect(() => {
         if (user.userList.length <= 0)
@@ -68,9 +115,8 @@ function UserEdit() {
             user.id === parseInt(userId)
         );
 
-        console.log(userCurrent);
-
         formik.setValues({
+            ...formik.values,
             id: userCurrent.id,
             active: userCurrent.active,
             avatar: userCurrent.avatar,
@@ -80,8 +126,7 @@ function UserEdit() {
             password: userCurrent.password,
             phoneNumber: userCurrent.phoneNumber,
             userName: userCurrent.userName,
-            roleId: 0,
-            role: userCurrent.role,
+            roleId: userCurrent.role.id,
             roles: role.roles
         });
     }, []);
@@ -114,7 +159,18 @@ function UserEdit() {
         }
     ];
 
-    console.log(formik.values);
+    const handleChooseRole = item => {
+        formik.setFieldValue('roleId', item.id);
+    }
+
+    const handleUploadClick = file => {
+        getBase64(file);
+        // formik.setValues({
+        //     ...formik.values,
+        //     avatar: URL.createObjectURL(file),
+        //     avatarFile: file
+        // });
+    }
 
     return (
         <section className={cx('user-edit')}>
@@ -122,7 +178,7 @@ function UserEdit() {
             <div className={cx('user-edit__header')}>
                 <p className={cx('user-edit__header__title')}>user - edit</p>
             </div>
-            <form className={cx('container')}>
+            <form className={cx('container')} onSubmit={formik.handleSubmit}>
                 <header><p>edit user</p></header>
                 {FIELD_INPUTS.map((input, index) => (
                     <Input
@@ -138,14 +194,40 @@ function UserEdit() {
                         onFocus={() => formik.setFieldTouched(input.name, true)}
                     />
                 ))}
-                <CheckBox title='Disable' name={'active'} onChange={formik.handleChange} />
+                <CheckBox
+                    title='Disable'
+                    name='active'
+                    checked={!formik.values.active}
+                    onChange={() => formik.setFieldValue('active', !formik.values.active)}
+                />
                 <GroupRadioButton
                     title='Role'
                     name='roleId'
+                    className={cx('group-radio')}
                     data={formik.values.roles}
-                    onClick={e => console.log(e)}
-                    // onChange={e => formik.setFieldValue('roleId', e.target.value)}
+                    activeId={formik.values.roleId}
+                    onChange={handleChooseRole}
                 />
+                <div className={cx('form-group')}>
+                    <label className={cx('form-group__field-name')}>Avatar</label>
+                    <div className={cx('form-group__container-input')}>
+                        <label>
+                            Upload an image
+                            <Input
+                                type='file'
+                                accept='image/*'
+                                style={{ display: 'none' }}
+                                onChange={e => handleUploadClick(e.target.files[0])}
+                            />
+                        </label>
+                        <img className={cx('img-uploaded')} src={`${formik.values.avatar}`} alt="" />
+                    </div>
+                </div>
+                <div className={cx('row-input')}>
+                    <Button className={cx('row-input__save')} type='submit'>Save</Button>
+                    <Button className={cx('row-input__reset')} type='button'>Reset</Button>
+                    <Button className={cx('row-input__cancel')} type='button'>Cancel</Button>
+                </div>
             </form>
         </section>
     );

@@ -1,38 +1,86 @@
-thead>tr>th {
-    background-color: rgb(48 50 76);
-    font-size: 1.3rem;
-    text-transform: uppercase;
-    color: var(--white);
-}
+.table-widget {
+    &>table.table {
+        width: 100%;
+        height: auto;
+        border-collapse: collapse;
+    
+        &>thead p,
+        & td.header {
+            text-transform: uppercase;
+        }
+    
+        &>thead>tr,
+        &>tbody>tr {
+            border: .1rem solid #e4e4e4;
+        }
+    
+        &>thead>tr {
+            height: var(--height-thead);
+            max-height: 4rem;
+    
+            &>td>p {
+                width: max-content;
+                margin: 0 auto;
+            }
+        }
+    
+        &>tbody>tr {
+            height: var(--height-tr);
+            max-height: var(--height-tr);
+        }
+    
+        &>thead td,
+        &>thead th,
+        &>tbody td {
+            padding: 1rem 2rem;
+        }
+    
+        & tr>td>h3 {
+            text-transform: uppercase;
+        }
+    
+        & tr {
+            border: .1rem solid #e4e4e4;
+        }
 
-tbody>tr>td {
-    text-align: center;
-}
+        &>thead>tr>th {
+            background-color: rgb(48 50 76);
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            color: var(--white);
+            padding: 1rem 2rem;
+        }
 
-tbody>tr>td>img {
-    width: 6rem;
-    height: 6rem;
-    border-radius: 50%;
-    object-fit: cover;
-}
+        & tbody>tr>td {
+            text-align: center;
+        }
 
-tbody>tr>td>button {
-    width: max-content!important;
-    height: 2rem!important;
-    padding: 0 .6rem!important;
+        & tbody>tr>td>img {
+            width: 6rem;
+            height: 6rem;
+            border-radius: 50%;
+            object-fit: cover;
+        }
 
-    &>span {
-        font-size: 1rem !important;
-        text-transform: capitalize;
-    }
+        & tbody>tr>td>button {
+            width: max-content !important;
+            height: 2rem !important;
+            padding: 0 .6rem !important;
 
-    &:nth-child(2) {
-        background-color: #26cd5f;
-        border-color: #26cd5f;
-    }
+            &>span {
+                font-size: 1rem !important;
+                text-transform: capitalize;
+            }
 
-    &:nth-child(3) {
-        background-color: #ff5574;
-        border-color: #ff5574;
+            &:nth-child(2) {
+                background-color: #26cd5f;
+                border-color: #26cd5f;
+            }
+
+            &:nth-child(3) {
+                background-color: #ff5574;
+                border-color: #ff5574;
+            }
+        }
     }
 }

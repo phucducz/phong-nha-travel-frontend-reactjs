@@ -2,9 +2,8 @@ import axios from "axios";
 
 const httpRequest = axios.create({
     baseURL: process.env.REACT_APP_BASE_URL,
-    headers: {
-        'content-type': 'application/json',
-    }
+    headers: { 'content-type': 'application/json' },
+    // headers: { "Content-Type": "multipart/form-data" }
 });
 
 export const get = async (path, option = {}) => {
@@ -12,8 +11,8 @@ export const get = async (path, option = {}) => {
     return res.data;
 }
 
-export const post = async (path, option = {}) => {
-    const res = await httpRequest.post(path, option);
+export const post = async (path, option = {}, header = {}) => {
+    const res = await httpRequest.post(path, option, header);
     return res.data;
 }
 
@@ -22,8 +21,8 @@ export const deleteAPI = async (path, option = {}) => {
     return res.data;
 }
 
-export const putAPI = async (path, option = {}) => {
-    const res = await httpRequest.put(path, option);
+export const putAPI = async (path, option = {}, header = {}) => {
+    const res = await httpRequest.put(path, option, header);
     return res.data;
 }
 

@@ -3,6 +3,8 @@ import classNames from "classnames/bind";
 
 import style from './Menu.module.scss';
 import Item from "./Item";
+import { useSelector } from 'react-redux';
+import { routes } from '~/config';
 
 const cx = classNames.bind(style);
 
@@ -17,7 +19,7 @@ function Menu({
     const classes = cx('menu-item', {
         [className]: className
     });
-    console.log(data);
+
     return (
         <ul className={classes} {...passProps}>
             {data.map(item => (

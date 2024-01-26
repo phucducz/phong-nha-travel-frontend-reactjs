@@ -1,13 +1,13 @@
-import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
+import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-import style from './DefaultLayout.module.scss';
-import Header from './Header';
-import Footer from './Footer';
+import Loading from '~/components/Loading';
 import SocialNetWork from '~/components/SocialNetwork';
 import { SOCIAL_NETWORKS } from '~/constant';
-import Loading from '~/components/Loading';
-import { useSelector } from 'react-redux';
+import style from './DefaultLayout.module.scss';
+import Footer from './Footer';
+import Header from './Header';
 
 const cx = classNames.bind(style);
 

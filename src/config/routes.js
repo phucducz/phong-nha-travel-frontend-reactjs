@@ -5,14 +5,19 @@ const routes = {
     ViewTour: '/tours/:tourName/:tourId',
     CheckOut: '/checkout',
     Cart: '/cart',
-    Account: '/my-account',
+    Login: '/login',
     Admin: '/admin',
+    Account: '/my-account',
     TourCategory: '/tour-category/:categoryName',
     Policy: '/policy',
     ToursSearch: '/tours/search',
     UserManagement: '/admin/users',
     UserEdit: '/admin/users/edit/:userId',
-    EditProfile: '/admin/edit-profile'
+    EditProfile: '/admin/edit-profile',
+    UserCreate: '/admin/users/create',
+    Test: '/test',
+    BTPV: '/btpv',
+    HandBook: '/hand-book'
 }
 
-export { routes };
+export { routes }

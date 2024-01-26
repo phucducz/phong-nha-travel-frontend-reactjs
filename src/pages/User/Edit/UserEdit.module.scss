@@ -1,0 +1,89 @@
+.user-edit {
+    &>ul+div {
+        margin-top: 2rem;
+    }
+
+    &>div+div {
+        margin-top: 2rem;
+    }
+
+    &>.container {
+        &>div+div {
+            margin-top: 2rem;
+        }
+    
+        &>.row-input {
+            margin-top: 4rem;
+        }
+    }
+}
+
+.user-edit__header {
+    &>.user-edit__header__title {
+        font-size: 3rem;
+        line-height: normal;
+        text-transform: capitalize;
+    }
+}
+
+.container {
+    margin-top: 2rem;
+    padding: 2rem;
+    background-color: var(--white);
+    border-radius: .5rem;
+
+    &>header>p {
+        font-size: 2rem;
+        text-transform: capitalize;
+    }
+
+    &>header+div {
+        margin-top: 2rem;
+        width: 100%;
+    }
+}
+
+.group-radio {
+    width: 10rem;
+}
+
+.form-group {
+    &>.form-group__container-input {
+        width: max-content;
+        height: auto;
+        margin-top: 2rem;
+        
+        &>label {
+            padding: 0.5rem 1.4rem;
+            color: var(--color-word-2);
+            border: .2rem solid var(--color-word-2);
+            border-radius: .3rem;
+            cursor: pointer;
+        }
+    }
+}
+
+.row-input {
+    &>button {
+        padding: 0.5rem 1.4rem;
+        font-weight: 300;
+    }
+
+    &>.row-input__save {
+        background-color: var(--color-green);
+    }
+
+    &>.row-input__reset,
+    &>.row-input__cancel {
+        background-color: #5a5d76;
+
+    }
+}
+
+.img-uploaded {
+    display: block;
+    width: 10rem;
+    height: 10rem;
+    object-fit: cover;
+    margin-top: 2rem;
+}

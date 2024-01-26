@@ -13,27 +13,21 @@ function GroupCheckBox({
     onChange,
     className
 }) {
-    const classes = cx('wrapper', {
+    const classes = cx('form-group', {
         [className]: className
     });
 
     return (
         <div className={classes}>
-            <label className={cx('wrapper__title')}>
+            <label className={cx('form-group__title')}>
                 {title}
-                {optional
-                    ? <span className={cx('label-option')}>
-                        (optional)
-                        <span className={cx('colon')}>:</span>
-                    </span>
-                    : <span className={cx('label-option')}>
-                        (required)
-                        <span className={cx('colon')}>:</span>
+                {!optional
+                    && <span className={cx('label-option')}>
                         <abbr title="required">*</abbr>
                     </span>
                 }
             </label>
-            <div className={cx('wrapper__input')}>
+            <div className={cx('form-group__input')}>
                 {data && data.map(item => (
                     <Item
                         key={item.id}

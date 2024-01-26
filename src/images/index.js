@@ -7,6 +7,12 @@ const image = {
     zalo: require('~/images/unnamed.webp'),
     logo: require('~/images/logophongnha.png'),
     imgDiscovery: require('~/images/discovery.jpg'),
+
+    phongNhaVietNam: require('./phong_nha_viet_nam.jpeg'),
+    osen: require('./Bang_Osen_Quang_Binh.jpeg'),
+    banhXeoBaDon: require('./Banh_Xeo_Ba_Don.jpeg'),
+    tuLanLodge: require('./Tu_Lan_Lodge.jpeg'),
+    conDuongDaLatQB: require('./con_duong_da_lat_quang_binh.jpeg'),
 }
 
 const imageFeature = [

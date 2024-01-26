@@ -1,17 +1,21 @@
 import classNames from "classnames/bind";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import style from './UserManagement.module.scss';
+import Avatar from "~/components/Avatar";
+import Button from "~/components/Button";
+import DialogModal from "~/components/DialogModal";
+import Input from "~/components/Input";
 import StatusHeader from "~/components/StatusHeader";
 import TableWidget from "~/components/TableWidget";
-import Button from "~/components/Button";
-import { getService } from "~/services";
-import Avatar from "~/components/Avatar";
-import Input from "~/components/Input";
-import { setData as setUserData } from "~/reducers/user";
+import { routes } from "~/config";
+import { doDeleteUser } from "~/constant/reduxContants";
+import { setLoading } from "~/reducers/loading";
 import { setData as setRoleData } from '~/reducers/role';
+import { setData as setUserData } from "~/reducers/user";
+import { getService } from "~/services";
+import style from './UserManagement.module.scss';
 
 const cx = classNames.bind(style);
 
@@ -28,13 +32,16 @@ const DATA_STATUS_HEADER = [
 function UserManagement() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const user = useSelector(state => state.userfAdmin);
+    const user = useSelector(state => state.user);
     const { userList } = user;
 
     const thead = ['avatar', 'first name', 'last name', 'phone number',
         'e-mail', 'role', 'active', 'action'];
     const [usersFilter, setUsersFilter] = useState([]);
     const [searchValue, setSearchValue] = useState('');
+    const [confirmActive, setConfirmActive] = useState(false);
+    const [userActive, setUserActive] = useState(0);
+    const [render, setRender] = useState(false);
 
     useEffect(() => {
         const getUsers = async () => {
@@ -56,7 +63,7 @@ function UserManagement() {
         }
 
         fetchData();
-    }, []);
+    }, [render]);
 
     useEffect(() => {
         setUsersFilter(() => {
@@ -74,6 +81,27 @@ function UserManagement() {
         })
     }, [searchValue]);
 
+    const handleOnClickDelete = id => {
+        setConfirmActive(true);
+        setUserActive(id);
+    }
+
+    const handleConfirmClick = useCallback(async () => {
+        dispatch(setLoading(true));
+
+        doDeleteUser(userActive);
+
+        dispatch(setLoading(false));
+        navigate(routes.UserManagement);
+
+        setConfirmActive(false);
+        setRender(!render);
+    }, [userActive]);
+
+    const handleCancelOnClick = useCallback(() => {
+        setConfirmActive(false);
+    }, []);
+
     return (
         <div className={cx('user-management')}>
             <StatusHeader data={DATA_STATUS_HEADER} />
@@ -87,7 +115,7 @@ function UserManagement() {
                             <p>List of Users</p>
                         </div>
                         <div className={cx('create-button')}>
-                            <Button className={cx('create-button__user')}>create product</Button>
+                            <Button className={cx('create-button__user')} onClick={() => navigate('./create')}>create product</Button>
                         </div>
                         <div className={cx('search-input')}>
                             <Input
@@ -103,7 +131,7 @@ function UserManagement() {
                     </div>
                     <TableWidget data={userList}>
                         <colgroup>
-                            {thead.map((item, index) => <col key={index}></col>)}
+                            {thead.map((_, index) => <col key={index}></col>)}
                         </colgroup>
                         <thead>
                             <tr>
@@ -123,7 +151,7 @@ function UserManagement() {
                                     <td>
                                         <Button className={cx('view')} onClick={() => navigate(`/admin/users/edit/${user.id}`)}>view</Button>
                                         <Button className={cx('edit')} onClick={() => navigate(`/admin/users/edit/${user.id}`)}>edit</Button>
-                                        <Button className={cx('delete')} onClick={() => navigate(`/admin/users/edit/${user.id}`)}>delete</Button>
+                                        <Button className={cx('delete')} onClick={() => handleOnClickDelete(user.id)}>delete</Button>
                                     </td>
                                 </tr>
                             ))}
@@ -131,6 +159,13 @@ function UserManagement() {
                     </TableWidget>
                 </div>
             </div>
+            <DialogModal
+                title='confirm delete'
+                message='Are you sure you want to delete this user ?'
+                visible={confirmActive}
+                confirmOnClick={handleConfirmClick}
+                cancelOnclick={handleCancelOnClick}
+            />
         </div>
     );
 }

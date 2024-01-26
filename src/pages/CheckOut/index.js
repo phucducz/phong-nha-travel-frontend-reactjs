@@ -1,31 +1,31 @@
-import classNames from "classnames/bind";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus, faInfo, faPerson } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames/bind";
 import { useFormik } from "formik";
-import * as Yup from 'yup';
-import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import * as Yup from 'yup';
 
-import style from './CheckOut.module.scss';
-import Input from "~/components/Input";
 import Button from "~/components/Button";
-import CouponForm from "~/components/CouponForm";
 import { CheckBox } from "~/components/CheckBox";
-import { formatMoney } from "~/format";
-import { RadioButton } from "~/components/RadioButton";
-import { routes } from "~/config";
-import { getService } from "~/services";
 import ConfirmData from "~/components/ConfirmData";
+import CouponForm from "~/components/CouponForm";
+import Input from "~/components/Input";
+import { RadioButton } from "~/components/RadioButton";
+import TableProduct from "~/components/TableProduct";
+import WoocommerceMessage from "~/components/WoocommerceMessage";
+import { routes } from "~/config";
 import {
     doConfirmData,
     handleDiscount,
     handleFetchUserDataById
 } from "~/constant/reduxContants";
-import WoocommerceMessage from "~/components/WoocommerceMessage";
-import TableProduct from "~/components/TableProduct";
+import { formatMoney } from "~/format";
 import { setMessage } from "~/reducers/message";
 import { setDataPayment } from "~/reducers/payment";
+import { getService } from "~/services";
+import style from './CheckOut.module.scss';
 
 const cx = classNames.bind(style);
 
@@ -53,13 +53,19 @@ function CheckOut() {
     const message = useSelector(state => state.message);
     const cart = useSelector(state => state.cart);
     const checkoutDetail = useSelector(state => state.checkoutDetail);
+    const user = useSelector(state => state.user);
 
     const [active, setActive] = useState(false);
     const [couponCode, setCouponCode] = useState('');
     const [visibleModalConfirm, setVisibleModalConfirm] = useState(false);
+    const [userId, setUserId] = useState(null);
 
     // fake user id
-    const userId = 1;
+    // const userId = 1;
+
+    useEffect(() => {
+        setUserId(user.currentUser.id);
+    }, [user]);
 
     const formik = useFormik({
         initialValues: {
@@ -136,22 +142,25 @@ function CheckOut() {
             return result;
         }
 
-        const fetchCart = userId => {
-            handleFetchUserDataById(dispatch, {
-                userId: userId,
-            });
-        }
-
         const fetchData = async () => {
             const payments = await getListPayment();
-
-            fetchCart(userId);
 
             formik.setFieldValue('payments', payments);
         }
 
         fetchData();
     }, []);
+
+    useEffect(() => {
+        const fetchCart = userId => {
+            console.log(userId);
+            handleFetchUserDataById(dispatch, {
+                userId: userId,
+            });
+        }
+        console.log(userId);
+        userId && fetchCart(userId);
+    }, [userId]);
 
     useEffect(() => {
         formik.setValues({
@@ -161,7 +170,7 @@ function CheckOut() {
             cart: cart.cartItemsCurrent,
             ...checkoutDetail.information,
             couponId: coupon.id,
-            checkoutDetailId: checkoutDetail.information.id
+            checkoutDetailId: checkoutDetail.information !== null && checkoutDetail.information.id
         });
     }, [cart, checkoutDetail.information, coupon]);
 
@@ -318,11 +327,9 @@ function CheckOut() {
         handleDiscount(dispatch, {
             couponCode: couponCode,
             // fake user id
-            userId: 1
+            userId: userId
         });
     }, [coupon]);
-
-    console.log(formik.values);
 
     const handleConfirmData = async data => {
         if (data.cart.length) {
@@ -333,7 +340,6 @@ function CheckOut() {
                 status: '',
                 actionMessage: null
             }));
-
             navigate('/cart');
 
             return;
@@ -395,9 +401,10 @@ function CheckOut() {
                     </div>
                     <div className={cx('form__box__2')}>
                         <CheckBox
-                            data={{
-                                title: 'Giao hàng tới địa chỉ khác'
-                            }}
+                            // data={{
+                            //     title: 'Giao hàng tới địa chỉ khác'
+                            // }}
+                            title='Giao hàng tới địa chỉ khác'
                             checked={formik.values.addressOther}
                             onChange={() => formik.setValues({
                                 ...formik.values,

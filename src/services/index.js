@@ -1,8 +1,8 @@
 import * as httpRequest from "~/utils/httpRequest";
 
-const putService = async (path, q = {}) => {
+const putService = async (path, q = {}, headers = {}) => {
     try {
-        const res = await httpRequest.putAPI(path, q);
+        const res = await httpRequest.putAPI(path, q, headers);
         return res;
     }
     catch (error) {
@@ -22,9 +22,9 @@ const getService = async (path, q = {}) => {
     }
 }
 
-const postService = async (path, option = {}) => {
+const postService = async (path, option = {}, headers = {}) => {
     try {
-        const res = await httpRequest.post(path, option);
+        const res = await httpRequest.post(path, option, headers);
         return res;
     }
     catch (error) {

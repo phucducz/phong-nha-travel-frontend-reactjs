@@ -31,6 +31,7 @@ import zalo from '~/images/zalo-icon.png';
 import phone from '~/images/phone-icon.png';
 import instagram from '~/images/Instagram-Icon.png';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { image } from "~/images";
 
 const SLIDER_IMAGES = [
     {
@@ -171,7 +172,7 @@ const MENU_ITEMS = [
     }, {
         id: 15,
         title: 'cẩm nang',
-        url: '/',
+        url: '/hand-book',
         icon: null,
         subMenu: null
     }, {
@@ -204,7 +205,7 @@ const MENU_ITEMS = [
                     id: 20,
                     title: 'trang tài khoản',
                     icon: null,
-                    url: routes.Account,
+                    url: routes.Login,
                     subMenu: null
                 }
             ]
@@ -526,6 +527,49 @@ const SIDEBAR_NAV_ITEMS = [
     }
 ]
 
+const HAND_BOOK = [
+    {
+        id: 1,
+        title: "Khu Du lịch Bang Osen Quảng Bình",
+        datePublished: "10/08/2023",
+        user: "Dương Đại",
+        type: "Cẩm Nang",
+        thumbnail: image.osen,
+        articleSection: "Du lịch suối Bang, Khu Du lịch Bang Osen Quảng Bình, tour hang ngay quang binh",
+        description: "Khu Du lịch Bang Osen Quảng Bình Quà Tặng từ thiên nhiên Khu Du lịch Bang Osen Quảng Bình là Suối nước khoáng nóng bang có từ hằng trăm năm nay. Nằm trên miền rừng núi xã Kim Thuỷ huyện Lệ Thuỷ. Cách Đồng Hới 60km và trung tâm huyện Lệ Thuỷ 21km về phía"
+    },
+    {
+        id: 2,
+        title: "BÁNH XÈO (QUẢNG HOÀ – BA ĐỒN)",
+        datePublished: "02/03/2023",
+        user: "Dương Đại",
+        type: "Cẩm Nang",
+        thumbnail: image.banhXeoBaDon,
+        articleSection: "Am thuc quang binh, ăn gì ở Quảng Bình, BÁNH XÈO (QUẢNG HOÀ - BA ĐỒN), du lịch Quảng Bình",
+        description: "BÁNH XÈO (QUẢNG HOÀ – BA ĐỒN) Địa Điểm BÁNH XÈO (QUẢNG HOÀ – BA ĐỒN) Bánh xèo ở xã Quảng Hòa, thị xã Ba Đồn nằm bên dòng sông Gianh thơ mộng. là món ăn quen thuộc với người dân và nay được du khách gần xa lựa chọn khi đến vùng bắc Quảng"
+    },
+    {
+        id: 3,
+        title: "TÚ LÀN LODGE – TRẢI NGHIỆM LƯU TRÚ ĐỘC ĐÁO BÊN TRIỀN NÚI TÂN HOÁ",
+        datePublished: "22/02/2023",
+        user: "Dương Đại",
+        type: "Cẩm Nang",
+        thumbnail: image.tuLanLodge,
+        articleSection: "tour động thiên đường, tour du lịch phong nha, Tour Ghép Quảng Bình Hàng ngày",
+        description: "TÚ LÀN LODGE – TRẢI NGHIỆM LƯU TRÚ ĐỘC ĐÁO BÊN TRIỀN NÚI TÂN HOÁ Vị trí lý tưởng, độc đáo Là khu lưu trú có địa thế độc đáo, Tu Lan Lodge toạ lạc ngay lưng chừng triền núi, có thiết kế chắc chắn và cao ráo để thích nghi với điều kiện thời"
+    },
+    {
+        id: 4,
+        title: "Lý do khách Sài Gòn du lịch Quảng Bình vào mùa đông",
+        datePublished: "23/09/2020",
+        user: "Dương Đại",
+        type: "Cẩm Nang",
+        thumbnail: image.conDuongDaLatQB,
+        articleSection: "co nen du lich quang binh vao mua dong, Lý do khách Sài gòn du lịch Quảng Bình vào mùa đông",
+        description: "TÚ LÀN LODGE – TRẢI NGHIỆM LƯU TRÚ ĐỘC ĐÁO BÊN TRIỀN NÚI TÂN HOÁ Vị trí lý tưởng, độc đáo Là khu lưu trú có địa thế độc đáo, Tu Lan Lodge toạ lạc ngay lưng chừng triền núi, có thiết kế chắc chắn và cao ráo để thích nghi với điều kiện thời"
+    }
+]
+
 const today = () => {
     let newDate = new Date();
     let bookeDate = `${newDate.getFullYear()}-${newDate.getMonth() + 1 < 10 ? `0${newDate.getMonth() + 1}` :
@@ -559,5 +603,6 @@ export {
     SHARE_BUTTONS,
     MESSAGE_ICONS,
     PASSWORD_RIGHT_ICONS,
-    SIDEBAR_NAV_ITEMS
+    SIDEBAR_NAV_ITEMS,
+    HAND_BOOK
 }

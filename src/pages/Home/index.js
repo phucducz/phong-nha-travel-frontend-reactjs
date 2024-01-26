@@ -1,29 +1,23 @@
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
-import { image } from '~/images';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { image } from '~/images';
 
-import style from './HomeStyle.module.scss';
-import { SLIDER_IMAGES } from "~/constant";
-import { GridTour } from '~/components/GridTour';
 import Button from '~/components/Button';
-import {
-    PAGESINGLE_ITEMS,
-    GRIDTOUR_ITEMS,
-    TOURSTYPE_ITEMS,
-    TOURREIVEW_ITEMS
-} from '~/constant';
-import { getService } from '~/services';
+import { GridTour } from '~/components/GridTour';
 import PageSingle from '~/components/PageSingle';
 import SearchBox from '~/components/SearchBox';
+import Slider from '~/components/Slider';
 import { TourReview } from '~/components/TourReview';
 import ToursType from '~/components/TourType';
-import Slider from '~/components/Slider';
-import { setMenuActive } from '~/reducers/menu';
+import { GRIDTOUR_ITEMS, PAGESINGLE_ITEMS, SLIDER_IMAGES, TOURREIVEW_ITEMS, TOURSTYPE_ITEMS } from "~/constant";
 import { handleFetchUserDataById } from '~/constant/reduxContants';
+import { setMenuActive } from '~/reducers/menu';
+import { getService } from '~/services';
+import style from './HomeStyle.module.scss';
 
 const cx = classNames.bind(style);
 
@@ -31,12 +25,18 @@ function Home() {
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
+    
+    const user = useSelector(state => state.user);
 
     const [categories, setCategories] = useState({ data: [] });
     const [topics, setTopics] = useState([]);
+    const [userId, setUserId] = useState(null);
 
     // fake user id
-    const userId = 1;
+    // const userId = 1;
+    useEffect(() => {
+        setUserId(user.currentUser.id);
+    }, [user]);
 
     useEffect(() => {
         const fetchTopics = async () => {
@@ -63,6 +63,7 @@ function Home() {
         }
 
         fetchData();
+        dispatch(setMenuActive({ id: 0 }));
     }, []);
 
     const handleNavigate = (id, url) => {
@@ -179,7 +180,8 @@ function Home() {
                 <span className={cx('images__crossbar')}></span>
             </div>
         </div>
-    )
+    );
 }
 
 export default Home;
+

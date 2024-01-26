@@ -8,7 +8,6 @@ import Button from "../Button";
 const cx = classNames.bind(style);
 
 function ConfirmData({
-    id,
     title,
     children,
     visible,

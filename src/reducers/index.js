@@ -1,17 +1,19 @@
 import { combineReducers } from "redux";
 
-import checkoutReducer from "./checkout";
-import couponReducer from "./coupon";
-import paymentReducer from "./payment";
 import cartReducer from "./cart";
-import messageReducer from "./message";
-import searchReducer from './search';
-import tourCategoriesReducer from "./tourCategories";
-import menuReducer from './menu';
+import checkoutReducer from "./checkout";
 import checkoutDetailReducer from "./checkoutDetail";
+import couponReducer from "./coupon";
 import loadingReducer from "./loading";
-import userReducer from "./user";
+import { loginReducer } from "./login";
+import menuReducer from './menu';
+import messageReducer from "./message";
+import paymentReducer from "./payment";
 import roleReducer from './role';
+import searchReducer from './search';
+import { signUpReducer } from "./signup";
+import tourCategoriesReducer from "./tourCategories";
+import userReducer from "./user";
 
 const rootReducer = combineReducers({
     checkout: checkoutReducer,
@@ -24,8 +26,10 @@ const rootReducer = combineReducers({
     menu: menuReducer,
     checkoutDetail: checkoutDetailReducer,
     loading: loadingReducer,
-    userfAdmin: userReducer,
-    rolefAdmin: roleReducer
+    user: userReducer,
+    rolefAdmin: roleReducer,
+    login: loginReducer,
+    signUp: signUpReducer
 });
 
 export default rootReducer;

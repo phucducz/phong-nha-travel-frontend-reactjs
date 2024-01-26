@@ -27,6 +27,8 @@ const fetchListCart = id => {
 }
 
 const fetchUserDataById = async userId => {
+    if (userId === null) return;
+
     const result = await getService('users', { id: userId, type: 'more' });
 
     return result[0];
@@ -274,6 +276,31 @@ const doConfirmData = async (data, cartCurrentData) => {
     await postService('checkouts', { ...postData, type: 'pay' });
 }
 
+const doSaveUser = async values => {
+    const { id, active, avatar, email, firstName,
+        lastName, password, phoneNumber, userName, roleId } = values;
+    await postService('users', {
+        id,
+        active,
+        avatar,
+        email,
+        firstName,
+        lastName,
+        password,
+        phoneNumber,
+        userName,
+        roleId,
+        file: values.avatarFile,
+        fileName: values.avatarFile.name
+    }, {
+        headers: { "Content-Type": "multipart/form-data" }
+    });
+}
+
+const doDeleteUser = async id => {
+    await deleteService('users', { id: id });
+}
+
 export {
     doCreateCheckoutDetail,
     doCreateCartItem,
@@ -286,5 +313,7 @@ export {
     doRestoreCartItem,
     fetchListCart,
     doConfirmData,
-    doGetExistCart
+    doGetExistCart,
+    doSaveUser,
+    doDeleteUser
 }

@@ -28,6 +28,7 @@
 .container__table {
     background-color: var(--white);
     padding: 2rem;
+    border-radius: .5rem;
 
     & .container__table__header {
         &>.container__table__header__title>p {

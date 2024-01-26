@@ -14,13 +14,13 @@ function Avatar({
     });
 
     let isNull = src === null ? true : false;
-
-    let nameAtIndex0 = alt.charAt(0);
+    
+    let nameAtZeroIndex = alt.charAt(0);
 
     return (
         <div className={cx(isNull && 'avatar-null')}>
-            <img className={classes} src={`../images/${src}`} alt={alt} />
-            {isNull && <p className={cx('name')}>{nameAtIndex0}</p>}
+            <img className={classes} src={src} alt={alt} />
+            {isNull && <p className={cx('name')}>{nameAtZeroIndex}</p>}
         </div>
     )
 }

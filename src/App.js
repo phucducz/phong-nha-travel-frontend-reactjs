@@ -3,9 +3,6 @@ import { publicRoutes } from '~/routes';
 import { Fragment } from "react";
 
 import { DefaultLayout } from "./layouts";
-// import { MessageProvider } from "./context/Message";
-// import { AdminProvider } from "./context/Admin";
-// import AdminV2 from "./pages/AdminV2";
 
 function App() {
   return (
@@ -21,25 +18,6 @@ function App() {
             else if (route.layout === null)
               Layout = Fragment;
 
-            //   return (
-            //     <Route
-            //       key={index}
-            //       path={route.path}
-            //       element={
-            //         <Layout>
-            //           {route.component === AdminV2
-            //             ? <AdminProvider>
-            //               <MessageProvider>
-            //                 <Page />
-            //               </MessageProvider>
-            //             </AdminProvider>
-            //             : <Page />
-            //           }
-            //         </Layout>
-            //       } />
-            //   );
-            // })};
-
             return (
               <Route
                 key={index}
@@ -48,13 +26,14 @@ function App() {
                   <Layout>
                     <Page />
                   </Layout>
-                } />
+                }
+              />
             );
           })};
         </Routes>
       </div>
     </Router>
-  )
+  );
 }
 
 export default App;

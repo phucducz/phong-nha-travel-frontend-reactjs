@@ -22,7 +22,7 @@ import {
     setCartItemsCurrent,
     setPriceCartItem
 } from "~/reducers/cart";
-import { clearMessage, setMessage } from "~/reducers/message";
+import { setMessage } from "~/reducers/message";
 
 const cx = classNames.bind(style);
 
@@ -47,25 +47,30 @@ function Cart() {
 
     const coupon = useSelector(state => state.coupon);
     const message = useSelector(state => state.message);
-    
+    const user = useSelector(state => state.user);
+
     const { dataCart, totalPrice, cartItemsPaid,
         activeCoupon, cartItemsDeleted, cartItemsCurrent
     } = useSelector(state => state.cart);
 
     const [activeShipping, setActiveShipping] = useState(false);
-
+    const [userId, setUserId] = useState(null);
     // fake user id
-    const userId = 1;
-    
+    // const userId = 1;
+
+    useEffect(() => {
+        setUserId(user.currentUser.id);
+    }, [user]);
+
     useEffect(() => {
         const fetchCart = userId => {
             handleFetchUserDataById(dispatch, {
                 userId: userId,
             });
         }
-
-        fetchCart(userId);
-    }, []);
+        
+        userId && fetchCart(userId);
+    }, [userId]);
 
     const handleApplyCoupon = useCallback((couponCode, dataCoupon) => {
         dispatch(restoreCartItem({
@@ -85,7 +90,7 @@ function Cart() {
         handleDiscount(dispatch, {
             couponCode: couponCode,
             // fake user id
-            userId: 1
+            userId: userId
         });
     }, []);
 
@@ -106,7 +111,7 @@ function Cart() {
 
     const handleRestoreCartItem = useCallback((data, couponValue, itemRemoved) => {
         // fake user id
-        let userId = 1;
+        // let userId = 1;
         doRestoreCartItem(dispatch, {
             data: data,
             userId: userId,

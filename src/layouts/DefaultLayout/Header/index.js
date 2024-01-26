@@ -1,13 +1,13 @@
 import classNames from "classnames/bind";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
-import style from './HeaderDefault.module.scss';
-import logo from '~/images/logophongnha.png';
 import Menu from '~/components/Menu';
-import { MENU_ITEMS } from "~/constant";
 import { routes } from "~/config";
+import { MENU_ITEMS } from "~/constant";
+import logo from '~/images/logophongnha.png';
 import { setMenuActive } from "~/reducers/menu";
+import style from './HeaderDefault.module.scss';
 
 const cx = classNames.bind(style);
 

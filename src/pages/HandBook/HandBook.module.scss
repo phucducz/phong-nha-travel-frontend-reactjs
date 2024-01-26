@@ -1,0 +1,162 @@
+.container {
+  padding-top: 0;
+}
+
+.content__header {
+  height: 30rem;
+  display: flex;
+  color: var(--white);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-attachment: fixed;
+
+  .title-primary h2 {
+    font-size: 4.2rem;
+  }
+
+  .description-primary {
+    font-size: 2.3rem;
+    margin-top: 1rem;
+  }
+}
+
+.blog-item {
+  width: 114rem;
+  background-color: var(--white);
+  margin: 4rem auto 0 auto;
+  padding: 4rem 0 0 0;
+  text-align: center;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.09);
+  border-radius: 0.3rem;
+
+  .blog-item__header,
+  .blog-item__body {
+    padding: 0 5rem;
+  }
+
+  .title {
+    font-size: 2.8rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .thumbnail {
+    height: 53rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    img {
+      max-width: 96rem;
+      max-height: 53rem;
+    }
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  .description {
+    padding: 4rem 0;
+    text-align: left;
+  }
+
+  .read-more {
+    margin-bottom: 4rem;
+  }
+}
+
+.article-info {
+  font-family: "Kaushan Script";
+  font-size: 1.6rem;
+
+  .article-hash-tag,
+  .published-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .published-info {
+    gap: 1.5rem;
+  }
+
+  .article-hash-tag {
+    margin-bottom: 2rem;
+  }
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+
+  .calendar,
+  .user,
+  .pencil,
+  .tags {
+    color: #47a0ff;
+  }
+
+  p:hover {
+    opacity: 0.8;
+  }
+}
+
+.blog-item__bottom {
+  display: flex;
+  align-items: center;
+  width: 114rem;
+  margin: 0 auto;
+
+  .item {
+    display: flex;
+    justify-content: center;
+    width: 28.5rem;
+    height: 6rem;
+    font-size: 2.2rem;
+    transition: all 0.2s ease-in-out;
+    border: 0.1rem solid #ebebeb;
+    cursor: pointer;
+  }
+
+  .facebook {
+    color: #3b579d!important;
+  }
+
+  .twitter {
+    color: #5ea9dd;
+  }
+
+  .instagram {
+    color: #0e76a8;
+  }
+
+  .pinterest {
+    color: #bd081c;
+  }
+  
+  // .facebook:hover {
+  //   color: #3b579d!important;
+  // }
+
+  // .twitter:hover {
+  //   color: #5ea9dd;
+  // }
+
+  // .instagram:hover {
+  //   color: #0e76a8;
+  // }
+
+  // .pinterest:hover {
+  //   color: #bd081c;
+  // }
+}

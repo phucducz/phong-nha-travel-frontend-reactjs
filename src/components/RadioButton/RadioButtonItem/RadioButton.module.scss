@@ -6,6 +6,7 @@ $width_background: 5rem;
     height: auto;
     display: flex;
     align-items: center;
+    text-transform: capitalize;
 
     &>label {
         cursor: pointer;

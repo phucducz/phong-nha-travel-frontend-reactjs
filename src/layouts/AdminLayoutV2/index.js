@@ -1,15 +1,17 @@
-import classNames from "classnames/bind";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowsUpDown, faCalendar, faChevronLeft, faGear, faInbox, faList, faRightFromBracket, faSearch, faUser, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames/bind";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
-import style from './AdminLayoutV2.module.scss';
-import logo from '~/images/logophongnha.png'
-import { SIDEBAR_NAV_ITEMS } from "~/constant";
-import ToolTip from "~/components/ToolTip";
 import Input from "~/components/Input";
+import Loading from "~/components/Loading";
 import DropDown from "~/components/Menu/DropDown";
+import ToolTip from "~/components/ToolTip";
+import { SIDEBAR_NAV_ITEMS } from "~/constant";
+import logo from '~/images/logophongnha.png';
+import style from './AdminLayoutV2.module.scss';
 
 const cx = classNames.bind(style);
 
@@ -17,23 +19,32 @@ const MENU_ITEMS = [
     {
         id: 1,
         icon: faUser,
-        title: 'my account'
+        title: 'my account',
+        url: '/admin/'
     }, {
         id: 2,
         icon: faCalendar,
-        title: 'calendar'
+        title: 'calendar',
+        url: '/admin/'
     }, {
         id: 3,
         icon: faInbox,
-        title: 'inbox'
+        title: 'inbox',
+        url: '/admin/'
     }, {
         id: 4,
         icon: faRightFromBracket,
-        title: 'logout'
+        title: 'logout',
+        to: '/login'
     }
 ];
 
 function AdminLayout({ children }) {
+    const navigate = useNavigate();
+
+    const loading = useSelector(state => state.loading);
+    const user = useSelector(state => state.user);
+
     const [searchValue, setSearchValue] = useState('');
     const [linkGroupItem, setLinkGroupItem] = useState(-1);
     const [active, setActive] = useState({
@@ -42,6 +53,13 @@ function AdminLayout({ children }) {
         collapsingSidebar: true,
         settingActive: false
     });
+
+    useEffect(() => {
+        if (typeof user.currentUser.id === 'undefined')
+            navigate('/');
+        else if (user.currentUser.role.id === 1)
+            navigate('/');
+    }, [user]);
 
     return (
         <div className={cx('admin-page__header')}>
@@ -142,6 +160,7 @@ function AdminLayout({ children }) {
                     {children}
                 </div>
             </div>
+            <Loading visible={loading.loading} />
         </div>
     );
 }

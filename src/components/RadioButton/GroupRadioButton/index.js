@@ -8,31 +8,35 @@ const cx = classNames.bind(style);
 
 function GroupRadioButton({
     data,
+    activeId,
     title,
     optional,
-    onChange,
     className,
+    onChange,
+    onClick,
     ...passProps
 }) {
-    const classes = cx('wrapper', {
+    const classes = cx('form-group', {
         [className]: className
     });
 
     return (
-        <div className={classes} {...passProps}>
-            <label className={cx('wrapper__title')}>
+        <div className={classes}>
+            <label className={cx('form-group__title')}>
                 {title}
                 {!optional && <span className={cx('label-option')}>
                     <abbr title="required">*</abbr>
                 </span>}
             </label>
-            <div className={cx('wrapper__input')}>
+            <div className={cx('form-group__input')}>
                 {data && data.map(item => (
                     <RadioButton
                         key={item.id}
                         id={item.id}
                         title={item.role}
-                        onChange={onChange}
+                        checked={activeId === item.id}
+                        onChange={() => onChange(item)}
+                        {...passProps}
                     />
                 ))}
             </div>
@@ -41,7 +45,7 @@ function GroupRadioButton({
 }
 
 GroupRadioButton.propTypes = {
-    data: PropTypes.object.isRequired,
+    data: PropTypes.array.isRequired,
     onChange: PropTypes.func,
 }
 

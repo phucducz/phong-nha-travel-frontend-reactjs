@@ -1,21 +1,21 @@
-import PropTypes from 'prop-types';
-import classNames from "classnames/bind";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames/bind";
 import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
-import style from './SearchBox.module.scss';
-import Input from "../Input";
-import Range from '../Range';
-import Button from "../Button";
-import DropDown from "../Menu/DropDown";
-import { getService } from '~/services';
 import { routes } from '~/config';
 import { setResultData, setSearchData } from '~/reducers/search.js';
+import { getService } from '~/services';
+import Button from "../Button";
+import Input from "../Input";
+import DropDown from "../Menu/DropDown";
+import Range from '../Range';
+import style from './SearchBox.module.scss';
 
 const cx = classNames.bind(style);
 
@@ -67,28 +67,22 @@ function SearchBox({
             let listStartDate = startDate && startDate.split('/');
             let startDateFormat = listStartDate && `${listStartDate[2]}-${listStartDate[1]}-${listStartDate[0]}`;
             let listEndDate = endDate && endDate.split('/');
-            let endDateFormat = listStartDate && `${listEndDate[2]}-${listEndDate[1]}-${listEndDate[0]}`;
+            let endDateFormat = listEndDate && `${listEndDate[2]}-${listEndDate[1]}-${listEndDate[0]}`;
+            let currentDate = new Date();
 
             let payload = {
-                name: tourName,
-                title: category.title,
-                priceAdult: rangePrice,
-                start_date: startDateFormat ? startDateFormat : '',
-                end_date: endDateFormat ? endDateFormat : ''
+                name: tourName || "",
+                code: category.code || "",
+                startPrice: rangePrice[0],
+                endPrice: rangePrice[1],
+                startDate: startDateFormat ? startDateFormat : '2023-08-30',
+                endDate: endDateFormat ? endDateFormat : `${currentDate.getFullYear() + 1}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`
             }
-
-            Object.entries(payload).forEach(([key, value]) => {
-                if (value === '' || value === 'category')
-                    delete payload[key];
-            });
 
             dispatch(setSearchData(payload));
 
             const findTours = async (payload) => {
-                const result = await getService('tours', {
-                    type: 'search',
-                    payload: payload
-                });
+                const result = await getService('tours/search', { type: 'search', ...payload });
 
                 dispatch(setResultData({ result: result }));
             }
@@ -191,8 +185,8 @@ function SearchBox({
                 </div>
                 <div className={cx('price-range')}>
                     <Range
-                        min={0}
-                        max={4850000}
+                        min={0} 
+                        max={20000000}
                         onChange={(min, max) => formik.setFieldValue('rangePrice', [min, max])}
                         className={cx('price-range__rg')}
                     />

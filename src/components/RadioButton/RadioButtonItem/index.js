@@ -27,6 +27,8 @@ function RadioButtonItem({
 }
 
 RadioButtonItem.propTypes = {
+    title: PropTypes.string.isRequired,
+    id: PropTypes.number,
     onClick: PropTypes.func,
 }
 

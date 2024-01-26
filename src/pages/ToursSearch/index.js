@@ -1,20 +1,18 @@
 import classNames from "classnames/bind";
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-import style from './ToursSearch.module.scss';
+import Pagination from "~/components/Pagination";
 import SearchBox from "~/components/SearchBox";
 import TourItem from "~/components/TourItem";
-import Pagination from "~/components/Pagination";
-import { getService } from "~/services";
-import { setResultData } from "~/reducers/search";
+import style from './ToursSearch.module.scss';
 
 const cx = classNames.bind(style);
 
 function ToursSearch() {
     const search = useSelector(state => state.search);
     const tourCategories = useSelector(state => state.tourCategories);
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     const { result } = search;
     const { listData } = tourCategories;
@@ -22,13 +20,13 @@ function ToursSearch() {
     const [toursOfPage, setTourOfPage] = useState([]);
 
     useEffect(() => {
-        const fetchTours = async () => {
-            const response = await getService('tours', { type: 'view' });
-            dispatch(setResultData({ result: response }));
-        }
+        // const fetchTours = async () => {
+        //     const response = await getService('tours', { type: 'view' });
+        //     dispatch(setResultData({ result: response }));
+        // }
 
-        if (result.length === 0)
-            fetchTours();
+        // if (result.length === 0)
+        //     fetchTours();
 
         handlePagination();
     }, [result]);

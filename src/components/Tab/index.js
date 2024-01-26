@@ -1,7 +1,6 @@
-import PropTypes from 'prop-types';
 import classNames from "classnames/bind";
-import { useState } from "react";
-import { memo } from 'react';
+import PropTypes from 'prop-types';
+import { memo, useState } from "react";
 
 import style from './Tab.module.scss';
 
@@ -19,7 +18,7 @@ function Tab({
                 {tabs.map((tab, index) => (
                     <li
                         key={index}
-                        className={cx('nav__tour__item', index === 1 && 'active-nav__item')}
+                        className={cx('nav__tour__item', index === toggle && 'active-nav__item')}
                         onClick={() => setToggle(index)}
                     >
                         <p>{tab}</p>
@@ -29,7 +28,7 @@ function Tab({
             {contents.map((content, index) => (
                 <div
                     key={content.id}
-                    className={cx('tab__item', index === 1 && 'active-tab__item')}
+                    className={cx('tab__item', index === toggle && 'active-tab__item')}
                 >
                     {content.tab}
                 </div>

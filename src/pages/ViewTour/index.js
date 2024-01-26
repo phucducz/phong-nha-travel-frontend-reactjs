@@ -1,53 +1,52 @@
-import classNames from 'classnames/bind';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames/bind';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import * as Yup from 'yup';
 
-import style from './TourView.module.scss';
-import { getService } from '~/services';
-import { formatMoney } from '~/format';
-import TabCategories from './TabCategories';
-import { INFO_TOUR, SHARE_BUTTONS, toLocalDate } from '~/constant';
-import { routes } from '~/config';
-import Icon from '~/components/Icon';
-import Tab from '~/components/Tab';
-import FormBlock from '~/components/FormBlock';
-import Input from '~/components/Input';
 import Button from '~/components/Button';
+import FormBlock from '~/components/FormBlock';
+import Icon from '~/components/Icon';
+import Input from '~/components/Input';
+import Tab from '~/components/Tab';
+import { routes } from '~/config';
+import { INFO_TOUR, SHARE_BUTTONS, toLocalDate } from '~/constant';
 import { handleBookClick } from '~/constant/reduxContants';
+import { formatMoney } from '~/format';
+import { getService } from '~/services';
+import TabCategories from './TabCategories';
+import style from './TourView.module.scss';
 
 const cx = classNames.bind(style);
 
 function ViewTour() {
     const { tourId } = useParams();
     const [tour, setTour] = useState({});
+    const [userId, setUserId] = useState(null);
 
     const checkoutDetail = useSelector(state => state.checkoutDetail);
+    const user = useSelector(state => state.user);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const formik = useFormik({
         initialValues: {
-            fullName: '',
-            emailAddress: '',
-            phoneNumber: '',
+            fullName: user.currentUser.firstName && `${user.currentUser.firstName} ${user.currentUser.lastName}` || '',
+            emailAddress: user.currentUser.email || '',
+            phoneNumber: user.currentUser.phoneNumber || '',
             bookingDate: '',
             quantity: '',
             tourId: +tourId,
-            userId: 1
         },
-
         validationSchema: Yup.object({
             fullName: Yup.string()
-                .required('Vui lòng điền đầy đủ họ tên!')
-                .matches(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{3,}$/, 'Vui lòng nhập họ tên ít nhất 4 ký tự và không chứa ký tự đặt biệt'),
+                .required('Vui lòng điền đầy đủ họ tên!'),
             emailAddress: Yup.string()
-                .required('Vui lòng cung cấp email!')
-                .matches(/[A-Za-z0-9'\.\-\s\,]/, 'Vui lòng nhập địa chỉ đúng định dạng (Không dùng ký tự đặc biệt)'),
+                .required("Không được để trống!")
+                .matches(/^\S+@\S+\.\S+$/, "Vui lòng nhập địa chỉ email đúng định dạng(abc@xyz.def)"),
             phoneNumber: Yup.string()
                 .required('Vui lòng nhập số điện thoại của bạn!')
                 .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?\d{3}\d{4}$/, 'Vui lòng nhập số điện thoại đúng định dạng (10 chữ số) !'),
@@ -60,9 +59,15 @@ function ViewTour() {
                 .required('Vui lòng nhập số lượng vé!')
                 .matches(/^[1-9]$/, 'Chỉ được phép đặt 1-9 vé')
         }),
-
         onSubmit: values => handleClick(values)
     });
+
+    useEffect(() => {
+        if (Object.keys(user.currentUser).length <= 0) return;
+
+        setUserId(user.currentUser.id);
+        formik.setFieldValue('userId', user.currentUser.id);
+    }, [user]);
 
     const FORM_BLOCK_INPUTS = [
         {
@@ -242,9 +247,15 @@ function ViewTour() {
     }, [formik.values.fullName]);
 
     const handleClick = async values => {
-        const { tourId, quantity, bookingDate, userId,
+        const { tourId, quantity, bookingDate,
             fullName, phoneNumber, emailAddress
         } = values;
+
+        if (user.currentUser.id === null ||
+            typeof user.currentUser.id === 'undefined') {
+            navigate('/login');
+            return;
+        }
 
         let cartData = {
             tourId: tourId,
@@ -254,6 +265,7 @@ function ViewTour() {
         }
 
         let checkoutDetailData = {
+            userId: userId,
             ...checkoutDetail.information,
             fullName: fullName,
             phoneNumber: phoneNumber,
@@ -327,7 +339,7 @@ function ViewTour() {
                             />
                         ))}
                         <div className={cx('form__price-detail')}>
-                            <span>{formik.values.quantity} x </span>
+                            <span>{formik.values.quantity === '' ? 0 : formik.values.quantity} x </span>
                             <span>{formatMoney(tour.priceAdult)} = </span>
                             <span>{formatMoney(formik.values.quantity * tour.priceAdult)}</span>
                         </div>
