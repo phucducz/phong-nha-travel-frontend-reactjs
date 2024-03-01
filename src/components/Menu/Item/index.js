@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types';
-import classNames from "classnames/bind";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import style from './Item.module.scss';
-import DropDown from "../DropDown";
-import { routes } from '~/config';
+import classNames from "classnames/bind";
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import { Link } from "react-router-dom";
+
+import { routes } from '~/config';
+import DropDown from "../DropDown";
+import style from './Item.module.scss';
 
 const cx = classNames.bind(style);
 
@@ -27,7 +27,7 @@ function Item({
     const classes = cx('menu_li', {
         [className]: className,
     }, active === data.id && 'active');
-    
+
     return (
         <li className={classes}>
             <div className={cx('d-item')}>
@@ -90,7 +90,11 @@ function Item({
                     placement={placement}
                     onClick={onClick}
                     active={active}
-                />}
+                    // className={cx(
+                    //     window.matchMedia('(max-width: 900px)').matches && 'mobile-mode'
+                    // )}
+                />
+            }
         </li>
     );
 }

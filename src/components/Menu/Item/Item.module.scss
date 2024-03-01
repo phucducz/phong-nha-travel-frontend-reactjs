@@ -99,3 +99,36 @@
     text-transform: none;
     font-style: normal;
 }
+
+@media screen and (max-width: 900px) {
+    .menu_li {
+        &>ul {
+            position: unset;
+            width: 100%;
+            max-width: 100%;
+            box-shadow: unset;
+            background-color: transparent;
+            border-radius: unset;
+
+            &>li {
+                padding-left: 3rem;
+                cursor: pointer;
+
+                & a {
+                    opacity: 0.8;
+                    transition: opacity .2s linear;
+                    text-align: left;
+                    white-space: nowrap;
+                    
+                    &:hover {
+                        opacity: 1;
+                    }
+
+                    &::before {
+                        display: none !important;
+                    }
+                }
+            }
+        }
+    }
+}

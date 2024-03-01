@@ -36,10 +36,20 @@ const useMenu = initialState => {
     return [menu, setMenu];
 }
 
+const useWindowResize = (handleWindowResize, dependencies = []) => {
+    useEffect(() => {
+        handleWindowResize();
+        window.addEventListener('resize', handleWindowResize);
+
+        return () => window.removeEventListener('resize', handleWindowResize);
+    }, [...dependencies]);
+}
+
 export {
     useMessageBox,
     useAdmin,
     useDebounce,
     useFilter,
-    useMenu
+    useMenu,
+    useWindowResize
 }

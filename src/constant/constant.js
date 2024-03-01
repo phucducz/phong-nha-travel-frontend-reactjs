@@ -1,4 +1,10 @@
 import {
+    faFacebookF,
+    faLinkedinIn,
+    faPinterest,
+    faTwitter
+} from "@fortawesome/free-brands-svg-icons";
+import {
     faCartShopping,
     faCheck,
     faChevronDown,
@@ -9,14 +15,15 @@ import {
     faTruck,
     faUser
 } from "@fortawesome/free-solid-svg-icons";
-import {
-    faFacebookF,
-    faLinkedinIn,
-    faPinterest,
-    faTwitter
-} from "@fortawesome/free-brands-svg-icons";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { routes } from "~/config";
+import { image } from "~/images";
+import instagram from '~/images/Instagram-Icon.png';
+import SLIDER_1 from '~/images/black-forest-gaf3ef4a97_1920.jpg';
+import SLIDER_3 from '~/images/dulichhangdongquangbinh.jpeg';
+import SLIDER_2 from '~/images/pexels-photo-237272.jpeg';
+import phone from '~/images/phone-icon.png';
 import TOUR_TYPE_1 from '~/images/tour-deal.jpg';
 import TOUR_TYPE_2 from '~/images/tour-hang-ngay.jpg';
 import TOUR_TYPE_3 from '~/images/tour-mao-hiem.jpg';
@@ -24,25 +31,18 @@ import TOUR_TYPE_4 from '~/images/tour-mien-trung.jpg';
 import TOUR_TYPE_5 from '~/images/tour-noi-bat.jpg';
 import TOUR_TYPE_6 from '~/images/tour-phong-nha.jpg';
 import TOUR_TYPE_7 from '~/images/tour-quang-binh.jpg';
-import SLIDER_1 from '~/images/black-forest-gaf3ef4a97_1920.jpg';
-import SLIDER_2 from '~/images/dulichhangdongquangbinh.jpeg';
-import SLIDER_3 from '~/images/con-duong-da-lat-quang-binh-2-720x530.jpg';
 import zalo from '~/images/zalo-icon.png';
-import phone from '~/images/phone-icon.png';
-import instagram from '~/images/Instagram-Icon.png';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { image } from "~/images";
 
 const SLIDER_IMAGES = [
     {
         src: SLIDER_1,
-        alt: 'slide-1.jpg'
+        alt: 'slide-1'
     }, {
         src: SLIDER_2,
-        alt: 'slide-2.jpg'
+        alt: 'slide-2'
     }, {
         src: SLIDER_3,
-        alt: 'slide-3.jpg'
+        alt: 'kham-pha-phong-nha-ke-bang'
     }
 ];
 
@@ -585,24 +585,8 @@ const toLocalDate = date => {
 }
 
 export {
-    today,
-    toLocalDate,
-    SLIDER_IMAGES,
-    TOUR_TYPES,
-    fieldNames,
-    MENU_ITEMS,
-    GRIDTOUR_ITEMS,
-    GRIDTOUR_ITEMS_PREFERENTIAL,
-    PAGESINGLE_ITEMS,
-    TOURREIVEW_ITEMS,
-    TOURSTYPE_ITEMS,
-    CATEGORY_ICONS,
-    SOCIAL_NETWORKS,
-    INFO_TOUR,
-    CATEGORIES_HREF,
-    SHARE_BUTTONS,
-    MESSAGE_ICONS,
-    PASSWORD_RIGHT_ICONS,
-    SIDEBAR_NAV_ITEMS,
-    HAND_BOOK
-}
+    CATEGORIES_HREF, CATEGORY_ICONS, GRIDTOUR_ITEMS,
+    GRIDTOUR_ITEMS_PREFERENTIAL, HAND_BOOK, INFO_TOUR, MENU_ITEMS, MESSAGE_ICONS, PAGESINGLE_ITEMS, PASSWORD_RIGHT_ICONS, SHARE_BUTTONS, SIDEBAR_NAV_ITEMS, SLIDER_IMAGES, SOCIAL_NETWORKS, TOURREIVEW_ITEMS,
+    TOURSTYPE_ITEMS, TOUR_TYPES,
+    fieldNames, toLocalDate, today
+};

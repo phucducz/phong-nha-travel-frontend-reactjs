@@ -20,15 +20,15 @@ function Slider({
     const handleClick = (cases) => {
         switch (cases) {
             case 'UP':
-                setCounter(counter === length - 1 ? 0 : counter + 1);
+                setCounter(prev => prev === length - 1 ? 0 : prev + 1);
                 break;
 
             case 'DOWN':
-                setCounter(counter === 0 ? length - 1 : counter - 1);
+                setCounter(prev => prev === 0 ? length - 1 : prev - 1);
                 break;
 
-            default: 
-                throw new Error('Invalud case!');
+            default:
+                throw new Error('Invalid case!');
         }
     }
 
@@ -45,11 +45,13 @@ function Slider({
         return () => clearInterval(id);
     }, []);
 
+    console.log(counter);
+
     return (
         <div className={classes}>
             <button
                 className={cx('slider__btn__prev')}
-                onClick={() => handleClick('UP')}
+                onClick={() => handleClick('DOWN')}
             ></button>
             <div className={cx('slider__images')}>
                 {images.map((img, index) => (
@@ -71,7 +73,7 @@ function Slider({
             </div>
             <button
                 className={cx('slider__btn__next')}
-                onClick={() => handleClick('DOWN')}
+                onClick={() => handleClick('UP')}
             ></button>
         </div >
     );
