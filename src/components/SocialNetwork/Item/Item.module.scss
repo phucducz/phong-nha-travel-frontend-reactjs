@@ -177,22 +177,30 @@
 
 .instagram {
     &>img {
-        background: linear-gradient(to right,#f9ce34, #ee2a7b, #6228d7);
+        background: linear-gradient(to right, #f9ce34, #ee2a7b, #6228d7);
     }
 
     &::before {
-        background: linear-gradient(to right,#f9ce34, #ee2a7b, #6228d7);
+        background: linear-gradient(to right, #f9ce34, #ee2a7b, #6228d7);
     }
 
     &::after {
-        background: linear-gradient(to right,#f9ce34, #ee2a7b, #6228d7);
+        background: linear-gradient(to right, #f9ce34, #ee2a7b, #6228d7);
     }
 
     &>span {
-        background: linear-gradient(to right,#f9ce34, #ee2a7b, #6228d7);
+        background: linear-gradient(to right, #f9ce34, #ee2a7b, #6228d7);
     }
 
     &>div {
-        background-color: linear-gradient(to right,#f9ce34, #ee2a7b, #6228d7);
+        background-color: linear-gradient(to right, #f9ce34, #ee2a7b, #6228d7);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .phone {
+        &>div {
+            display: none;
+        }
     }
 }

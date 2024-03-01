@@ -143,7 +143,7 @@ function Home() {
                 data={topics.length > 0 ? topics[topics.length - 1].listTour : []}
                 title={GRIDTOUR_ITEMS.length === 0 ? {} : GRIDTOUR_ITEMS[topics.length - 1] }
             />
-            <div className={cx('wrapper-find')}>
+            {/* <div className={cx('wrapper-find')}>
                 <div className={cx('tours-type')}>
                     <div className={cx('tours-type__title')}>
                         <p>Find a Tour by</p>
@@ -172,13 +172,13 @@ function Home() {
                     </div>
                     <TourReview data={TOURREIVEW_ITEMS} className={cx('review')} />
                 </div>
-            </div>
-            <div className={cx('container-images__title')}>
+            </div> */}
+            {/* <div className={cx('container-images__title')}>
                 <span className={cx('images__crossbar')}></span>
                 <div className={cx('images__icon')}></div>
                 <h3 className={cx('images__desc')}>Hình ảnh từ Phong Nha Travel</h3>
                 <span className={cx('images__crossbar')}></span>
-            </div>
+            </div> */}
         </div>
     );
 }

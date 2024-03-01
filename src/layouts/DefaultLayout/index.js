@@ -23,8 +23,8 @@ function DefaultLayout({ children }) {
         <>
             <Loading visible={loading.loading} />
             <Header />
-            {/* <div className={cx('main')}>{children}</div>
-            <Footer /> */}
+            <div className={cx('main')}>{children}</div>
+            {/* <Footer /> */}
             <SocialNetWork data={SOCIAL_NETWORKS} />
         </>
     );

@@ -48,6 +48,7 @@
         height: 24rem;
         cursor: pointer;
         overflow: hidden;
+        object-fit: cover;
 
         &:hover {
             transform: scale(1.2);
@@ -63,9 +64,9 @@
         border-top-right-radius: .5rem;
     }
 
-    &+.gridtours__standout {
-        margin-left: 3rem;
-    }
+    // &+.gridtours__standout {
+    //     margin-left: 3rem;
+    // }
 }
 
 .round {
