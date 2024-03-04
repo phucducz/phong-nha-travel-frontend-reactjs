@@ -1,4 +1,4 @@
-.header_wrapper {
+.header__wrapper {
     width: 100%;
     background-color: var(--white);
     position: fixed;
@@ -9,7 +9,7 @@
     box-shadow: 0px 1px 1px 0px #ddd;
     display: flex;
     justify-content: center;
-    z-index: 2;
+    z-index: 3;
 
     .cn-header {
         display: flex;
@@ -20,7 +20,7 @@
     }
 }
 
-.header_left {
+.header__left {
     .logo {
         max-height: 95px;
         max-width: 300px;
@@ -28,7 +28,7 @@
     }
 }
 
-.header_right {
+.header__right {
     & ul>li {
         font-size: 1.2rem;
         font-weight: 900;
@@ -47,19 +47,22 @@
     }
 }
 
-@media screen and (max-width: 1170px) and (min-width: 901px) {
-    .header_wrapper {
+@media screen and (max-width: 1170px) and (min-width: 930px) {
+    .header__wrapper {
         &>.cn-header {
             flex-direction: column;
-            align-items: flex-start;
-            padding: 0 2rem;
+            align-items: flex-end;
+
+            &>a {
+                width: 100%;
+            }
         }
     }
 }
 
-.header_wrapper {
+.header__wrapper {
     &>.cn-header {
-        &>.header_right>svg {
+        &>.header__right>svg {
             width: 20px;
             height: 20px;
             padding: 1rem;
@@ -71,19 +74,23 @@
 }
 
 @media screen and (max-width: 1140px) {
-    .header_wrapper {
+    .header__wrapper {
         .cn-header {
             width: calc(100vw - 2rem - 4rem);
         }
     }
 }
 
-@media screen and (max-width: 900px) {
-    .header_wrapper {
-        &>.cn-header {
-            padding: 0 2rem;
+@media screen and (max-width: 1140px) and (min-width: 930px) {
+    .header_wrapper>.cn-header {
+        align-items: flex-end;
+    }
+}
 
-            &>.header_right {
+@media screen and (max-width: 930px) {
+    .header__wrapper {
+        &>.cn-header {
+            &>.header__right {
                 &>.ul-responsive {
                     width: 0%;
                     height: 100vh;
@@ -92,10 +99,9 @@
                     overflow-x: hidden;
                     position: absolute;
                     top: 100%;
-                    right: 0;
-                    transition: height .2s linear;
+                    right: -4rem;
                     z-index: 2;
-                    transition: width .2s linear;
+                    transition: width .3s linear;
 
                     &.active {
                         width: 70%;

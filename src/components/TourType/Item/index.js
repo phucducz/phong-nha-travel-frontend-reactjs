@@ -8,6 +8,7 @@ const cx = classNames.bind(style);
 function Item({
     data,
     className,
+    itemRef,
     ...passProps
 }) {
     const classes = cx('item', {
@@ -15,7 +16,7 @@ function Item({
     });
 
     return (
-        <div className={classes} {...passProps}>
+        <div className={classes} {...passProps} ref={itemRef}>
             <img src={data.image} alt={data.name} />
             <p>{data.title}</p>
         </div>

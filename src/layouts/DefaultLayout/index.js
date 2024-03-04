@@ -24,7 +24,7 @@ function DefaultLayout({ children }) {
             <Loading visible={loading.loading} />
             <Header />
             <div className={cx('main')}>{children}</div>
-            {/* <Footer /> */}
+            <Footer />
             <SocialNetWork data={SOCIAL_NETWORKS} />
         </>
     );

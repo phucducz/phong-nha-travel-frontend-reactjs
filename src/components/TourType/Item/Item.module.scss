@@ -11,9 +11,9 @@
     position: relative;
     transition: .5s;
     
-    &+.item {
-        margin-left: var(--margin-item);
-    }
+    // &+.item {
+    //     margin-left: var(--margin-item);
+    // }
 }
 
 .item {

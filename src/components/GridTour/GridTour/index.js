@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import classNames from "classnames/bind";
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect, memo, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 import style from './GridTourStyle.module.scss';
 import Item from "../Item";
 import Button from "~/components/Button";
+import { useWindowsResize } from '~/context';
 
 const cx = classNames.bind(style);
 
@@ -22,6 +23,7 @@ function GridTour({
         count: 0,
         index: 0,
     });
+    const itemRef = useRef();
 
     let flex = false, round = false, slider = false;
 
@@ -47,13 +49,23 @@ function GridTour({
 
     useEffect(() => {
         const { count } = action;
-        let widthItem = 39;
+        let widthItem = itemRef.current ? (itemRef.current.offsetWidth + 30) : 390;
 
         setGridTourItems(prev => ({
             ...prev,
             marginLeft: -widthItem * count
         }));
-    }, [action]);
+    }, [action.count]);
+
+    useWindowsResize(() => {
+        if (!itemRef.current) return;
+        let widthItem = itemRef.current ? (itemRef.current.offsetWidth + 30) : 390;
+
+        setGridTourItems(prev => ({
+            ...prev,
+            marginLeft: -widthItem * action.count
+        }));
+    }, []);
 
     const handlePrevious = () => {
         setAction(() => {
@@ -99,9 +111,10 @@ function GridTour({
                                 ? <Item
                                     key={index}
                                     data={tour}
-                                    style={{ marginLeft: `${gridTourItems.marginLeft}rem` }}
+                                    style={{ marginLeft: `${gridTourItems.marginLeft}px` }}
                                     categories={tour.categoryIds}
                                     round={rounded}
+                                    itemRef={itemRef}
                                 />
                                 : <Item
                                     key={index}

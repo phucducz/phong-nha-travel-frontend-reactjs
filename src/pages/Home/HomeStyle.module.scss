@@ -366,24 +366,24 @@ $animation-image-hide: hideImage ease-in-out 1s;
     padding-right: 2rem;
 }
 
-.container-images__title {
-    display: flex;
-    align-items: center;
-    max-width: max-content;
-    margin: 70px auto 40px auto;
-}
+// .container-images__title {
+//     display: flex;
+//     align-items: center;
+//     max-width: max-content;
+//     margin: 70px auto 40px auto;
+// }
 
-.images__icon:after {
-    content: '\f03e';
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
-    margin-right: 30px;
-    font-size: 30px;
-    color: #69b1fd;
-    background-color: #cccccc;
-    border-radius: 47%;
-    padding: 15px;
-}
+// .images__icon:after {
+//     content: '\f03e';
+//     font-family: 'Font Awesome 5 Free';
+//     font-weight: 900;
+//     margin-right: 30px;
+//     font-size: 30px;
+//     color: #69b1fd;
+//     background-color: #cccccc;
+//     border-radius: 47%;
+//     padding: 15px;
+// }
 
 .images-row-one,
 .images-row-two {
@@ -405,6 +405,7 @@ $animation-image-hide: hideImage ease-in-out 1s;
     justify-content: space-between;
     padding-top: 60px;
     margin: 0 auto;
+    gap: 3rem;
 }
 
 @mixin title {
@@ -537,12 +538,12 @@ $animation-image-hide: hideImage ease-in-out 1s;
 }
 
 .tours-type {
-    width: var(--max-width-page);
+    width: max-content;
     margin: 0 auto;
     padding: 6rem 0;
 
     .tours-type__title {
-        width: var(--max-width-page);
+        width: max-content;
         margin: 0 auto;
     }
 }
@@ -556,6 +557,8 @@ $animation-image-hide: hideImage ease-in-out 1s;
     }
 
     &>h3 {
+        width: max-content;
+        max-width: var(--max-width-page);
         @include title;
     }
 }
@@ -570,6 +573,19 @@ $animation-image-hide: hideImage ease-in-out 1s;
     .gridtour__regular {
         width: calc(100vw - 6rem);
     }
+
+    .tours-type__title {
+        &>h3 {
+            width: calc(100vw - 6rem);
+        }
+    }
+}
+
+@media screen and (max-width: 1260px) {
+    .discovery-review {
+        width: calc(100vw - 6rem);
+        margin: 0 3rem;
+    }
 }
 
 @media screen and (max-width: 1140px) {
@@ -581,6 +597,18 @@ $animation-image-hide: hideImage ease-in-out 1s;
 @media screen and (max-width: 1110px) {
     .wrapper__page {
         flex-direction: column;
+    }
+
+    .discovery-review {
+        flex-direction: column;
+
+        &>div {
+            width: 100%;
+
+            &:first-child {
+                margin-bottom: 11rem;
+            }
+        }
     }
 }
 

@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types';
-import classNames from "classnames/bind";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames/bind";
+import PropTypes from 'prop-types';
+import { useEffect, useRef, useState } from "react";
 
-import style from './ToursType.module.scss';
 import Item from './Item';
-import { useEffect, useState } from "react";
+import style from './ToursType.module.scss';
 
 const cx = classNames.bind(style);
 
@@ -15,8 +15,8 @@ function ToursType({
 }) {
     const [count, setCount] = useState(0);
     const [marginLeft, setMarginLeft] = useState(0);
-    let widthItem = 26.25;
-    let spaceMargin = 3;
+    const itemRef = useRef();
+
     let itemPresent = 4;
 
     const classes = cx('tours-type', {
@@ -24,6 +24,9 @@ function ToursType({
     });
 
     useEffect(() => {
+        let widthItem = itemRef.current ? itemRef.current.offsetWidth : 262.5;
+        let spaceMargin = 30;
+
         setMarginLeft((-widthItem - spaceMargin) * count);
     }, [count]);
 
@@ -37,7 +40,12 @@ function ToursType({
             <div className={cx('tours-type__present')}>
                 {data.map((item, index) => (
                     index === 0
-                        ? <Item style={{ marginLeft: `${marginLeft}rem` }} key={index} data={item} />
+                        ? <Item
+                            style={{ marginLeft: `${marginLeft}px` }}
+                            key={index}
+                            data={item}
+                            itemRef={itemRef}
+                        />
                         : <Item key={index} data={item} />
                 ))}
             </div>

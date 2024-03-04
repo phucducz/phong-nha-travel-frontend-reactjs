@@ -32,11 +32,13 @@
 }
 
 .footer {
-    width: 130rem;
+    width: calc(100vw - 6rem);
+    max-width: 130rem;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 3rem;
 }
 
 .--position {
@@ -65,4 +67,11 @@
 
 .containter-social__icon {
     position: relative;
+}
+
+@media screen and (max-width: 960px) {
+    .footer {
+        flex-direction: column;
+        gap: 3rem;
+    }
 }

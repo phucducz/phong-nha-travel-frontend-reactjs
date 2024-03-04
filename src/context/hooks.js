@@ -36,12 +36,20 @@ const useMenu = initialState => {
     return [menu, setMenu];
 }
 
-const useWindowResize = (handleWindowResize, dependencies = []) => {
+const useWindowsResize = (handleWindowResize, dependencies = []) => {
     useEffect(() => {
         handleWindowResize();
         window.addEventListener('resize', handleWindowResize);
 
         return () => window.removeEventListener('resize', handleWindowResize);
+    }, [...dependencies]);
+}
+
+const useWindowsMouseDown = (handleWindowResize, dependencies = []) => {
+    useEffect(() => {
+        window.addEventListener('mousedown', handleWindowResize);
+
+        return () => window.removeEventListener('mousedown', handleWindowResize);
     }, [...dependencies]);
 }
 
@@ -51,5 +59,6 @@ export {
     useDebounce,
     useFilter,
     useMenu,
-    useWindowResize
+    useWindowsResize,
+    useWindowsMouseDown
 }

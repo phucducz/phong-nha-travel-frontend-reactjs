@@ -113,6 +113,14 @@
 }
 
 @media screen and (max-width: 1350px) and (min-width: 950px) {
+    .flex {
+        & .container-presented {
+            & .container-gridtour {
+                width: calc(100vw - 6rem) !important;
+            }
+        }
+    }
+
     .tour-item {
         width: calc(100vw - 6rem);
 
@@ -161,6 +169,10 @@
         &:not(.slider) {
             .container-presented {
                 width: 100% !important;
+
+                &>div {
+                    flex-direction: column;
+                }
             }
         }
     }

@@ -1,11 +1,12 @@
 .tours-type {
     padding-top: 3rem;
     position: relative;
-    
+
     .tours-type__present {
         width: var(--max-width-page);
         display: flex;
         overflow: hidden;
+        gap: 3rem;
     }
 }
 
@@ -30,12 +31,52 @@
 
 .tours-type {
     & .tours-type__prev {
-        @include setPosition(left, -3.5%);
+        @include setPosition(left, -2rem);
         @include commonlyAttributes;
     }
 
     & .tours-type__next {
-        @include setPosition(right, -3.5%);
+        @include setPosition(right, -2rem);
         @include commonlyAttributes;
+    }
+}
+
+@media screen and (max-width: 1260px) {
+    .tours-type {
+        .tours-type__present {
+            width: calc(100vw - 6rem);
+
+            &>div {
+                width: max-content;
+                
+                &>img {
+                    width: calc((100vw - 6rem - (3rem * 3)) / 4);
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 950px) and (min-width: 570px) {
+    .tours-type {
+        .tours-type__present {
+            width: calc(100vw - 6rem);
+
+            &>div>img {
+                width: calc((100vw - 6rem - (3rem * 2)) / 3);
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 570px) {
+    .tours-type {
+        .tours-type__present {
+            width: calc(100vw - 6rem);
+
+            &>div>img {
+                width: calc((100vw - 6rem - 3rem) / 2);
+            }
+        }
     }
 }

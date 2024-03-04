@@ -44,7 +44,7 @@
 
 @media screen and (max-width: 1140px) {
     .page__single {
-        width: 100vw;
+        width: calc(100vw - 6rem);
         min-width: unset;
     }
 }

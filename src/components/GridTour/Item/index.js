@@ -1,14 +1,13 @@
-import PropTypes from 'prop-types';
-import classNames from "classnames/bind";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames/bind";
+import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 
-import style from './Item.module.scss';
-import { formatMoney } from "~/format";
-import { CATEGORY_ICONS } from "~/constant";
 import Icon from "~/components/Icon";
-import { TOUR_TYPES } from "~/constant";
+import { CATEGORY_ICONS, TOUR_TYPES } from "~/constant";
+import { formatMoney } from "~/format";
+import style from './Item.module.scss';
 
 const cx = classNames.bind(style);
 
@@ -16,6 +15,7 @@ function Item({
     data,
     categories,
     round,
+    itemRef,
     ...passProps
 }) {
     const navigate = useNavigate();
@@ -28,7 +28,7 @@ function Item({
     }
 
     return (
-        <div className={cx('gridtours__standout')} {...passProps}>
+        <div className={cx('gridtours__standout')} ref={itemRef} {...passProps}>
             <div className={cx('gridtours__standout__item')}>
                 <div className={cx('item__image', { round })}>
                     <div onClick={() => handleNavigate(data.name, data.id)}>
