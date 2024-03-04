@@ -26,6 +26,7 @@ function Header() {
 
     const handleMenuClick = id => {
         dispatch(setMenuActive({ id: id }));
+        setActiveBar(false);
     };
 
     useWindowsResize(() => {

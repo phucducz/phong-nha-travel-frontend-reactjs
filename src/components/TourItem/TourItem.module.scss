@@ -1,5 +1,13 @@
 .tours {
+    width: 100%;
+
     &>div+div {
         margin-top: 3rem;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .tours {
+        width: calc(100vw - 6rem);
     }
 }

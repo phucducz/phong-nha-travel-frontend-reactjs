@@ -171,12 +171,12 @@
 }
 
 .form-group__col__left-icon {
-    @include setPosition(absolute, 50%, 0, 0, 8%, true);
+    @include setPosition(absolute, 50%, 0, 0, 2rem, true);
     @include commonlyAttributes;
 }
 
 .form-group__col__right-icon {
-    @include setPosition(absolute, 50%, 8%, 0, 0, true);
+    @include setPosition(absolute, 50%, 2rem, 0, 0, true);
     @include commonlyAttributes;
 }
 

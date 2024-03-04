@@ -3,12 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
 import { useFormik } from 'formik';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import { routes } from '~/config';
+import { useWindowsMouseDown } from "~/context";
 import { setResultData, setSearchData } from '~/reducers/search.js';
 import { getService } from '~/services';
 import Button from "../Button";
@@ -31,6 +32,7 @@ function SearchBox({
     const [activeDropDown, setActiveDropDown] = useState(false);
     const [categories, setCategories] = useState({ data: [] });
     const [searchCategories, setSearchCategories] = useState({ data: [] });
+    const categoriesBoxRef = useRef();
 
     const navigate = useNavigate();
 
@@ -115,10 +117,6 @@ function SearchBox({
         fetchCategories();
     }, []);
 
-    const handleActiveDropDown = () => {
-        setActiveDropDown(!activeDropDown);
-    }
-
     const handleSearchCategories = (value) => {
         let findArray = categories.data.filter(item => item.title.includes(value.toLowerCase()));
 
@@ -145,6 +143,18 @@ function SearchBox({
 
         setActiveDropDown(false);
     }
+
+    useWindowsMouseDown((e) => {
+        if (!categoriesBoxRef.current) return;
+        if (categoriesBoxRef.current.contains(e.target)) {
+            setActiveDropDown(true);
+            return;
+        }
+
+        setActiveDropDown(false);
+    }, [activeDropDown]);
+
+    console.log(searchCategories.data.length);
 
     return (
         <form className={classes} onSubmit={formik.handleSubmit}>
@@ -185,18 +195,17 @@ function SearchBox({
                 </div>
                 <div className={cx('price-range')}>
                     <Range
-                        min={0} 
+                        min={0}
                         max={20000000}
                         onChange={(min, max) => formik.setFieldValue('rangePrice', [min, max])}
                         className={cx('price-range__rg')}
                     />
                 </div>
-                <div className={cx('category')}>
+                <div ref={categoriesBoxRef} className={cx('category')}>
                     <Button
                         type='button'
                         className={cx('category__button', activeDropDown && 'active')}
                         rightIcon={<FontAwesomeIcon icon={faBars} />}
-                        onClick={handleActiveDropDown}
                     >
                         {formik.values.category && formik.values.category.title}
                     </Button>
@@ -215,6 +224,10 @@ function SearchBox({
                             active={formik.values.category && formik.values.category.id}
                             className={cx('dropdown-menu', activeDropDown && 'active')}
                             onClick={handleClickCategory}
+                            style={{
+                                height: activeDropDown
+                                    ? `calc(${(searchCategories.data.length + 1) * 36}px` : '0'
+                            }}
                         />
                     }
                 </div>

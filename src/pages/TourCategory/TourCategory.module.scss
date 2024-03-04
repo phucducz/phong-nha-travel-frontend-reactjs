@@ -1,6 +1,85 @@
 .tours-categories {
-    width: var(--max-width-page);
+    width: max-content;
+    max-width: var(--max-width-page);
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
+    gap: 3rem;
+
+    & div:has(>ul) {
+
+        &>ul {
+            width: 100%;
+            max-width: 100% !important;
+
+            &>div:first-child {
+                width: 100%;
+
+                &>div {
+                    width: 100%;
+
+                    &>input {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1170px) and (min-width: 930px) {
+    .tours-categories {
+        margin-top: 22rem;
+    }
+}
+
+@media screen and (max-width: 1150px) {
+    .tours-categories {
+        flex-direction: column;
+        align-items: center;
+
+        & form {
+            width: 100%;
+            max-width: 845px;
+
+            &>div>div {
+                width: 100%;
+                gap: 2rem;
+
+                &>div {
+                    width: 100%;
+
+                    &>input {
+                        width: 100% !important;
+                    }
+
+                    &>div {
+                        width: 100%;
+
+                        &>input {
+                            width: 90%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .tours-categories {
+        & form {
+            &>div>div {
+                &>div {
+                    // width: 90%;
+
+                    &>div {
+                        width: 100%;
+
+                        &>input {
+                            width: 100% !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

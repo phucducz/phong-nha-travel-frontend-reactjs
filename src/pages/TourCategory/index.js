@@ -1,13 +1,13 @@
 import classNames from "classnames/bind";
-import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-
-import style from './TourCategory.module.scss';
-import { getService } from "~/services";
-import TourItem from "~/components/TourItem";
 import { useSelector } from "react-redux";
-import SearchBox from "~/components/SearchBox";
+import { useParams } from "react-router-dom";
+
 import Pagination from "~/components/Pagination";
+import SearchBox from "~/components/SearchBox";
+import TourItem from "~/components/TourItem";
+import { getService } from "~/services";
+import style from './TourCategory.module.scss';
 
 const cx = classNames.bind(style);
 
@@ -60,7 +60,7 @@ function TouCategory() {
                     />
                 }
             </div>
-            <SearchBox />
+            {/* <SearchBox /> */}
         </div>
     );
 }

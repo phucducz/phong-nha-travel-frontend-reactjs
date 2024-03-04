@@ -14,7 +14,8 @@ function DropDown({
     active,
     onlyChoose = false,
     iconPosition,
-    onClick
+    onClick,
+    style
 }) {
     let classes;
 
@@ -30,7 +31,7 @@ function DropDown({
         });
 
     return (
-        <ul className={classes}>
+        <ul className={classes} style={style}>
             {header && header}
             {data.data && data.data.map(item => (
                 <Item

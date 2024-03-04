@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types';
 import classNames from "classnames/bind";
+import PropTypes from 'prop-types';
 import { Link, useNavigate } from "react-router-dom";
 
-import style from './Item.module.scss';
-import { formatMoney } from "~/format";
 import Button from "~/components/Button";
-import { CATEGORY_ICONS } from "~/constant";
 import Icon from "~/components/Icon";
+import { CATEGORY_ICONS } from "~/constant";
+import { formatMoney } from "~/format";
+import style from './Item.module.scss';
 
 const cx = classNames.bind(style);
 
@@ -35,22 +35,22 @@ function Item({
         <div className={classes} {...passProps}>
             <div className={cx('tours__item__image')} onClick={() => navigate(handleNavigate(data.name, data.id))}>
                 <img src={image} alt={data.name} />
-            </div>
-            <div className={cx('item__image_category')}>
-                {data.categoryIds.map(category => {
-                    return CATEGORY_ICONS.map(icon => {
-                        return icon.id === category
-                            && <Link to={`/${icon.to}`}>
-                                <Icon
-                                    id={category.id}
-                                    key={icon.id}
-                                    data={icon}
-                                    href={`${icon.to}/${icon.title}`}
-                                    toolTip
-                                />
-                            </Link>
-                    })
-                })}
+                <div className={cx('item__image_category')}>
+                    {data.categoryIds.map(category => {
+                        return CATEGORY_ICONS.map(icon => {
+                            return icon.id === category
+                                && <Link to={`/${icon.to}`}>
+                                    <Icon
+                                        id={category.id}
+                                        key={icon.id}
+                                        data={icon}
+                                        href={`${icon.to}/${icon.title}`}
+                                        toolTip
+                                    />
+                                </Link>
+                        })
+                    })}
+                </div>
             </div>
             <div className={cx('tours__item__content')}>
                 <div className={cx('tours__item__content__item')}>
