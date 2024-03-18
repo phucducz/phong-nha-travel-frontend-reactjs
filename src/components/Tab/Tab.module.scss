@@ -2,11 +2,9 @@
     display: flex;
     padding: 0;
     max-height: 5rem;
+    position: relative;
 
-    & li {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    & li>p {
         background-color: var(--white);
         height: 5.5rem;
         padding: 0 3.5rem;
@@ -16,50 +14,85 @@
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         cursor: pointer;
-
-        & a {
-            text-decoration: none;
-            text-transform: uppercase;
-        }
     }
 }
 
 .nav__tour__item {
-    position: relative;
-    z-index: 1;
-    transition: all .2s linear;
+    &.active>p {
+        transform: translateY(-.4rem);
+        color: white;
+        background-color: var(--primary);
+    }
 
     &>p {
+        position: relative;
+        z-index: 1;
+        transition: all .2s linear;
         text-transform: uppercase;
     }
 }
 
 .tab__item {
-    display: none;
+    display: block;
     position: relative;
     z-index: 2;
-}
-
-@keyframes showContent {
-    from {
-        opacity: .5;
-    }
-
-    to {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    
+    &.active {
+        height: max-content;
+        background-color: var(--white);
         opacity: 1;
-    }
-}   
-
-.active-nav__item {
-    background-color: var(--primary)!important;
-    transform: translateY(-.4rem);
-
-    &>p {
-        color: var(--white)!important;
+        display: block;
+        transition: opacity .5s linear;
     }
 }
 
-.active-tab__item {
-    display: block;
-    transition: all .5s linear;
+.tab-according {
+    & li {
+        list-style: none;
+
+        &>p {
+            background-color: var(--white);
+            height: 5.5rem;
+            padding: 0 3.5rem;
+            line-height: 5.7rem;
+            border-radius: .3rem;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+    }
+}
+
+.tab-according__nav__tour {
+    width: calc(100vw - 6rem);
+    padding: 0;
+
+    &>.item {
+        &>div {
+            background-color: var(--white);
+            overflow-y: hidden;
+            transition: height .2s linear;
+        }
+
+        &.active {
+            &>p {
+                background-color: var(--primary) !important;
+                color: white;
+            }
+        }
+
+        &+.item {
+            margin-top: .5rem;
+        }
+    }
+}
+
+.tab-according__tab__item {
+    &>div {
+        border-top: none;
+    }
 }

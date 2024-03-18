@@ -164,3 +164,35 @@
         text-transform: capitalize;
     }
 }
+
+@media screen and (max-width: 750px) {
+    form.search-box {
+        width: 100%;
+        max-width: 100%;
+
+        &>div>div {
+            width: 100%;
+
+            & div:has(input) {
+                width: 100% !important;
+
+                & input {
+                    width: 100% !important;
+                }
+            }
+        }
+
+        .inputs__range {
+            gap: 3rem;
+        }
+
+        .dropdown-menu {
+            width: 100%;
+            max-width: 100%;
+
+            & .dropdown-menu__search {
+                width: 100% !important;
+            }
+        }
+    }
+}

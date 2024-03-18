@@ -10,6 +10,7 @@
     justify-content: space-between;
     padding-bottom: 2rem;
     border-bottom: 1px solid rgb(180, 180, 180, .5);
+    gap: 3rem;
 
     a {
       padding: .5rem 2rem;
@@ -123,6 +124,78 @@
   & button {
     &:hover {
       transform: none !important;
+    }
+  }
+}
+
+@media screen and (max-width: 1160px) {
+  .container {
+    div.header {
+      width: calc(100vw - 6rem);
+    }
+
+    .content {
+      width: calc(100vw - 6rem);
+    }
+  }
+}
+
+@media screen and (max-width: 1160px) and (min-width: 780px) {
+  .container {
+    .content {
+      .account-details {
+        width: calc(100vw - 346px - 3rem - 6rem);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1160px) {
+  .container {
+    div.header {
+      width: calc(100vw - 6rem);
+    }
+
+    .content {
+      width: calc(100vw - 6rem);
+
+      .account-details>.user-info>div {
+        width: 100%;
+
+        &>div:has(>input) {
+          width: 100%;
+
+          &>input {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .container {
+    &>.content {
+      flex-direction: column;
+
+      &>.account-details,
+      &>.profile-pic {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .container {
+    div.header {
+      flex-direction: column;
+
+      &>p {
+        text-align: center;
+        width: 100%;
+      }
     }
   }
 }

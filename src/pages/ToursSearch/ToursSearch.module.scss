@@ -4,6 +4,7 @@
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
+    gap: 3rem;
 }
 
 .tours,
@@ -52,6 +53,14 @@
     }
 }
 
-.tours-other {
+@media screen and (max-width: 900px) {
+    .tours-search {
+        width: calc(100vw - 6rem);
+        flex-direction: column;
+    }
+}
 
+@media screen and (max-width: 750px) {
+    .tours-search {
+    }
 }

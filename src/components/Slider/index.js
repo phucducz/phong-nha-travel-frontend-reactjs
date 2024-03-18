@@ -45,8 +45,6 @@ function Slider({
         return () => clearInterval(id);
     }, []);
 
-    console.log(counter);
-
     return (
         <div className={classes}>
             <button

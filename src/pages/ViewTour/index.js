@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useFormik } from 'formik';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -18,13 +18,80 @@ import { formatMoney } from '~/format';
 import { getService } from '~/services';
 import TabCategories from './TabCategories';
 import style from './TourView.module.scss';
+import { useWindowsResize } from '~/context';
 
 const cx = classNames.bind(style);
+
+const TablePrice = memo(({ data }) => {
+    const [mobileMode, setMobileMode] = useState(false);
+
+    useWindowsResize(() => {
+        if (window.matchMedia('(max-width: 750px)').matches) {
+            setMobileMode(true);
+            return;
+        }
+        setMobileMode(false);
+    }, []);
+
+    return (
+        <table className={cx('table')}>
+            {mobileMode
+                ? <tbody>
+                    <tr>
+                        <td className={cx('td-center-content')} colSpan={2}><p>Giá tour trọn gói VND cho mỗi khách</p></td>
+                    </tr>
+                    <tr className={cx('bg-even')}>
+                        <td className={cx('td-width')}><p>Giá TOUR người lớn</p></td>
+                    </tr>
+                    <tr>
+                        <td className={cx('td-width')}><p>{formatMoney(data.price || data.priceAdult)}/khách</p></td>
+                    </tr>
+                    <tr colSpan={2} className={cx('bg-even')}>
+                        <td className={cx('td-width')}><p>Giá TOUR trẻ em</p></td>
+                    </tr>
+                    <tr colSpan={2}>
+                        <td className={cx('td-width')}><p>{formatMoney(data.priceChildren)}/khách</p></td>
+                    </tr>
+                    <tr className={cx('bg-even')}>
+                        <td colSpan={2} style={{ height: '14.6rem' }}>
+                            <p style={{ lineHeight: '2.6rem' }}>Giá tour trọn gói trên dành cho nhóm 20 khách.Nhóm khách đoàn từ 20 khách trở lên vui lòng liên hệ về Phong Nha Travel
+                                <span className={cx('phone')}>0763700336</span>
+                                để có giá tốt hơn !
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+                : <tbody>
+                    <tr>
+                        <td className={cx('td-center-content')} colSpan={2}><p>Giá tour trọn gói VND cho mỗi khách</p></td>
+                    </tr>
+                    <tr className={cx('bg-even')}>
+                        <td className={cx('td-width')}><p>Giá TOUR người lớn</p></td>
+                        <td className={cx('td-width')}><p>{formatMoney(data.price || data.priceAdult)}/khách</p></td>
+                    </tr>
+                    <tr colSpan={2}>
+                        <td className={cx('td-width')}><p>Giá TOUR trẻ em</p></td>
+                        <td className={cx('td-width')}><p>{formatMoney(data.priceChildren)}/khách</p></td>
+                    </tr>
+                    <tr className={cx('bg-even')}>
+                        <td colSpan={2} style={{ height: '14.6rem' }}>
+                            <p style={{ lineHeight: '2.6rem' }}>Giá tour trọn gói trên dành cho nhóm 20 khách.Nhóm khách đoàn từ 20 khách trở lên vui lòng liên hệ về Phong Nha Travel
+                                <span className={cx('phone')}>0763700336</span>
+                                để có giá tốt hơn !
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+    );
+})
 
 function ViewTour() {
     const { tourId } = useParams();
     const [tour, setTour] = useState({});
     const [userId, setUserId] = useState(null);
+    const tabRef = useRef([]);
 
     const checkoutDetail = useSelector(state => state.checkoutDetail);
     const user = useSelector(state => state.user);
@@ -113,8 +180,9 @@ function ViewTour() {
         contents: [
             {
                 id: 1,
+                active: true,
                 tab: (
-                    <div className={cx('review')}>
+                    <div className={cx('review')} ref={e => tabRef.current[0] = e}>
                         {tour.categoryIds && <TabCategories data={tour.categoryIds} />}
                         <div className={cx('review__title')}>
                             <Link to={routes.Home}>{tour.name}</Link>
@@ -122,31 +190,7 @@ function ViewTour() {
                         <div className={cx('review__content')}>
                             <p>{tour.description}</p>
                         </div>
-                        <table className={cx('table')}>
-                            <tbody>
-                                <tr>
-                                    <td className={cx('td-center-content')} colSpan={2}><p>Giá tour trọn gói VND cho mỗi khách</p></td>
-                                </tr>
-                                <tr className={cx('bg-even')}>
-                                    <td className={cx('td-width')}><p>Giá TOUR người lớn</p></td>
-                                    <td className={cx('td-width')}><p>{formatMoney(tour.price || tour.priceAdult)}/khách</p></td>
-                                </tr>
-                                <tr colSpan={2}>
-                                    <td className={cx('td-width')}><p>Giá TOUR trẻ em</p></td>
-                                    <td className={cx('td-width')}><p>{formatMoney(tour.priceChildren)}/khách</p></td>
-                                </tr>
-                                <tr className={cx('bg-even')}>
-                                    <td colSpan={2} style={{ height: '14.6rem' }}>
-                                        <p>Giá tour trọn gói trên dành cho nhóm 20 khách.</p>
-                                        <p>
-                                            Nhóm khách đoàn từ 20 khách trở lên vui lòng liên hệ về Phong Nha Travel
-                                            <span className={cx('phone')}>0763700336</span>
-                                            để có giá tốt hơn !
-                                        </p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <TablePrice data={tour} />
                         <div className={cx('review__price')}>
                             <div>
                                 <h3>Giá tour trọn gói đã bao gồm:</h3>
@@ -178,9 +222,10 @@ function ViewTour() {
                 )
             }, {
                 id: 2,
+                active: false,
                 tab: (
-                    <div className={cx('review')}>
-                        <div className={cx('review__title')}>
+                    <div className={cx('review')} ref={e => tabRef.current[1] = e}>
+                        <div className={cx('review__title')} style={{ margin: '0 auto 3rem auto' }}>
                             <Link to={routes.Home}>{tour.name}</Link>
                         </div>
                         <div className={cx('review__content')}>
@@ -209,20 +254,16 @@ function ViewTour() {
                 )
             }, {
                 id: 3,
+                active: false,
                 tab: (
-                    <div className={cx('review')}>
-                        <div className={cx('review__title')}>
-                            <Link to={routes.Home}>{tour.name}</Link>
-                        </div>
-                        <div className={cx('review__content')}>
-                            <p>{tour.description}</p>
-                        </div>
+                    <div className={cx('review')} ref={e => tabRef.current[2] = e}>
+                        <img style={{ width: '100%' }} src={tour.listImage && `../../${tour.listImage[0].image}`} />
                     </div>
                 )
             }
         ]
     }
-
+    
     useEffect(() => {
         const getTour = async () => {
             const response = await getService('tours', { id: tourId });
@@ -251,12 +292,6 @@ function ViewTour() {
             fullName, phoneNumber, emailAddress
         } = values;
 
-        if (user.currentUser.id === null ||
-            typeof user.currentUser.id === 'undefined') {
-            navigate('/login');
-            return;
-        }
-
         let cartData = {
             tourId: tourId,
             quantity: parseInt(quantity),
@@ -265,7 +300,6 @@ function ViewTour() {
         }
 
         let checkoutDetailData = {
-            userId: userId,
             ...checkoutDetail.information,
             fullName: fullName,
             phoneNumber: phoneNumber,
@@ -287,6 +321,7 @@ function ViewTour() {
                     <Tab
                         tabs={tabForm.tabs}
                         contents={tabForm.contents}
+                        tabRef={tabRef}
                     />
                     <div className={cx('share-button')}>
                         {SHARE_BUTTONS.map((item, index) => (

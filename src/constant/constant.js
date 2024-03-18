@@ -94,55 +94,56 @@ const MENU_ITEMS = [
         icon: faChevronDown,
         subMenu: {
             data: [
+                // {
+                //     id: 5,
+                //     title: 'tour miền trung',
+                //     url: '/tour-category/du-lich-mien-trung',
+                //     icon: faChevronRight,
+                //     subMenu: {
+                //         data: [
+                //             {
+                //                 id: 6,
+                //                 title: 'tour đà nẵng',
+                //                 icon: faChevronRight,
+                //                 url: '/tour-category/',
+                //                 subMenu: {
+                //                     data: [
+                //                         {
+                //                             id: 7,
+                //                             title: 'tour deal',
+                //                             url: '/tour-category/',
+                //                             icon: null,
+                //                             subMenu: null
+                //                         }, {
+                //                             id: 8,
+                //                             title: 'tour deal',
+                //                             url: '/tour-category/',
+                //                             icon: faChevronRight,
+                //                             subMenu: {
+                //                                 data: [
+                //                                     {
+                //                                         id: 9,
+                //                                         title: 'tour deal',
+                //                                         url: '/tour-category/',
+                //                                         icon: null,
+                //                                         subMenu: null
+                //                                     }
+                //                                 ]
+                //                             }
+                //                         }
+                //                     ]
+                //                 }
+                //             }, {
+                //                 id: 10,
+                //                 title: 'tour hội an',
+                //                 icon: null,
+                //                 url: '/tour-category/',
+                //                 subMenu: null
+                //             }
+                //         ]
+                //     }
+                // }
                 {
-                    id: 5,
-                    title: 'tour miền trung',
-                    url: '/tour-category/du-lich-mien-trung',
-                    icon: faChevronRight,
-                    subMenu: {
-                        data: [
-                            {
-                                id: 6,
-                                title: 'tour đà nẵng',
-                                icon: faChevronRight,
-                                url: '/tour-category/',
-                                subMenu: {
-                                    data: [
-                                        {
-                                            id: 7,
-                                            title: 'tour deal',
-                                            url: '/tour-category/',
-                                            icon: null,
-                                            subMenu: null
-                                        }, {
-                                            id: 8,
-                                            title: 'tour deal',
-                                            url: '/tour-category/',
-                                            icon: faChevronRight,
-                                            subMenu: {
-                                                data: [
-                                                    {
-                                                        id: 9,
-                                                        title: 'tour deal',
-                                                        url: '/tour-category/',
-                                                        icon: null,
-                                                        subMenu: null
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    ]
-                                }
-                            }, {
-                                id: 10,
-                                title: 'tour hội an',
-                                icon: null,
-                                url: '/tour-category/',
-                                subMenu: null
-                            }
-                        ]
-                    }
-                }, {
                     id: 11,
                     title: 'tour deal',
                     url: '/tour-category/tour-deal',

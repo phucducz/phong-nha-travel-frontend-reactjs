@@ -1,13 +1,13 @@
-import classNames from "classnames/bind";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 
-import style from './Item.module.scss';
-import Input from "~/components/Input";
-import { formatMoney } from "~/format";
 import { Link } from "react-router-dom";
+import Input from "~/components/Input";
 import { useDebounce } from "~/context";
+import { formatMoney } from "~/format";
+import style from './Item.module.scss';
 
 const cx = classNames.bind(style);
 
@@ -18,21 +18,19 @@ function Item({
     couponValue,
     onChange,
     onRemove,
-    readOnly
+    readOnly,
+    mobileMode
 }) {
     let id = data.id;
 
     const [quantity, setQuantity] = useState(value);
     const [change, setChange] = useState(false);
+
     const debounce = useDebounce(quantity, 500);
 
     const handleChange = e => {
         setQuantity(e.target.value);
         setChange(true);
-    }
-
-    const handleRemove = data => {
-        onRemove && onRemove(data, couponValue);
     }
 
     useEffect(() => {
@@ -52,7 +50,7 @@ function Item({
                     && <div className={cx('remove__icon', status && 'item-paid')}>
                         {status
                             ? <FontAwesomeIcon icon={faCheck} />
-                            : <FontAwesomeIcon icon={faXmark} onClick={() => handleRemove(data)} />
+                            : <FontAwesomeIcon icon={faXmark} onClick={() => onRemove(data)} />
                         }
                     </div>
                 }

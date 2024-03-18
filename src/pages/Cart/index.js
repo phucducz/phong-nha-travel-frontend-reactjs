@@ -1,13 +1,11 @@
-import classNames from "classnames/bind";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTruck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames/bind";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import style from './CartStyle.module.scss';
-import { formatMoney } from "~/format";
-import Input from "~/components/Input";
 import Button from "~/components/Button";
+import Input from "~/components/Input";
 import ProductBox from "~/components/ProductBox";
 import WoocommerceMessage from "~/components/WoocommerceMessage";
 import { routes } from "~/config";
@@ -17,12 +15,14 @@ import {
     handleDiscount,
     handleFetchUserDataById
 } from "~/constant/reduxContants";
+import { formatMoney } from "~/format";
 import {
     restoreCartItem,
     setCartItemsCurrent,
     setPriceCartItem
 } from "~/reducers/cart";
 import { setMessage } from "~/reducers/message";
+import style from './CartStyle.module.scss';
 
 const cx = classNames.bind(style);
 
@@ -55,8 +55,6 @@ function Cart() {
 
     const [activeShipping, setActiveShipping] = useState(false);
     const [userId, setUserId] = useState(null);
-    // fake user id
-    // const userId = 1;
 
     useEffect(() => {
         setUserId(user.currentUser.id);
@@ -68,7 +66,7 @@ function Cart() {
                 userId: userId,
             });
         }
-        
+
         userId && fetchCart(userId);
     }, [userId]);
 
@@ -89,7 +87,6 @@ function Cart() {
 
         handleDiscount(dispatch, {
             couponCode: couponCode,
-            // fake user id
             userId: userId
         });
     }, []);
@@ -110,15 +107,15 @@ function Cart() {
     }, []);
 
     const handleRestoreCartItem = useCallback((data, couponValue, itemRemoved) => {
-        // fake user id
-        // let userId = 1;
+        if (userId === null) return;
+
         doRestoreCartItem(dispatch, {
             data: data,
             userId: userId,
             couponValue: couponValue,
             itemRemoved: itemRemoved
         });
-    }, []);
+    }, [userId]);
 
     useEffect(() => {
         let data = dataCart.filter(item => !item.checkout || item.checkout.status === 'unpaid' || item.checkout.date === null);
@@ -142,11 +139,13 @@ function Cart() {
                             itemRemoved: cartItemsDeleted
                         }}
                         action={handleRestoreCartItem}
+                        className={cx('woocommerce__restore-action')}
                     />
                 ))
                 : <WoocommerceMessage
                     data={{ message: message }}
                     action={handleRestoreCartItem}
+                    className={cx('woocommerce__restore-action')}
                 />
             }
             <ProductBox

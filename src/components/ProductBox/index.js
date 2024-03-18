@@ -1,14 +1,14 @@
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
-import { useDispatch } from "react-redux";
 import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 
-import style from './ProductBox.module.scss';
+import Button from "../Button";
 import CouponForm from "../CouponForm";
 import TableProduct from "../TableProduct";
 import WoocommerceMessage from "../WoocommerceMessage";
-import Button from "../Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import style from './ProductBox.module.scss';
 
 const cx = classNames.bind(style);
 
@@ -115,7 +115,7 @@ function ProductBox({
                             && <Button Button
                                 to='/'
                                 leftIcon={<FontAwesomeIcon icon={faArrowLeft} />}
-                                className={cx('woocommerce_return_button', 'button')}
+                                className={cx('woocommerce__return__button', 'button')}
                             >
                                 trở về trang chính
                             </Button>

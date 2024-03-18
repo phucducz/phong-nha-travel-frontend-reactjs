@@ -1,10 +1,10 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
 import { useEffect, useRef } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import style from './Woocommerce.module.scss';
 import { MESSAGE_ICONS } from "~/constant";
 import Button from "../Button";
+import style from './Woocommerce.module.scss';
 
 const cx = classNames.bind(style);
 

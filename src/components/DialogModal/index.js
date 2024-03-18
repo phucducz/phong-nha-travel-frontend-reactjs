@@ -1,11 +1,10 @@
-import classNames from "classnames/bind";
-
-import style from './DialogModal.module.scss';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import Button from "../Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames/bind";
 import { useEffect, useRef, useState } from "react";
-import { useFormik } from "formik";
+
+import Button from "../Button";
+import style from './DialogModal.module.scss';
 
 const cx = classNames.bind(style);
 

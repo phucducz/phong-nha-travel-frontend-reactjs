@@ -1,16 +1,15 @@
 .group-coupon {
     display: flex;
     align-items: center;
-    // justify-content: flex-end;
-
+    gap: 2rem;
+    
     &>button {
-        margin-left: 1rem;
+        margin: 0;
     }
 }
 
 .group-coupon__input {
-    width: 48.8rem;
-    height: 5rem;
+    max-width: 48.8rem;
 }
 
 .group-coupon__button {

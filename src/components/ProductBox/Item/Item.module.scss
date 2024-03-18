@@ -89,3 +89,21 @@
 .table-product__subtotal {
     text-align: center;
 }
+
+@media screen and (max-width: 950px) and (min-width: 800px) {
+    .table-product__name {
+        &>a,
+        &>p {
+            width: 100px!important;
+            display: block;
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+    tr.mobile-mode {
+        &>td {
+            display: block;
+        }
+    }
+}

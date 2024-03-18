@@ -38,7 +38,7 @@ function Login() {
         }),
         onSubmit: values => {
             const { userName, password } = values;
-
+            
             dispatch(login({
                 userName,
                 password,
@@ -189,7 +189,7 @@ function Login() {
             }
         }
     ];
-    
+
     const handleSignUpClick = () => {
         signinFormik.setFieldValue('isSignUp', true);
     }
@@ -197,8 +197,6 @@ function Login() {
     const handleSignInClick = () => {
         signinFormik.setFieldValue('isSignUp', false);
     }
-
-    console.log(signUpSlice.status);
 
     return (
         <div className={cx('account')}>

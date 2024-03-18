@@ -154,8 +154,6 @@ function SearchBox({
         setActiveDropDown(false);
     }, [activeDropDown]);
 
-    console.log(searchCategories.data.length);
-
     return (
         <form className={classes} onSubmit={formik.handleSubmit}>
             <h3 className={cx('search-box__title')}>tìm kiếm tour</h3>

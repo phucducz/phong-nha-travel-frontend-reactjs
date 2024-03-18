@@ -1,5 +1,6 @@
 .woocommerce {
-    width: var(--max-width-page);
+    width: 100%;
+    max-width: var(--max-width-page);
     height: auto;
     margin: 0 auto;
 
@@ -24,6 +25,10 @@
 
     & .height-auto {
         height: auto;
+    }
+
+    &>div:nth-child(2)>div>table {
+        margin-bottom: 7rem;
     }
 }
 
@@ -52,6 +57,7 @@
     &>table {
         & .padding-none {
             padding: 0;
+            width: 100%;
 
             &+.padding-none {
                 margin-top: 1rem;
@@ -106,14 +112,26 @@
 }
 
 .shipping-calculator {
-    width: max-content;
+    width: 100%;
     margin-top: 1rem;
     height: 0;
     overflow: hidden;
     transition: height .5s linear;
 
-    &>div+div {
-        margin-top: 1rem;
+    &>div {
+        width: 100%;
+
+        &+div {
+            margin-top: 1rem;
+        }
+
+        &>div {
+            width: 100%;
+
+            &>input {
+                width: 100% !important;
+            }
+        }
     }
 
     &>button {
@@ -138,6 +156,26 @@
 
             &>th:nth-child(3) {
                 width: 11.95rem;
+            }
+        }
+    }
+}
+
+
+@media screen and (max-width: 1200px) {
+    .woocommerce,
+    .woocommerce__restore-action {
+        width: calc(100vw - 6rem);
+    }
+}
+
+@media screen and (max-width: 530px) {
+    .cart-collaterals {
+        & .cart-collaterals__product {
+            width: calc(100vw - 6rem);
+
+            &>table {
+                table-layout: fixed;
             }
         }
     }

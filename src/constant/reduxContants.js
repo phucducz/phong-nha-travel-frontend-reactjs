@@ -1,9 +1,9 @@
+import { removeCartItem, restoreCartItem, setCartItemsPaid, setCartTotalPrice, setDataCart } from "~/reducers/cart";
 import { setDataCheckout } from "~/reducers/checkout";
+import { setDataCheckoutDetail } from "~/reducers/checkoutDetail";
 import { setDataCoupon } from "~/reducers/coupon";
 import { setMessage } from "~/reducers/message";
-import cart, { removeCartItem, restoreCartItem, setCartItemsPaid, setCartTotalPrice, setDataCart } from "~/reducers/cart";
 import { deleteService, getService, postService, putService } from "~/services";
-import { setDataCheckoutDetail } from "~/reducers/checkoutDetail";
 
 const doCreateCheckoutDetail = async (dispatch, payload) => {
     await postService('checkoutDetails', { ...payload });
@@ -302,18 +302,6 @@ const doDeleteUser = async id => {
 }
 
 export {
-    doCreateCheckoutDetail,
-    doCreateCartItem,
-    handleBookClick,
-    handleFetchUserDataById,
-    handleDiscount,
-    handleChangeQuantityItem,
-    handleSetTotalPrice,
-    doRemoveCartItem,
-    doRestoreCartItem,
-    fetchListCart,
-    doConfirmData,
-    doGetExistCart,
-    doSaveUser,
-    doDeleteUser
-}
+    doConfirmData, doCreateCartItem, doCreateCheckoutDetail, doDeleteUser, doGetExistCart, doRemoveCartItem,
+    doRestoreCartItem, doSaveUser, fetchListCart, handleBookClick, handleChangeQuantityItem, handleDiscount, handleFetchUserDataById, handleSetTotalPrice
+};

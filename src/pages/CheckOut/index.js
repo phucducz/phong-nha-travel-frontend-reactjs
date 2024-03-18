@@ -2,7 +2,7 @@ import { faCartPlus, faInfo, faPerson } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
 import { useFormik } from "formik";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
@@ -54,14 +54,13 @@ function CheckOut() {
     const cart = useSelector(state => state.cart);
     const checkoutDetail = useSelector(state => state.checkoutDetail);
     const user = useSelector(state => state.user);
+    const { listPayment } = useSelector(state => state.payment);
 
     const [active, setActive] = useState(false);
     const [couponCode, setCouponCode] = useState('');
     const [visibleModalConfirm, setVisibleModalConfirm] = useState(false);
     const [userId, setUserId] = useState(null);
-
-    // fake user id
-    // const userId = 1;
+    const paymentContentRef = useRef([]);
 
     useEffect(() => {
         setUserId(user.currentUser.id);
@@ -153,12 +152,11 @@ function CheckOut() {
 
     useEffect(() => {
         const fetchCart = userId => {
-            console.log(userId);
             handleFetchUserDataById(dispatch, {
                 userId: userId,
             });
         }
-        console.log(userId);
+
         userId && fetchCart(userId);
     }, [userId]);
 
@@ -174,6 +172,22 @@ function CheckOut() {
         });
     }, [cart, checkoutDetail.information, coupon]);
 
+    useEffect(() => {
+        if (typeof paymentContentRef.current === 'undefined') return;
+        if (!listPayment.length || !paymentContentRef.current.length)
+            return;
+
+        formik.setFieldValue('payments', listPayment.map(payment => ({
+            ...payment,
+            height: paymentContentRef.current[payment.id].offsetHeight
+        })));
+
+        console.log(listPayment.map(payment => ({
+            ...payment,
+            height: paymentContentRef.current[payment.id].offsetHeight
+        })));
+    }, [paymentContentRef, listPayment]);
+    
     const checkBoxInputs = [
         {
             className: 'first-name',
@@ -326,7 +340,6 @@ function CheckOut() {
 
         handleDiscount(dispatch, {
             couponCode: couponCode,
-            // fake user id
             userId: userId
         });
     }, [coupon]);
@@ -352,23 +365,25 @@ function CheckOut() {
                 <div className={cx('coupon__icon')}>
                     <FontAwesomeIcon icon={faInfo} />
                 </div>
-                <p className={cx('coupon__content')}>Bạn có mã ưu đãi?</p>
-                <span
-                    className={cx('coupon__show')}
-                    onClick={() => setActive(!active)}
-                >
-                    Ấn vào đây để nhập mã.
-                </span>
+                <p className={cx('coupon__content')}>
+                    <span>Bạn có mã ưu đãi?</span>
+                    <span
+                        className={cx('coupon__show')}
+                        onClick={() => setActive(!active)}
+                    >
+                        Ấn vào đây để nhập mã.
+                    </span>
+                </p>
             </div>
-            <WoocommerceMessage data={{ message: message }} />
+            <WoocommerceMessage data={{ message: message }} className={cx('woocommerce__coupon-message')} />
             <div className={cx('woocommerce__checkout-coupon', active && 'active')}>
                 <div className={cx('checkout-coupon__form')}>
                     <div className={cx('checkout-coupon__form__label')}>
-                        <p>Nếu bạn có phiếu giảm giá, vui lòng điền vào phía bên dưới.</p>
+                        <p>Nếu bạn có mã giảm giá, vui lòng điền vào phía bên dưới.</p>
                     </div>
                     <CouponForm
                         value={couponCode}
-                        className={'checkout-coupon__input'}
+                        className={'checkout-coupon__form-coupon'}
                         onChange={e => setCouponCode(e.target.value)}
                         handleSubmit={handleApplyCoupon}
                     />
@@ -381,7 +396,7 @@ function CheckOut() {
                         {checkBoxInputs.map((input, index) => (
                             <div
                                 key={index}
-                                className={cx(input.className)}
+                                className={cx(input.className, 'form__box__1__input')}
                             >
                                 <Input
                                     required
@@ -400,17 +415,6 @@ function CheckOut() {
                         ))}
                     </div>
                     <div className={cx('form__box__2')}>
-                        <CheckBox
-                            // data={{
-                            //     title: 'Giao hàng tới địa chỉ khác'
-                            // }}
-                            title='Giao hàng tới địa chỉ khác'
-                            checked={formik.values.addressOther}
-                            onChange={() => formik.setValues({
-                                ...formik.values,
-                                addressOther: !formik.values.addressOther
-                            })}
-                        />
                         <Input
                             type='textarea'
                             fieldName='Ghi chú đơn hàng:'
@@ -474,24 +478,32 @@ function CheckOut() {
                     <div className={cx('product-box__methods__payment')}>
                         <div className={cx('checkout-payment')}>
                             {formik.values.payments
-                                && formik.values.payments.map(payment => (
-                                    <div key={payment.id}>
-                                        <RadioButton
-                                            title={payment.name}
-                                            checked={+formik.values.paymentMethodId === +payment.id && true}
-                                            onChange={() => formik.setValues({
-                                                ...formik.values,
-                                                paymentMethodId: +payment.id
-                                            })}
-                                        />
-                                        <div className={cx('payment-bacs', +formik.values.paymentMethodId === +payment.id && 'active')}>
-                                            <p>Sau khi nhận được booking. Phong Nha Travel sẽ
-                                                liên hệ với khách hàng để thực
-                                                hiện xác nhận và đặt cọc tour.
-                                            </p>
+                                && formik.values.payments.map(payment => {
+                                    let active = +formik.values.paymentMethodId === +payment.id;
+                                    console.log(payment);
+                                    return (
+                                        <div key={payment.id}>
+                                            <RadioButton
+                                                title={payment.name}
+                                                checked={+formik.values.paymentMethodId === +payment.id && true}
+                                                onChange={() => formik.setValues({
+                                                    ...formik.values,
+                                                    paymentMethodId: +payment.id
+                                                })}
+                                            />
+                                            <div
+                                                ref={e => paymentContentRef.current[payment.id] = e}
+                                                className={cx('payment-bacs', active && 'active')}
+                                                style={{ height: active ? `${payment.height}px` : '0' }}
+                                            >
+                                                <p>Sau khi nhận được booking. Phong Nha Travel sẽ
+                                                    liên hệ với khách hàng để thực
+                                                    hiện xác nhận và đặt cọc tour.
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    )
+                                })}
                         </div>
                         <div className={cx('place-order')}>
                             <p>

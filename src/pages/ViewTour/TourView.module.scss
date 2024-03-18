@@ -9,26 +9,26 @@ $widthTab: calc(var(--max-width-page) * 74 / 100);
     }
 
     & .tab-pane {
-        width: var(--max-width-page);
+        width: 100%;
+        max-width: var(--max-width-page);
         margin: -17rem auto 0 auto;
         display: flex;
         justify-content: space-between;
+        gap: 3rem;
     }
 }
 
 .review {
-    min-width: $widthTab;
     max-width: $widthTab;
     min-height: 20rem;
     background-color: var(--white);
-    padding: 0 5rem 4rem;
+    padding: 4rem 5rem;
     border-top: .3rem solid var(--primary);
-
 }
 
 .review__title {
-    width: max-content;
-    margin: 3rem auto;
+    width: 100%;
+    margin: 3rem auto 3rem auto;
 
     & a {
         color: #ff6600;
@@ -87,39 +87,15 @@ $widthTab: calc(var(--max-width-page) * 74 / 100);
     }
 }
 
-// .nav__tour {
-//     width: var(--width-nav);
-//     display: flex;
-//     justify-content: space-between;
-//     padding: 0;
-
-//     & li {
-//         display: flex;
-//         justify-content: center;
-//         align-items: center;
-//         background-color: var(--white);
-//         width: calc(var(--width-nav) / 2.7);
-//         height: 5rem;
-//         margin-right: 1rem;
-//         border-radius: .3rem;
-//         border-bottom-left-radius: 0;
-//         border-bottom-right-radius: 0;
-//         cursor: pointer;
-
-//         & a {
-//             text-decoration: none;
-//             text-transform: uppercase;
-//         }
-//     }
-// }
-
 .tab-pane__right {
-    width: calc(var(--max-width-page) * 22 / 100);
-    margin-left: calc(var(--max-width-page) * 4 / 100);
-    margin-top: 5.1rem;
+    width: max-content;
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
 
     & .book__price {
-        width: 26rem;
+        width: 100%;
         border-radius: .3rem;
     }
 
@@ -213,7 +189,7 @@ $widthTab: calc(var(--max-width-page) * 74 / 100);
 
 .container__image {
     & h3 {
-        font-size: 4.2rem!important;
+        font-size: 4.2rem !important;
         color: var(--white);
         position: absolute;
         top: 40%;
@@ -265,7 +241,7 @@ $widthTab: calc(var(--max-width-page) * 74 / 100);
 .table {
     border-collapse: collapse;
     margin-top: 7rem;
-    width: 74.6rem;
+    width: 100%;
     border: .2rem solid #e4e4e4;
 
     & td {
@@ -302,7 +278,7 @@ $widthTab: calc(var(--max-width-page) * 74 / 100);
     justify-content: center;
     align-items: center;
     height: 6rem;
-    width: calc(100% / 3);
+    width: calc(100% / 4);
     border: .2rem solid #dbdbdb;
     cursor: pointer;
 
@@ -379,7 +355,7 @@ $widthTab: calc(var(--max-width-page) * 74 / 100);
 .form__price-detail {
     text-align: center;
     margin-top: 2rem;
-    
+
     &>span {
         font-size: 1.5rem;
         font-weight: 100;
@@ -400,5 +376,82 @@ $widthTab: calc(var(--max-width-page) * 74 / 100);
 
     &:hover {
         transform: translateX(-50%);
+    }
+}
+
+.form {
+    margin-top: 0;
+
+    &>form {
+        &>div {
+            width: 100%;
+
+            &>div {
+                width: 100%;
+
+                &>input {
+                    width: 100% !important;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .container {
+
+        & .tab-pane,
+        & .container__image>h3 {
+            width: calc(100vw - 6rem);
+        }
+    }
+}
+
+@media screen and (max-width: 1200px) and (min-width: 1000px) {
+    .container {
+        & .review {
+            width: calc(100vw - 6rem - 262px - 3rem);
+        }
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .container {
+        & .tab-pane {
+            width: calc(100vw - 6rem);
+            flex-direction: column;
+            align-items: center;
+
+            & .tab-pane__right {
+                width: 100%;
+                margin-top: 0;
+
+                &>div:last-child {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .container {
+        & .review {
+            width: calc(100vw - 6rem);
+        }
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .container {
+        .tab-pane {
+            margin: 3rem auto 0 auto;
+        }
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .share-button {
+        width: calc(100vw - 6rem);
     }
 }

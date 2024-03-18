@@ -22,7 +22,7 @@ function TouCategory() {
 
     useEffect(() => {
         const fetchTourByCategoryName = async name => {
-            const result = await getService('categories', {
+            const result = await getService('/categories', {
                 categoryCode: name
             });
 

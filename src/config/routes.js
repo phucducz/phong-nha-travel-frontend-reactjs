@@ -1,7 +1,5 @@
 const routes = {
     Home: '/',
-    Lienhe: '/lienhe',
-    Camnang: '/camnang',
     ViewTour: '/tours/:tourName/:tourId',
     CheckOut: '/checkout',
     Cart: '/cart',
@@ -15,8 +13,6 @@ const routes = {
     UserEdit: '/admin/users/edit/:userId',
     EditProfile: '/admin/edit-profile',
     UserCreate: '/admin/users/create',
-    Test: '/test',
-    BTPV: '/btpv',
     HandBook: '/hand-book'
 }
 

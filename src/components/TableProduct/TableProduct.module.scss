@@ -25,6 +25,92 @@
     }
 }
 
+.product {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4rem;
+
+    &>.product__item {
+        width: 100%;
+
+        &>div {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            padding: 1rem 2rem;
+            border: 1px solid #e4e4e4;
+
+            &.product__item-name {
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+                align-items: flex-start;
+
+                &>div {
+                    display: flex;
+                    align-items: center;
+                    gap: 2rem;
+                }
+            }
+
+            &>p:first-child {
+                text-transform: uppercase;
+            }
+        }
+    }
+}
+
+.product__item {
+    & .product__item__action {
+        &>svg.delete {
+            color: var(--color-red);
+        }
+
+        &>svg.done {
+            color: var(--color-green);
+        }
+    }
+
+    & .product__item-name {
+        &>.name {
+            &>p {
+                text-transform: uppercase;
+            }
+
+            &>a {
+                text-decoration: none;
+                color: var(--primary);
+                border-bottom: 1px solid transparent;
+                transition: border-color .2s linear;
+
+                &:hover {
+                    border-color: var(--primary);
+                }
+            }
+        }
+
+        &>.booking-date {
+            text-transform: uppercase;
+        }
+    }
+
+    & .quantity {
+        &>div {
+            width: 100%;
+
+            &>div {
+                width: 100%;
+
+                &>input {
+                    width: 100%;
+                    padding: 0 0 0 2rem;
+                }
+            }
+        }
+    }
+}
+
 .table-product__product {
     &>a {
         color: var(--primary);

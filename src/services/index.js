@@ -12,9 +12,7 @@ const putService = async (path, q = {}, headers = {}) => {
 
 const getService = async (path, q = {}) => {
     try {
-        const res = await httpRequest.get(path, {
-            params: { ...q }
-        });
+        const res = await httpRequest.get(path, { params: { ...q } });
         return res;
     }
     catch (error) {
@@ -34,9 +32,7 @@ const postService = async (path, option = {}, headers = {}) => {
 
 const deleteService = async (path, q = {}) => {
     try {
-        const res = await httpRequest.deleteAPI(path, {
-            params: { ...q }
-        });
+        const res = await httpRequest.deleteAPI(path, { params: { ...q } });
         return res;
     } catch (error) {
         return error;

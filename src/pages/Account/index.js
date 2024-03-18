@@ -8,12 +8,12 @@ import * as Yup from "yup";
 import Button from "~/components/Button";
 import Input from "~/components/Input";
 import Loading from "~/components/Loading";
+import { ToastMessage } from "~/components/ToastMessage";
 import { routes } from "~/config";
 import { PASSWORD_RIGHT_ICONS } from "~/constant";
 import fallbackImage from '~/images/usericon.jpg';
 import { saveChangesProfile } from "~/reducers/user";
 import style from './AccountStyle.module.scss';
-import { ToastMessage } from "~/components/ToastMessage";
 
 const cx = classNames.bind(style);
 
@@ -92,9 +92,9 @@ function Account() {
             </div>
             <div className={cx("content")}>
                 <div className={cx("profile-pic")}>
-                    <div className={cx("header")}>
+                    <header className={cx("header")}>
                         <h2 className={cx("title")}>Profile Picture</h2>
-                    </div>
+                    </header>
                     <div className={cx('content-avatar')}>
                         <img className={cx('avatar')} src={values.file || user.currentUser.avatar} alt="" />
                         <label>
@@ -109,9 +109,9 @@ function Account() {
                     </div>
                 </div>
                 <div className={cx("account-details")}>
-                    <div className={cx("header")}>
+                    <header className={cx("header")}>
                         <h2 className={cx("title")}>Account Details</h2>
-                    </div>
+                    </header>
                     <form className={cx("user-info")} onSubmit={handleSubmit}>
                         <Input
                             readOnly

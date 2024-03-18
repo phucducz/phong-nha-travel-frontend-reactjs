@@ -4,7 +4,6 @@ import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { image } from '~/images';
 
 import Button from '~/components/Button';
 import { GridTour } from '~/components/GridTour';
@@ -15,6 +14,7 @@ import { TourReview } from '~/components/TourReview';
 import ToursType from '~/components/TourType';
 import { GRIDTOUR_ITEMS, PAGESINGLE_ITEMS, SLIDER_IMAGES, TOURREIVEW_ITEMS, TOURSTYPE_ITEMS } from "~/constant";
 import { handleFetchUserDataById } from '~/constant/reduxContants';
+import { image } from '~/images';
 import { setMenuActive } from '~/reducers/menu';
 import { getService } from '~/services';
 import style from './HomeStyle.module.scss';
@@ -32,8 +32,6 @@ function Home() {
     const [topics, setTopics] = useState([]);
     const [userId, setUserId] = useState(null);
 
-    // fake user id
-    // const userId = 1;
     useEffect(() => {
         setUserId(user.currentUser.id);
     }, [user]);
@@ -46,7 +44,7 @@ function Home() {
         }
 
         const fetchCategories = async () => {
-            const result = await getService('categories');
+            const result = await getService('/categories');
             result.splice(0, 0, { id: 0, title: 'Category' });
 
             setCategories({ data: result });
@@ -173,12 +171,6 @@ function Home() {
                     <TourReview data={TOURREIVEW_ITEMS} className={cx('review')} />
                 </div>
             </div>
-            {/* <div className={cx('container-images__title')}>
-                <span className={cx('images__crossbar')}></span>
-                <div className={cx('images__icon')}></div>
-                <h3 className={cx('images__desc')}>Hình ảnh từ Phong Nha Travel</h3>
-                <span className={cx('images__crossbar')}></span>
-            </div> */}
         </div>
     );
 }

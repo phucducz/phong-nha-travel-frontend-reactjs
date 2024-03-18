@@ -1,5 +1,6 @@
 .woocommerce__message {
-    width: var(--max-width-page);
+    width: 100%;
+    max-width: var(--max-width-page);
     height: 9.6rem;
     position: relative;
     transition: height .5s linear;

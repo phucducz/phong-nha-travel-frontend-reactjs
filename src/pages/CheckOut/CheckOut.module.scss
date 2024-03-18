@@ -49,15 +49,6 @@
     }
 
     &::before {
-        // content: '';
-        // display: block;
-        // width: .5rem;
-        // height: 3rem;
-        // background-color: var(--primary);
-        // position: absolute;
-        // top: 50%;
-        // left: 0;
-        // transform: translateY(-50%);
         @include crossBefore(var(--primary));
     }
 }
@@ -91,24 +82,6 @@
     }
 }
 
-// .check__entered-true {
-//     display: flex;
-//     width: 100%;
-//     padding: 4rem 5rem;
-//     position: relative;
-
-//     &>svg {
-//         color: var(--white);
-//         background-color: #eb7591;
-//         border-radius: 100%;
-//         margin-right: .5rem;
-//     }
-
-//     &:before {
-//         @include crossBefore(#eb7591);
-//     }
-// }
-
 .coupon__icon {
     width: 1.5rem;
     height: 1.5rem;
@@ -139,9 +112,14 @@
     }
 }
 
+.coupon__content {
+    &>span {
+        font-size: 1.5rem;
+    }
+}
+
 .coupon__show {
     font-family: var(--font-family);
-    font-size: 1.5rem;
     color: var(--primary);
     margin: .2rem 0 0 .5rem;
     cursor: pointer;
@@ -167,6 +145,19 @@
 
         &>div+form {
             margin-top: 1rem;
+            max-width: 68rem;
+
+            &>div:first-child {
+                width: calc(100% - 130px);
+
+                &>div {
+                    width: 100%;
+
+                    &>input {
+                        width: 100%;
+                    }
+                }
+            }
         }
     }
 
@@ -182,29 +173,6 @@
     }
 }
 
-// coupon
-
-// .checkout-coupon__input {
-//     display: flex;
-// }
-
-// .input__input {
-//     width: 48.8rem;
-//     height: 5rem;
-// }
-
-// .input__button {
-//     text-transform: uppercase;
-//     background-color: rgba(71, 160, 255, 0.8);
-//     border: none;
-//     margin-left: 6rem;
-
-//     &:hover {
-//         transform: translate(0);
-//         background-color: #47a0ff;
-//     }
-// }
-
 .woocommerce__checkout__form {
     &>div+div {
         margin-top: 4rem;
@@ -216,6 +184,8 @@
 }
 
 .form__box__1 {
+    width: calc(55% - 1rem);
+
     &>p {
         margin-bottom: 2rem;
         font-size: 2rem;
@@ -228,9 +198,39 @@
     }
 }
 
+.form__box__1__input {
+    &>div {
+        width: 100%;
+
+        &>div:has(>input) {
+            width: 100%;
+
+            &>input {
+                width: 100% !important;
+            }
+        }
+    }
+
+    &.last-name {
+        margin-left: 2rem;
+    }
+}
+
 .form__box__2 {
-    &>div+div {
-        margin-top: 2rem;
+    width: calc(45% - 1rem);
+    margin-top: 3.6rem;
+
+    &>div {
+        width: 100%;
+
+        &>div {
+            width: 100%;
+
+            &>textarea {
+                width: 100%;
+                min-width: 100%;
+            }
+        }
     }
 }
 
@@ -292,7 +292,7 @@
     }
 
     .payment-bacs {
-        height: 0;
+        height: auto;
         display: flex;
         align-items: flex-end;
         overflow: hidden;
@@ -301,25 +301,28 @@
 
         &>p {
             width: 100%;
-            line-height: 4.6rem;
-            padding-left: 1.5rem;
+            height: auto;
+            padding: 1.5rem;
             background-color: #dfdcde;
+            display: flex;
+            align-items: center;
+            position: relative;
+
+            &::after {
+                content: '';
+                display: block;
+                border-top: 2rem solid #dfdcde;
+                border-left: 2rem solid transparent;
+                position: absolute;
+                top: -9px;
+                left: 3rem;
+                transform: rotate(-45deg);
+            }
         }
 
-        &::after {
-            content: '';
-            display: block;
-            border-top: 2rem solid #dfdcde;
-            border-left: 2rem solid transparent;
-            position: absolute;
-            top: 19%;
-            left: 3rem;
-            transform: rotate(-45deg);
-        }
-
-        &.active {
-            height: 6.6rem;
-        }
+        // &.active {
+        //     height: 6.6rem;
+        // }
     }
 }
 
@@ -433,7 +436,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    
+
     &>div {
         width: max-content;
 
@@ -479,5 +482,72 @@
 
     &>div+div {
         margin-top: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .woocommerce {
+        width: calc(100vw - 6rem);
+    }
+}
+
+@media screen and (max-width: 1165px) {
+    .form__box__1__input {
+
+        &.first-name,
+        &.last-name {
+            width: 100%;
+            display: block;
+            float: unset;
+            margin-left: 0;
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .form__box {
+        flex-direction: column;
+        align-items: flex-start;
+
+        & .form__box__1,
+        & .form__box__2 {
+            width: 100%;
+        }
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .woocommerce__checkout-coupon {
+        .checkout-coupon__form {
+            padding: 3rem;
+
+            &>div+form {
+                flex-direction: column;
+                align-items: flex-start;
+
+                &>div:first-child,
+                &>button {
+                    width: 100%;
+                }
+            }
+        }
+
+        &.active {
+            height: 235px;
+        }
+    }
+
+    .woocommerce__checkout__form>.form__box,
+    .woocommerce>.woocommerce__coupon {
+        padding: 3rem;
+    }
+
+    .order__table {
+
+        &>thead td,
+        &>thead th,
+        &>tbody td {
+            padding: 0 .5rem !important;
+        }
     }
 }

@@ -143,3 +143,15 @@
         display: block;
     }
 }
+
+@media screen and (max-width: 1200px) {
+    .account {
+        width: calc(100vw - 6rem);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .account {
+        padding: 2rem;
+    }
+}

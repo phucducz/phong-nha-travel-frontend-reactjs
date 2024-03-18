@@ -11,20 +11,23 @@ export const login = createAsyncThunk(
     'loginReducer/login',
     async (data, thunkAPI) => {
         const { userName, password, navigate } = data;
-        const userLoggedin = await postService('/users/login', { userName: userName, password: password });
+        const userLoggedIn = await postService('/users/login', { userName: userName, password: password });
 
-        if (typeof userLoggedin.id !== 'undefined') {
-            thunkAPI.dispatch(setCurrentUser(userLoggedin));
-            console.log(userLoggedin);
-            switch (userLoggedin.role.id) {
+        if (typeof userLoggedIn.userId !== 'undefined') {
+            thunkAPI.dispatch(setCurrentUser(userLoggedIn));
+            localStorage.setItem('token', userLoggedIn.accessToken);
+
+            switch (userLoggedIn.roleId) {
                 case 1:
                     navigate('/');
                     break;
                 case 2:
-                    navigate('/admin');
+                    navigate('/admin/users');
+                    console.log('admin');
                     break;
                 case 3:
-                    navigate('/admin');
+                    navigate('/admin/users');
+                    console.log('admin');
                     break;
                 default:
                     navigate('/');

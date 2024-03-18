@@ -65,19 +65,6 @@ function UserEdit() {
             const { id, active, email, firstName, file, lastName,
                 password, phoneNumber, userName, roleId } = values;
 
-            console.log({
-                id,
-                active,
-                avatar: file,
-                email,
-                firstName,
-                lastName,
-                password,
-                phoneNumber,
-                userName,
-                roleId
-            });
-
             dispatch(saveChangesUser({
                 id,
                 active,
@@ -165,11 +152,6 @@ function UserEdit() {
 
     const handleUploadClick = file => {
         getBase64(file);
-        // formik.setValues({
-        //     ...formik.values,
-        //     avatar: URL.createObjectURL(file),
-        //     avatarFile: file
-        // });
     }
 
     return (
