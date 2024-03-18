@@ -45,7 +45,7 @@ function UserManagement() {
 
     useEffect(() => {
         const getUsers = async () => {
-            const result = await getService('users', { type: 'less' });
+            const result = await getService('admin/users', { type: 'less' },);
 
             dispatch(setUserData(result));
             setUsersFilter(result);
