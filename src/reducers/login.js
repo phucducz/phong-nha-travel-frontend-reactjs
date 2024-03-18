@@ -15,7 +15,8 @@ export const login = createAsyncThunk(
 
         if (typeof userLoggedIn.userId !== 'undefined') {
             thunkAPI.dispatch(setCurrentUser(userLoggedIn));
-            localStorage.setItem('token', userLoggedIn.accessToken);
+            localStorage.setItem('currentUser', JSON.stringify(userLoggedIn));
+            // localStorage.setItem('userId', userLoggedIn.userId);
 
             switch (userLoggedIn.roleId) {
                 case 1:

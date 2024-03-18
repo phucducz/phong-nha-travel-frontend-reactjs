@@ -29,11 +29,16 @@ function DialogModal({
 
     useEffect(() => {
         if (!visible) {
+            console.log(containerRef.current);
+            if(containerRef.current === null) return;
+
             setStatusForm('');
-            setTimeout(() => {
+
+            const timeoutId = setTimeout(() => {
                 containerRef.current.style = 'display: none';
             }, 500);
-            return;
+
+            return () => clearTimeout(timeoutId);
         }
 
         containerRef.current.style = 'display: block';

@@ -33,19 +33,23 @@ function UserManagement() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector(state => state.user);
-    const { userList } = user;
 
-    const thead = ['avatar', 'first name', 'last name', 'phone number',
-        'e-mail', 'role', 'active', 'action'];
     const [usersFilter, setUsersFilter] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [confirmActive, setConfirmActive] = useState(false);
     const [userActive, setUserActive] = useState(0);
     const [render, setRender] = useState(false);
 
+    const { userList } = user;
+    const thead = ['avatar', 'first name', 'last name', 'phone number',
+        'e-mail', 'role', 'active', 'action'];
+
     useEffect(() => {
         const getUsers = async () => {
-            const result = await getService('admin/users', { type: 'less' });
+            const result = await getService(
+                'admin/users',
+                { type: 'more' }
+            );
 
             dispatch(setUserData(result));
             setUsersFilter(result);

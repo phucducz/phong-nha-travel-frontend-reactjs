@@ -55,9 +55,10 @@ function AdminLayout({ children }) {
     });
 
     useEffect(() => {
-        if (typeof user.currentUser.id === 'undefined')
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser.userId) 
             navigate('/');
-        else if (user.currentUser.role.id === 1)
+        else if (currentUser.roleId === 1)
             navigate('/');
     }, [user]);
 

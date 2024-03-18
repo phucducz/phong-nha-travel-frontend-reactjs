@@ -5,8 +5,8 @@ const httpRequest = axios.create({
     headers: { 'content-type': 'application/json' }
 });
 
-export const get = async (path, option = {}, header) => {
-    const res = await httpRequest.get(path, option, header);
+export const get = async (path, option = {}) => {
+    const res = await httpRequest.get(path, option);
     return res.data;
 }
 
@@ -25,11 +25,11 @@ export const putAPI = async (path, option = {}, header = {}) => {
     return res.data;
 }
 
-// httpRequest.interceptors.request.use(config => {
-//     const token = localStorage.getItem('token');
-//     config.headers.Authorization = `Bearer ${token}`;
+httpRequest.interceptors.request.use(config => {
+    const { accessToken } = JSON.parse(localStorage.getItem('currentUser'));
+    config.headers.Authorization = `Bearer ${accessToken}`;
 
-//     return config;
-// });
+    return config;
+});
 
 export default httpRequest;
