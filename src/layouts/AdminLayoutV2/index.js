@@ -55,10 +55,10 @@ function AdminLayout({ children }) {
     });
 
     useEffect(() => {
-        if (typeof user.currentUser.id === 'undefined')
-            navigate('/');
-        else if (user.currentUser.role.id === 1)
-            navigate('/');
+        // if (typeof user.currentUser.id === 'undefined')
+        //     navigate('/');
+        // else if (user.currentUser.role.id === 1)
+        //     navigate('/');
     }, [user]);
 
     return (

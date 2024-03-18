@@ -13,10 +13,10 @@ export const login = createAsyncThunk(
         const { userName, password, navigate } = data;
         const userLoggedin = await postService('/users/login', { userName: userName, password: password });
 
-        if (typeof userLoggedin.id !== 'undefined') {
+        if (typeof userLoggedin.userId === 'number') {
             thunkAPI.dispatch(setCurrentUser(userLoggedin));
             console.log(userLoggedin);
-            switch (userLoggedin.role.id) {
+            switch (userLoggedin.roleId) {
                 case 1:
                     navigate('/');
                     break;
